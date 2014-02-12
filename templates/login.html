@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block title %}Login{% endblock %}
+{% block css %}
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/supersized.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block menu %}{% endblock %}
+{% block contenido %}
+{% if user.is_authenticated %}
+    <meta http-equiv='refresh' content='0.5; url=/'>"
+{% else %}
+    <div class="page-container">
+        <h1>Bienvenido!!!</h1>
+        <form method="post">{% csrf_token %}
+            <input type="text" name="username" class="username" placeholder="Username">
+            <input type="password" name="password" class="password" placeholder="Password">
+        {% if form.errors %}
+            <p class='text-danger'>Usuario o contraseña incorrectos, intente nuevamente.</p>
+        {% endif %}
+            <button type="submit" >INGRESAR AHORA</button>
+        </form>
+    </div>
+{% endif %}
+{% endblock %}
+{% block js_end %}
+    <script src="{% static 'js/supersized.3.2.7.min.js' %}"></script>
+    <script src="{% static 'js/supersized-init.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+{% endblock %}

@@ -10,6 +10,7 @@ class Paciente(models.Model):
         verbose_name = ('Paciente')
         verbose_name_plural = ('Pacientes')
 
+    dni = models.CharField(max_length=8, verbose_name=u'DNI')
     nombres = models.CharField(max_length=200, verbose_name=u'Nombres y Apellidos')
     direccion = models.CharField(max_length=200, verbose_name=u'Dirección')
     edad = models.IntegerField(verbose_name=u'Edad')
@@ -35,10 +36,10 @@ class Antecedente(models.Model):
     familiares = models.CharField(max_length=200, verbose_name=u'Familiares')
     cancer = models.CharField(max_length=200, verbose_name=u'Cancer')
     otros = models.CharField(max_length=200, verbose_name=u'Otros')
-    paciente = models.ForeignKey(Paciente)
+    examen = models.ForeignKey('Examen')
 
     def __unicode__(self):
-        return str(self.paciente)
+        return str(self.examen)
 
 
 class UltimaCita(models.Model):
@@ -97,6 +98,7 @@ class Frecuencia(models.Model):
     def __unicode__(self):
         return self.nombre
 
+
 class DiagnosticoReceta(models.Model):
     class Meta:
         verbose_name = ('DiagnosticoReceta')
@@ -114,8 +116,8 @@ class Medicamento(models.Model):
         verbose_name_plural = ('Medicamentos')
 
     nombre = models.CharField(max_length=100, verbose_name=u'Nombre')
-    clase = models.ForeignKey(ClaseMedicamento, verbose_name=u'Clase de Medicamento')
-    cantidad = models.ForeignKey(TipoCantidad, verbose_name=u'Tipode Cantidad')
+    clase = models.ForeignKey(ClaseMedicamento, verbose_name=u'Clase de Medicamento', related_name='medicamento_clase')
+    cantidad = models.ForeignKey(TipoCantidad, verbose_name=u'Tipode Cantidad', related_name='medicamento_cantidad')
 
     def __unicode__(self):
         return self.nombre
@@ -155,11 +157,10 @@ class Tratamiento(models.Model):
         ('se', 'Semanas'),
         ('me', 'Meses'),
     )
-
-    medicamento = models.ForeignKey(Medicamento, verbose_name=u'Medicamento')
+    medicamento = models.ForeignKey(Medicamento, verbose_name=u'Medicamento', related_name='tratamiento_medicamento')
     cantidad = models.IntegerField(verbose_name=u'Cantidad')
     cantidaddosis = models.IntegerField(verbose_name=u'Cantidad de dosis')
-    frecuencia = models.ForeignKey(Frecuencia, verbose_name=u'Frecuencia')
+    frecuencia = models.ForeignKey(Frecuencia, verbose_name=u'Frecuencia', related_name='tratamiento_frecuencia')
     duracion = models.IntegerField(verbose_name=u'Duración')
     tipoduracion = models.CharField(max_length=2,
                                     choices=tipo_duracion,
@@ -193,6 +194,7 @@ class TipoExamen(models.Model):
         verbose_name_plural = ('Tipos de Examenes')
 
     nombre = models.CharField(max_length=100, verbose_name=u'Nombre')
+    descripcion = models.TextField(verbose_name=u'Descripción')
     fechacreacion = models.DateField(auto_now_add=True)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     activo = models.BooleanField(default=True)
@@ -238,7 +240,11 @@ class Paquete(models.Model):
         return self.nombre
 
     def precio_total(self):
-        pass
+        retornar = 0
+        examenes = self.tiposexamen.all()
+        for examen in examenes:
+            retornar +=examen.precio
+        return retornar
 
 
 class Examen(models.Model):
@@ -295,3 +301,21 @@ class ResultadoSubItem(models.Model):
 
     def __unicode__(self):
         return self.texto
+
+
+#perfil personal
+
+class Perfil(models.Model):
+    class Meta:
+        verbose_name = ('Perfil')
+        verbose_name_plural = ('Perfiles')
+
+    usuario = models.ForeignKey(User)
+    dni = models.CharField(max_length=8, verbose_name=u'DNI')
+    nombres = models.CharField(max_length=200, verbose_name=u'Nombres y Apellidos')
+    profesion = models.CharField(max_length=200, verbose_name=u'Profesión', blank=True, null=True)
+    direccion = models.CharField(max_length=200, verbose_name=u'Dirección', blank=True, null=True)
+    sueldo = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __unicode__(self):
+        return str(self.usuario)

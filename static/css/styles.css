@@ -1,0 +1,305 @@
+body{
+/*background-color: rgb(27, 26, 26);*/
+background-image: url(../img/fonditos.jpg);
+background-size: cover;
+
+
+}
+
+.content-principal{
+	margin-top: 200px;
+}
+
+.title-system{
+	margin: 50px;
+	background-color: #fff;
+}
+
+.principal{
+	margin-top: 50px;
+		
+	box-shadow: 0px 0px 20px 5px;
+
+
+}
+.opacar{
+	opacity: 0.7;
+}
+
+img:hover{
+	box-shadow: 4px;
+}
+.panel-1{
+	margin-bottom: 20px;
+	background-color: #fff;
+	border: 1px solid #CFCACA;
+	border-radius: 7px;
+}
+.panel-color{
+	background-color: #058177;
+	color: #0BC7B0;
+	border-right: 7px;
+	
+}
+
+
+.log{
+	background-color: rgba(0, 0, 0, 0.59);
+	padding: 10px;
+	text-align: center;
+	margin-top: 200px;
+
+
+}
+.fondo-usuario{
+	background-color: rgba(240, 240, 240, 0.88);
+	color: rgb(87, 84, 84);
+}
+
+
+
+
+
+
+
+
+
+/*===============================aldo=================================*/
+
+/*----------------------------datos-auto-rellenados-----------------*/
+.datos_derecha{
+	background: rgb(218, 218, 226);
+	padding: 12px 12px 12px 22px;
+	border-radius: 12px 0px 0px 12px;
+	height: 104px;
+	line-height: 7px;
+}
+
+.datos_izquierda{
+	background: rgb(218, 218, 226);
+	padding: 12px 12px 12px 22px;
+	border-radius: 0px 12px 12px 0px;
+	height: 104px;
+	line-height: 7px;
+
+}
+/*-------------------------------fin--------------------------------------*/
+/*---------------panel agregar diagnostico y tratamiento-----------------*/
+.Agregardiagnostico{
+	background: rgb(4, 27, 99);
+	width: 222px;
+	height: 73px;
+	text-align: center;
+}
+.Agregardiagnostico a{
+	font-size: 25px;
+	text-decoration: none !important;
+	color:white !important;
+	text-decoration: underline;
+
+}
+.Agregardiagnostico:hover{
+	background: rgb(5, 146, 5);
+	border-radius: 25px 0px;
+
+}
+
+.Agregartratamiento{
+	background: rgb(4, 27, 99);
+	width: 222px;
+	height: 73px;
+	text-align: center;
+}
+.Agregartratamiento a{
+	font-size: 25px;
+	text-decoration: none !important;
+	color:white !important;
+	text-decoration: underline;
+}
+.Agregartratamiento:hover{
+	background: rgb(5, 146, 5);
+	border-radius: 25px 0px;
+}
+
+.control-panel{
+	padding: 12px;
+}
+/*---------------------------------------fin-----------------------------*/
+/*--------------------Buscador---------------------------*/
+#searchform {
+   	width: 518px;
+	height: 54px;
+	padding: 8px;
+	margin: 13px auto;
+	background: #ccc;
+	border-radius: 10px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.27) inset, 0 2px 0 rgba(255,255,255,.5);
+}
+#searchform input {
+ 	width: 385px;
+	height: 38px;
+	padding: 11px;
+	float: left;
+	border: 0;
+	background: rgba(243, 240, 240, 1);
+	border-radius: 3px 0 0 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.36) inset;
+}
+#searchform input:focus {
+  	height: 38px;
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+}
+ 
+#searchform input:-webkit-input-placeholder {
+   color: #999;
+   font-weight: normal;
+   font-style: italic;
+}
+#searchform input:-moz-placeholder {
+    color: #999;
+    font-weight: normal;
+    font-style: italic;
+}
+#searchform input:-moz-placeholder {
+    color: #999;
+    font-weight: normal;
+    font-style: italic;
+}
+#searchform button {
+  	position: relative;
+	float: right;
+	border: 0;
+	cursor: pointer;
+	height: 39px;
+	width: 117px;
+	font-size: 22px;
+	color: #fff;
+	background: #438cdb;
+	border-radius: 0 29px 3px 0;
+	text-shadow: 0 -1px 0 rgba(0, 0 ,0, .3);
+}   
+#searchform button:hover{
+    background: #0053AD;
+} 
+ 
+#searchform button:before { /* flecha */
+    content: '';
+    position: absolute;
+	border-width: 9px 6px 9px 0;
+    border-style: solid solid solid none;
+    border-color: transparent #438cdb transparent;
+    top: 10px;
+    left: -5px;
+}
+#searchform button:hover:before{
+    border-right-color: #0053AD;
+}
+ 
+#searchform button:focus:before{
+    border-right-color: #0053AD;
+}
+
+/*-----------------fin---------------------------------------*/
+/*------------------------------tratamiento---------------------*/
+.tratamiento{
+	padding: 15px;
+}
+.tratamiento .col-md-12 p{
+	text-align: center;
+	font-size: 19px;
+}
+.tratamiento .col-md-2 p{
+	text-align: center;
+	font-size: 17px;
+	font-family: sans-serif;
+}
+.tratamiento .col-md-5 p{
+	text-align: center;
+	font-size: 17px;
+	font-family: sans-serif;
+}
+.tratamiento .col-md-5{
+	background: rgb(11, 20, 126);
+	padding: 5px;
+	height: 29px;
+	font-family: ;
+	color: white;
+}
+.tratamiento .col-md-2{
+	background: rgb(11, 20, 126);
+	padding: 5px;
+	height: 29px;
+	font-family: bold;
+	color: white;
+}
+.contenido p{
+	color: black;
+}
+/*---------------formulario-medicina---------------*/
+.form_medicina{
+	background: rgba(23, 88, 255, 0.14);
+	padding-bottom: 16px;
+	padding-top: 19px;
+}
+.tipo-medicamento{
+	width: 177px !important;
+	height: 44px !important;
+}
+.selec-medicamento{
+	height: 44px !important;
+	width: 219px !important;
+}
+.selec-cantidad{
+	height: 44px !important;
+	width: 63px !important;
+}
+.selec-dosis{
+	height: 44px !important;
+}
+.selec-frecuencia{
+	height: 44px !important;
+}
+.selec-durante{
+	height: 44px !important;
+	width: 65px !important;
+}
+.selec-durante1{
+	height: 44px !important;
+	width: 126px !important;
+}
+.agregar{
+	background: rgb(4, 88, 0);
+	height: 50px;
+	padding: 12px;
+	text-align: center;
+	border-radius: 12px;
+}
+.agregar a{
+	text-decoration: none !important;
+	font-size: 19px;
+	font-family: arial;
+	color: white !important;
+	text-decoration: underline;
+}
+
+.agregar:hover{
+	background: rgb(43, 150, 1);
+}
+.cancelar-medicamento{
+	background: rgb(180, 0, 0);
+	height: 50px;
+	padding: 12px;
+	text-align: center;
+	border-radius: 12px;
+}
+.cancelar-medicamento a{
+	text-decoration: none !important;
+	font-size: 19px;
+	font-family: arial;
+	color: white !important;
+	text-decoration: underline;
+}
+.cancelar-medicamento:hover{
+	background: rgb(223, 8, 8);
+}

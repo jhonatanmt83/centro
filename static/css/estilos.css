@@ -1,0 +1,530 @@
+/*----------------------------datos-auto-rellenados-----------------*/
+.datos_derecha{
+	background: rgb(218, 218, 226);
+	padding: 12px 12px 12px 22px;
+	border-radius: 12px 0px 0px 12px;
+	height: 104px;
+	line-height: 7px;
+}
+
+.datos_izquierda{
+	background: rgb(218, 218, 226);
+	padding: 12px 12px 12px 22px;
+	border-radius: 0px 12px 12px 0px;
+	height: 104px;
+	line-height: 7px;
+
+}
+/*-------------------------------fin--------------------------------------*/
+/*---------------panel agregar diagnostico y tratamiento-----------------*/
+.Agregardiagnostico{
+	background: rgb(4, 27, 99);
+	width: 222px;
+	height: 73px;
+	text-align: center;
+}
+.Agregardiagnostico a{
+	font-size: 25px;
+	text-decoration: none !important;
+	color:white !important;
+	text-decoration: underline;
+
+}
+.Agregardiagnostico:hover{
+	background: rgb(5, 146, 5);
+	border-radius: 25px 0px;
+
+}
+
+.Agregartratamiento{
+	background: rgb(4, 27, 99);
+	width: 222px;
+	height: 73px;
+	text-align: center;
+}
+.Agregartratamiento a{
+	font-size: 25px;
+	text-decoration: none !important;
+	color:white !important;
+	text-decoration: underline;
+}
+.Agregartratamiento:hover{
+	background: rgb(5, 146, 5);
+	border-radius: 25px 0px;
+}
+
+.control-panel{
+	padding: 12px;
+}
+/*---------------------------------------fin-----------------------------*/
+/*--------------------Buscador---------------------------*/
+#searchform {
+   	width: 518px;
+	height: 54px;
+	padding: 8px;
+	margin: 13px auto;
+	background: #ccc;
+	border-radius: 10px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.27) inset, 0 2px 0 rgba(255,255,255,.5);
+}
+#searchform input {
+ 	width: 385px;
+	height: 38px;
+	padding: 11px;
+	float: left;
+	border: 0;
+	background: rgba(243, 240, 240, 1);
+	border-radius: 3px 0 0 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.36) inset;
+}
+#searchform input:focus {
+  	height: 38px;
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+}
+ 
+#searchform input:-webkit-input-placeholder {
+   color: #999;
+   font-weight: normal;
+   font-style: italic;
+}
+#searchform input:-moz-placeholder {
+    color: #999;
+    font-weight: normal;
+    font-style: italic;
+}
+#searchform input:-moz-placeholder {
+    color: #999;
+    font-weight: normal;
+    font-style: italic;
+}
+#searchform button {
+  	position: relative;
+	float: right;
+	border: 0;
+	cursor: pointer;
+	height: 39px;
+	width: 117px;
+	font-size: 22px;
+	color: #fff;
+	background: #438cdb;
+	border-radius: 0 29px 3px 0;
+	text-shadow: 0 -1px 0 rgba(0, 0 ,0, .3);
+}   
+#searchform button:hover{
+    background: #0053AD;
+} 
+ 
+#searchform button:before { /* flecha */
+    content: '';
+    position: absolute;
+	border-width: 9px 6px 9px 0;
+    border-style: solid solid solid none;
+    border-color: transparent #438cdb transparent;
+    top: 10px;
+    left: -5px;
+}
+#searchform button:hover:before{
+    border-right-color: #0053AD;
+}
+ 
+#searchform button:focus:before{
+    border-right-color: #0053AD;
+}
+
+/*-----------------fin---------------------------------------*/
+/*------------------------------tratamiento---------------------*/
+.tratamiento{
+	padding: 15px;
+}
+.tratamiento .col-md-12 p{
+	text-align: center;
+	font-size: 19px;
+}
+.tratamiento .col-md-2 p{
+	text-align: center;
+	font-size: 17px;
+	font-family: sans-serif;
+}
+.tratamiento .col-md-5 p{
+	text-align: center;
+	font-size: 17px;
+	font-family: sans-serif;
+}
+.tratamiento .col-md-5{
+	background: rgb(11, 20, 126);
+	padding: 5px;
+	height: 29px;
+	font-family: ;
+	color: white;
+}
+.tratamiento .col-md-2{
+	background: rgb(11, 20, 126);
+	padding: 5px;
+	height: 29px;
+	font-family: bold;
+	color: white;
+}
+.contenido p{
+	color: black;
+}
+/*---------------formulario-medicina---------------*/
+.form_medicina{
+	background: rgba(23, 88, 255, 0.14);
+	padding-bottom: 21px;
+	padding-top: 21px;
+	border-radius: 32px;
+	margin: 2px 0px;
+}
+.tipo-medicamento{
+	width: 177px !important;
+	height: 44px !important;
+	margin: 0px -40px;
+}
+.selec-medicamento{
+	height: 44px !important;
+	width: 219px !important;
+}
+.selec-cantidad{
+	height: 44px !important;
+	width: 63px !important;
+}
+.selec-dosis{
+	height: 44px !important;
+}
+.selec-frecuencia{
+	height: 44px !important;
+}
+.selec-durante{
+	height: 44px !important;
+	width: 65px !important;
+}
+.selec-durante1{
+	height: 44px !important;
+	width: 126px !important;
+}
+.agregar{
+	background: rgb(14, 158, 8);
+	height: 50px;
+	padding: 12px;
+	text-align: center;
+	border-radius: 12px;
+}
+.agregar a{
+	text-decoration: none !important;
+	font-size: 19px;
+	font-family: arial;
+	color: white !important;
+	text-decoration: underline;
+}
+
+.agregar:hover{
+	background: rgb(25, 218, 17);
+}
+.cancelar-medicamento{
+	background: rgb(180, 0, 0);
+	height: 50px;
+	padding: 12px;
+	text-align: center;
+	border-radius: 12px;
+}
+.cancelar-medicamento a{
+	text-decoration: none !important;
+	font-size: 19px;
+	font-family: arial;
+	color: white !important;
+	text-decoration: underline;
+}
+.cancelar-medicamento:hover{
+	background:rgb(223, 8, 8);
+}
+.cabezera-medicina{
+	background: rgb(31, 31, 138);
+	color: white;
+	border-radius: 36px 0px 35px 0px;
+	padding: 0px;
+}
+.boton-quitar{
+	text-align: center;
+	background: rgb(180, 0, 0);
+	height: 32px;
+	margin: 2px 0px;
+	padding: 1px;
+	border-radius: 22px;
+	font-size: 19px;
+	}
+.boton-quitar a{
+	color:white !important;
+	text-decoration: none !important;
+
+}
+.boton-quitar:hover{
+	background: rgb(252, 0, 0);
+}
+.cuerpo-medicina{
+	text-align: center;
+	color: rgb(3, 3, 80);
+	font-size: 18px;
+}
+.contenedor-receta{
+	height: 313px;
+}
+.citas{
+	padding-top: 64px;
+}
+.imprimir {
+	background: rgb(18, 32, 134);
+	text-align: center;
+	font-size: 27px;
+	width: 150px;
+	height: 50px;
+	padding: 8px;
+	border-radius: 12px;
+	float: right;
+}
+.seccion-imprimir{
+	padding-top: 16px
+}
+.imprimir a{
+	color: rgb(253, 253, 253) !important;
+	text-decoration: none !important;
+}
+/*------------------------Guardar--------------*/
+.guardar{
+	background: rgb(3, 31, 104);
+	width: 223px !important;
+	height: 36px;
+	padding: 8px;
+	text-align: center;
+	border-radius: 8px;
+}
+.guardar a{
+	text-decoration: none !important;
+	color: white!important;
+
+}
+.espacio-formulario{
+	height: 54px;
+}
+/*.container{
+	background: rgb(216, 216, 216);
+}*/
+.checkbox1 input{
+	width: 39px;
+	height: 24px
+}
+.checkbox1 label{
+	font-size: 24px;
+}
+
+/*------------------------reporte-clientes------------*/
+.reporte-clinico{
+	
+	background: rgb(56, 56, 56);
+	padding: 1px 13px 11px 0px;
+	
+}
+.fondoprimario{
+	background: white;
+	border-radius: 4px;
+}
+.texto3d{
+	text-transform: uppercase;
+	color: #fff;
+	text-shadow: 1px 1px 3px #000;
+}
+/*----------------------HISTORIA CLINICA-----------*/
+
+
+/*------------------index--------*/
+.view-sixth img {
+   -webkit-transition: all 0.4s ease-in-out 0.5s;
+   -moz-transition: all 0.4s ease-in-out 0.5s;
+   -o-transition: all 0.4s ease-in-out 0.5s;
+   -ms-transition: all 0.4s ease-in-out 0.5s;
+   transition: all 0.4s ease-in-out 0.5s;
+}
+.view-sixth .mask {
+   background: rgba(146,96,91,0.5);
+   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   opacity: 0;
+   -webkit-transition: all 0.3s ease-in 0.4s;
+   -moz-transition: all 0.3s ease-in 0.4s;
+   -o-transition: all 0.3s ease-in 0.4s;
+   -ms-transition: all 0.3s ease-in 0.4s;
+   transition: all 0.3s ease-in 0.4s;
+}
+.view-sixth h2 {
+   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   opacity: 0;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+   background: transparent;
+   margin: 20px 40px 0px 40px;
+   -webkit-transform: scale(10);
+   -moz-transform: scale(10);
+   -o-transform: scale(10);
+   -ms-transform: scale(10);
+   transform: scale(10);
+   -webkit-transition: all 0.3s ease-in-out 0.1s;
+   -moz-transition: all 0.3s ease-in-out 0.1s;
+   -o-transition: all 0.3s ease-in-out 0.1s;
+   -ms-transition: all 0.3s ease-in-out 0.1s;
+   transition: all 0.3s ease-in-out 0.1s;
+}
+.view-sixth p {
+   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   opacity: 0;
+   -webkit-transform: scale(10);
+   -moz-transform: scale(10);
+   -o-transform: scale(10);
+   -ms-transform: scale(10);
+   transform: scale(10);
+   -webkit-transition: all 0.3s ease-in-out 0.2s;
+   -moz-transition: all 0.3s ease-in-out 0.2s;
+   -o-transition: all 0.3s ease-in-out 0.2s;
+   -ms-transition: all 0.3s ease-in-out 0.2s;
+   transition: all 0.3s ease-in-out 0.2s;
+}
+.view-sixth a.info {
+   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   opacity: 0;
+   -webkit-transform: translateY(100px);
+   -moz-transform: translateY(100px);
+   -o-transform: translateY(100px);
+   -ms-transform: translateY(100px);
+   transform: translateY(100px);
+   -webkit-transition: all 0.3s ease-in-out 0.1s;
+   -moz-transition: all 0.3s ease-in-out 0.1s;
+   -o-transition: all 0.3s ease-in-out 0.1s;
+   -ms-transition: all 0.3s ease-in-out 0.1s;
+   transition: all 0.3s ease-in-out 0.1s;
+}
+.view-sixth:hover .mask {
+   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   filter: alpha(opacity=100);
+   opacity: 1;
+   -webkit-transition-delay: 0s;
+   -moz-transition-delay: 0s;
+   -o-transition-delay: 0s;
+   -ms-transition-delay: 0s;
+   transition-delay: 0s;
+}
+.view-sixth:hover img {
+   -webkit-transition-delay: 0s;
+   -moz-transition-delay: 0s;
+   -o-transition-delay: 0s;
+   -ms-transition-delay: 0s;
+   transition-delay: 0s;
+}
+.view-sixth:hover h2 {
+   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   filter: alpha(opacity=100);
+   opacity: 1;
+   -webkit-transform: scale(1);
+   -moz-transform: scale(1);
+   -o-transform: scale(1);
+   -ms-transform: scale(1);
+   transform: scale(1);
+   -webkit-transition-delay: 0.1s;
+   -moz-transition-delay: 0.1s;
+   -o-transition-delay: 0.1s;
+   -ms-transition-delay: 0.1s;
+   transition-delay: 0.1s;
+}
+.view-sixth:hover p {
+   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   filter: alpha(opacity=100);
+   opacity: 1;
+   -webkit-transform: scale(1);
+   -moz-transform: scale(1);
+   -o-transform: scale(1);
+   -ms-transform: scale(1);
+   transform: scale(1);
+   -webkit-transition-delay: 0.2s;
+   -moz-transition-delay: 0.2s;
+   -o-transition-delay: 0.2s;
+   -ms-transition-delay: 0.2s;
+   transition-delay: 0.2s;
+}
+.view-sixth:hover a.info {
+   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   filter: alpha(opacity=100);
+   opacity: 1;
+   -webkit-transform: translateY(0px);
+   -moz-transform: translateY(0px);
+   -o-transform: translateY(0px);
+   -ms-transform: translateY(0px);
+   transform: translateY(0px);
+   -webkit-transition-delay: 0.3s;
+   -moz-transition-delay: 0.3s;
+   -o-transition-delay: 0.3s;
+   -ms-transition-delay: 0.3s;
+   transition-delay: 0.3s;
+}
+
+.view {
+   width: 200px;
+   height: 283px;
+   margin: 10px;
+   border: 10px solid #fff;
+   overflow: hidden;
+   position: relative;
+   text-align: center;
+   -webkit-box-shadow: 1px 1px 2px #e6e6e6;
+   -moz-box-shadow: 1px 1px 2px #e6e6e6;
+   box-shadow: 1px 1px 2px #e6e6e6;
+   cursor: default;
+   background: #fff url(../images/bgimg.jpg) no-repeat center center;
+}
+.view .mask,.view .content {
+   width: 200px;
+   height: 260px;
+   position: absolute;
+   overflow: hidden;
+   top: 0;
+   left: 0;
+}
+.view img {
+   display: block;
+   position: relative;
+}
+.view h2 {
+   text-transform: uppercase;
+   color: #fff;
+   text-align: center;
+   position: relative;
+   font-size: 17px;
+   padding: 10px;
+   background: rgba(0, 0, 0, 0.8);
+   margin: 20px 0 0 0;
+}
+.view p {
+   font-family: Georgia, serif;
+   font-style: italic;
+   font-size: 13px;
+   position: relative;
+   color: #fff;
+   padding: 10px 20px 20px;
+   text-align: center;
+}
+.view a.info {
+   display: inline-block;
+   text-decoration: none;
+   padding: 7px 14px;
+   background: #000;
+   color: #fff;
+   text-transform: uppercase;
+   -webkit-box-shadow: 0 0 1px #000;
+   -moz-box-shadow: 0 0 1px #000;
+   box-shadow: 0 0 1px #000;
+   border-radius:10px;
+}
+.view a.info:hover {
+   -webkit-box-shadow: 0 0 5px #000;
+   -moz-box-shadow: 0 0 5px #000;
+   box-shadow: 0 0 5px #000;
+}
