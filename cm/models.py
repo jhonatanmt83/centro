@@ -127,7 +127,6 @@ class Receta(models.Model):
         verbose_name_plural = ('Recetas')
 
     paciente = models.ForeignKey(Paciente, verbose_name=u'Paciente')
-    usuario = models.ForeignKey(User, verbose_name=u'Usuario')
     fecha = models.DateField(auto_now_add=True)
 
     def __unicode__(self):
@@ -159,9 +158,7 @@ class Tratamiento(models.Model):
 
     medicamento = models.ForeignKey(Medicamento, verbose_name=u'Medicamento')
     cantidad = models.IntegerField(verbose_name=u'Cantidad')
-    tipocantidad = models.ForeignKey(TipoCantidad ,verbose_name=u'Tipo de Cantidad', related_name='tipocantidad_total')
     cantidaddosis = models.IntegerField(verbose_name=u'Cantidad de dosis')
-    tipocantidaddosis = models.ForeignKey(TipoCantidad ,verbose_name=u'Tipo de Cantidad de Dosis', related_name='tipocantidad_dosis')
     frecuencia = models.ForeignKey(Frecuencia, verbose_name=u'Frecuencia')
     duracion = models.IntegerField(verbose_name=u'Duración')
     tipoduracion = models.CharField(max_length=2,
@@ -240,6 +237,9 @@ class Paquete(models.Model):
     def __unicode__(self):
         return self.nombre
 
+    def precio_total(self):
+        pass
+
 
 class Examen(models.Model):
     class Meta:
@@ -247,10 +247,13 @@ class Examen(models.Model):
         verbose_name_plural = ('Examenes')
 
     paciente = models.ForeignKey(Paciente, related_name='examen_paciente')
-    paquetes = models.ManyToManyField(Paquete, related_name='examen_paquetes')
+    paquetes = models.ManyToManyField(Paquete, related_name='examen_paquetes', null=True, blank=True)
     fecha = models.DateField(auto_now_add=True)
+    fecha_editado = models.DateField(auto_now=True)
     recomendaciones = models.TextField()
     terminado = models.BooleanField(default=False)
+    precio = models.DecimalField(max_digits=6, decimal_places=2)
+    tipos_examen = models.ManyToManyField(TipoExamen, related_name='examen_tiposexamen', null=True, blank=True)
 
     def __unicode__(self):
         return str(self.paciente)
