@@ -3,6 +3,8 @@ from cm.models import Perfil, Paciente, Paquete, Antecedente
 from django.contrib.auth.models import Group
 from django.forms.extras.widgets import SelectDateWidget
 
+from datetime import date
+
 
 
 class PerfilForm(forms.ModelForm):
@@ -25,12 +27,20 @@ class PacienteForm1(forms.ModelForm):
     
 
 class PacienteForm2(forms.ModelForm):
-    fecha_actual = forms.DateField('%m/%d/%Y', widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    fecha_actual = forms.DateField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta:
         model = Paciente
         fields = ['nrohistoria', 'edadfur', 'null_edadfur', 'ultimofur', 'null_ultimofur', 'fecha_actual']
 
+
+class PacienteForm(forms.ModelForm):
+    class Meta:
+        model = Paciente
+        widgets = {
+            'fechanacimiento': SelectDateWidget(years=range(1960,2014)),
+        }
+    
 
 paquetes_total = Paquete.objects.all()
 seleccionado = []

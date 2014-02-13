@@ -1,0 +1,174 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block title %}Adminstrador - Crear Nuevo Usuario{% endblock %}
+{% block css %}
+{% endblock %}
+{% block menu %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/administrador/">SISTEMA DE RECETAS</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
+            <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
+            <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
+            <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
+            <li ><a href="/administrador/receta">RECETAS</b></a></li>
+            <li ><a href="/administrador/caja">CAJA</b></a></li>
+            <li ><a href="/administrador/cita">CITAS</b></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <form id="searchform">
+                <input type="text" placeholder="Buscar Paciente por DNI o NOMBRE" required>
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="row">
+            <h3 class="text-center"><strong>TITULO GENERAL CHEQUEO GINECOLOGICO</strong></h3>
+            <div class="col-md-10 col-md-offset-1">
+                <h3 class="text-left"><strong>DATOS GENERALES</strong></h3>
+                <hr>
+                <div class="col-md-5">
+                    <div class="col-md-4">
+                        
+                        <p><strong>Nombres</strong></p>
+                        <p><strong>Direccion</strong></p>
+                        <p><strong>Edad</strong></p>
+                        <p><strong>F.Nacimiento</strong></p>
+                        <p><strong>Telefono</strong></p>
+                    </div>
+                    <div class="col-md-8">
+                        <p>{{ examen.paciente.nombres }}</p>
+                        <p>{{ examen.paciente.direccion }}</p>
+                        <p>{{ examen.paciente.edad }}</P>
+                        <p>{{ examen.paciente.fechanacimiento }}</p>
+                        <p>{{ examen.paciente.telefono }}</p>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <p><strong>N° H.C.</strong></p>
+                        <p><strong>EDAD RUF</strong></p>
+                        <p><strong>RUF</strong></p>
+                        <p><strong>FECHA EMISION</strong></p>
+                    </div>
+                    <div class="col-md-6">
+                        <P>{{ examen.paciente.nrohistoria }}</P>
+                        <p>{% if examen.paciente.null_edadfur %}No recuerda{% else %}{{ examen.paciente.edadfur }}{% endif %}</p>
+                        <p>{% if examen.paciente.null_ultimofur %}No recuerda{% else %}{{ examen.paciente.ultimofur }}{% endif %}
+                        <p>{{ examen.fecha }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-10 col-md-offset-1">
+                <h3 class="text-left"><strong>ANTECEDENTES</strong></h3>
+            
+                <div class="col-md-2">
+                    <P><strong>Personales</strong></P>
+                    <P><strong>Familiares</strong></P>
+                    <P><strong>Cancer</strong></P>
+                    <P><strong>Otros</strong></P>
+                </div>
+                <div class="col-md-5">
+                    <p>{% if antecedente.personales %}{{antecedente.personales}}{% else %}No se derectaron{% endif %}</p>
+                    <p>{% if antecedente.familiares %}{{antecedente.familiares}}{% else %}No se derectaron{% endif %}</p>
+                    <p>{% if antecedente.cancer %}{{antecedente.cancer}}{% else %}No se derectaron{% endif %}</p>
+                    <p>{% if antecedente.otros %}{{antecedente.otros}}{% else %}No se derectaron{% endif %}</p>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="col-md-11 col-md-offset-1">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="myTab">
+                {% for paquete in examen.paquetes.all %}
+                <li id='li_{{ paquete.pk }}' {% if forloop.counter = 1 %}class='active'{% endif %}><a href="#div_{{ paquete.pk }}" data-toggle="tab">{{ paquete.nombre }}</a></li>
+                {% endfor %}
+            </ul>
+            <form class="form-horizontal" role="form" method='POST' action=''>
+            {% csrf_token %}
+            <div class="tab-content">
+                {% for paquete in examen.paquetes.all %}
+                <div class="tab-pane {% if forloop.counter = 1 %}active in{% endif %}" id='div_{{ paquete.pk }}'>
+                    <div class="row">
+                        {% for examen in paquete.tiposexamen.all %}
+                        <h4><strong>{{ examen.nombre }}</strong></h4>
+                        <hr>
+                        {% for item in examen.obtener_items %}
+                        {% if item.obtener_subitems %}
+                        <div class="form-group">
+                        <h5 class='col-xs-3 text-right'>{{ item.texto }}</h5>
+                        </div>
+                        {% for subitem in item.obtener_subitems %}
+                        <div class="form-group">
+                            <label  class="col-xs-4 control-label">{{ subitem.texto }}</label>
+                            <div class="col-xs-8">
+                                <textarea class="form-control" name='subitem_{{ subitem.pk }}'></textarea>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="form-group">
+                            <label  class="col-xs-3 control-label">{{ item.texto }}</label>
+                            <div class="col-xs-9">
+                                <textarea class="form-control" name='item_{{ item.pk }}'></textarea>
+                            </div>
+                        </div>
+                        {% endif%}
+                        {% endfor %}<hr>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <br><hr><hr>
+            <div class="row">
+                <h3><strong>IMPRESION DIAGNOSTICA</strong></h3>
+                <input type="text" class="form-control"  placeholder="Ingresa el diagnostico">
+                <br>
+                <input type="text" class="form-control"  placeholder="Ingresa el diagnostico">
+            </div>
+            <div class="row">
+                <h3><strong>RECOMENDACIONES</strong></h3>
+                <textarea class='form-control'></textarea>
+            </div>
+
+            <div class="row">
+                <h4><strong>Proxima cita</strong></h4>
+                    <input type="text" class="form-control"  placeholder="Lunes 12 de Noviemrbre del 2014">
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-1 col-md-offset-10">
+                        <button class='btn btn-primary '>Imprimir</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button class='btn btn-danger '>cancelar</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <hr>
+        </div>
+    </div>
+{% endblock %}
+{% block js_end %}
+{% endblock %}

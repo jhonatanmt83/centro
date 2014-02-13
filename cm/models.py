@@ -10,7 +10,7 @@ class Paciente(models.Model):
         verbose_name = ('Paciente')
         verbose_name_plural = ('Pacientes')
 
-    dni = models.CharField(max_length=8, verbose_name=u'DNI')
+    dni = models.CharField(max_length=8, verbose_name=u'DNI', unique=True)
     nombres = models.CharField(max_length=200, verbose_name=u'Nombres y Apellidos')
     direccion = models.CharField(max_length=200, verbose_name=u'Dirección')
     edad = models.IntegerField(verbose_name=u'Edad')
@@ -32,10 +32,10 @@ class Antecedente(models.Model):
         verbose_name = ('Antecedente')
         verbose_name_plural = ('Antecedentes')
 
-    personales = models.CharField(max_length=200, verbose_name=u'Personales')
-    familiares = models.CharField(max_length=200, verbose_name=u'Familiares')
-    cancer = models.CharField(max_length=200, verbose_name=u'Cancer')
-    otros = models.CharField(max_length=200, verbose_name=u'Otros')
+    personales = models.CharField(max_length=200, verbose_name=u'Personales', null=True, blank=True)
+    familiares = models.CharField(max_length=200, verbose_name=u'Familiares', null=True, blank=True)
+    cancer = models.CharField(max_length=200, verbose_name=u'Cancer', null=True, blank=True)
+    otros = models.CharField(max_length=200, verbose_name=u'Otros', null=True, blank=True)
     examen = models.ForeignKey('Examen')
 
     def __unicode__(self):
@@ -201,6 +201,9 @@ class TipoExamen(models.Model):
 
     def __unicode__(self):
         return self.nombre
+
+    def obtener_items(self):
+        return ItemExamen.objects.filter(tipoexamen=self)
     
 
 class ItemExamen(models.Model):
@@ -213,6 +216,9 @@ class ItemExamen(models.Model):
 
     def __unicode__(self):
         return self.texto
+
+    def obtener_subitems(self):
+        return SubItemExamen.objects.filter(item=self)
 
 
 class SubItemExamen(models.Model):
@@ -256,7 +262,7 @@ class Examen(models.Model):
     paquetes = models.ManyToManyField(Paquete, related_name='examen_paquetes', null=True, blank=True)
     fecha = models.DateField(auto_now_add=True)
     fecha_editado = models.DateField(auto_now=True)
-    recomendaciones = models.TextField()
+    recomendaciones = models.TextField(null=True, blank=True)
     terminado = models.BooleanField(default=False)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     tipos_examen = models.ManyToManyField(TipoExamen, related_name='examen_tiposexamen', null=True, blank=True)

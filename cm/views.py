@@ -5,9 +5,9 @@ from django.template import RequestContext
 from centro.decoratos import registrador_login, evaluador_login, administrador_login
 from django.http import HttpResponseRedirect, HttpResponse
 
-from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm
+from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm
 from django.contrib.auth.models import User, Group
-from cm.models import Perfil, Paquete
+from cm.models import Perfil, Paquete, Examen, Antecedente
 
 from django.contrib import messages
 
@@ -71,30 +71,52 @@ def nuevo_usuario(request):
 
 @administrador_login
 def nuevo_paciente(request):
+    paquetes = Paquete.objects.all()
+    fecha_actual = str(date.today().month) + "/" + str(date.today().day) + "/" +str(date.today().year)
     if request.method=='POST':
-        formulario = UserCreationForm(request.POST)
-        formulario_perfil = PerfilForm(request.POST)
-        if formulario.is_valid() and formulario_perfil.is_valid():
-            nuevo_usuario = User.objects.create_user(request.POST['username'], '', request.POST['password1'])
-            nuevo_usuario.save()
-            nuevo_perfil = Perfil(usuario=nuevo_usuario, dni=request.POST['dni'], nombres=request.POST['nombres'], profesion=request.POST['profesion'], direccion=request.POST['direccion'], sueldo=request.POST['sueldo'])
-            nuevo_perfil.save()
-            grupo_seleccionado = Group.objects.get(pk=request.POST['rol'])
-            nuevo_usuario.groups.add(grupo_seleccionado)
-            messages.success(request, 'Nuevo usuario %s creado'% (request.POST['username']))
-            formulario = UserCreationForm
-            formulario_perfil = PerfilForm
+        formulario1 = PacienteForm1(request.POST)
+        formulario2 = PacienteForm2(request.POST)
+        formulario_paciente = PacienteForm(request.POST)
+        paquetesform = PaquetesSeleccionForm(request.POST)
+        antecedentesform = AntecedenteForm(request.POST)
+        if formulario_paciente.is_valid() and antecedentesform.is_valid() and paquetesform.is_valid():
+            paciente = formulario_paciente.save()
+            lista_paquetes = []
+            lista_seleccionados = paquetesform.cleaned_data.get('paquetes')
+            for elemento in lista_seleccionados:
+                lista_paquetes.append(Paquete.objects.get(pk=int(elemento)))
+            examen = Examen(paciente=paciente, recomendaciones='', terminado=False, precio=request.POST['precio_total'])
+            examen.save()
+            examen.paquetes = lista_paquetes
+            instancia = Antecedente(examen=examen)
+            antecedente = AntecedenteForm(request.POST, instance=instancia)
+            antecedente.save()
+            messages.success(request, 'Nuevo paciente %s creado'% (request.POST['nombres']))
+            # Nuevos formularios
+            formulario1 = PacienteForm1
+            formulario2 = PacienteForm2(initial={'fecha_actual': fecha_actual})
+            paquetesform = PaquetesSeleccionForm
+            antecedentesform = AntecedenteForm
     else:
         formulario1 = PacienteForm1
-        formulario2 = PacienteForm2(initial={'fecha_actual': date.today()})
+        formulario2 = PacienteForm2(initial={'fecha_actual': fecha_actual})
         paquetesform = PaquetesSeleccionForm
         antecedentesform = AntecedenteForm
-        paquetes = Paquete.objects.all()
-        print (dir(paquetes[0].tiposexamen.values))
-        print paquetes[0].tiposexamen.values
     return render_to_response('administrador/nuevo_paciente.html', {'formulario1': formulario1, 'formulario2': formulario2, 'paquetesform': paquetesform, 'antecedentesform': antecedentesform, 'paquetes': paquetes}, context_instance=RequestContext(request))
 
 
+@administrador_login
+def examen(request, codigo):
+    examen = Examen.objects.get(pk=codigo)
+    antecedente = Antecedente.objects.filter(examen=examen)[0]
+    if request.method=='POST':
+        pass
+    else:
+        pass
+    return render_to_response('administrador/examen.html', {'antecedente':antecedente, 'examen':examen}, context_instance=RequestContext(request))
+
+
+# Function json
 def precio_paquete(request, codigo):
     """Devuelve el precio correspondiente al paquete"""
     paquete = Paquete.objects.get(pk=int(codigo))

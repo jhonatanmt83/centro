@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^administrador/$', 'cm.views.administrador', name='administrador'),
     url(r'^administrador/usuario$', 'cm.views.nuevo_usuario', name='nuevo_usuario'),
     url(r'^administrador/paciente$', 'cm.views.nuevo_paciente', name='nuevo_paciente'),
+    url(r'^administrador/examen/(?P<codigo>\d+)/$', 'cm.views.examen', name='examen'),
 
     url(r'^precio/paquete/(?P<codigo>\d+)/$', 'cm.views.precio_paquete', name='precio_paquete'),
 

@@ -48,42 +48,30 @@
                             {% bootstrap_form formulario2  layout="horizontal" %}
                         </div>
                     </div>
-
                     <div class="col-xs-12">
-                        
                         <div class="col-xs-6 col-xs-offset-1">
                             <h4><strong>PAQUETE DE EXAMENES</strong></h4>                            
                             <hr>
                             {% bootstrap_form paquetesform  layout="horizontal" %}                 
                         </div>
-
-
                         <div class="col-xs-5">
                             <h4><strong>COSTO DE EXAMENES</strong></h4>
                             <hr>
                             <div class="form-group">
                                 <label  class="col-sm-4 control-label">MONTO S/.</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control"  placeholder="00.00" value='00.00' id='precio_total'>
+                                    <input type="text" class="form-control"  placeholder="00.00" value='00.00' id='precio_total' name='precio_total'>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
-
                     <div class="col-xs-12">
-                        
                         <div class="col-xs-6 col-xs-offset-1">
                             <h4><strong>ANTECEDENTES PERSONALES</strong></h4>
-                            
                             <hr>
                             {% bootstrap_form antecedentesform  layout="horizontal" %}
-                            
                         </div>
-
                         <div class="col-xs-2">
-                            
-                            
                         </div>
                         <div class="col-xs-2">
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -102,7 +90,7 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" id="myTab">
                     {% for paquete in paquetes %}
-                    <li id='li_{{ paquete.pk }}' class='oculto'><a href="#div_{{ paquete.pk }}" data-toggle="tab">{{ paquete.nombre }}</a></li>
+                    <li id='li_{{ paquete.pk }}'><a href="#div_{{ paquete.pk }}" data-toggle="tab">{{ paquete.nombre }}</a></li>
                     {% endfor %}
                 </ul>
                 <div class="tab-content">
@@ -156,8 +144,6 @@
                 </div>
                 -->
                 <hr>
-                
-                
             </div>
         </div>
     </div>
@@ -166,6 +152,9 @@
 <script type="text/javascript">
     {% for paque in paquetes %}
     $('#li_{{paque.pk}}').hide();
+    if($("input[value='{{paque.pk}}']").is(':checked')){
+        $('#precio_total').val(parseFloat($('#precio_total').val())+ parseFloat({{ paque.precio_total }}));
+    }
     {% endfor %}
     $("input[name='paquetes']").click(function() {
         var id_paquete = this.value;
@@ -180,8 +169,6 @@
                     $('#precio_total').val(precio_ant - precio_add);
                     $('#li_'+id_paquete).hide();
                 }
-               
-
             });
         });
     });
