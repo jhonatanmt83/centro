@@ -16,7 +16,7 @@ class Paciente(models.Model):
     edad = models.IntegerField(verbose_name=u'Edad')
     fechanacimiento = models.DateField(verbose_name=u'Fecha de Nacimiento')
     telefono = models.CharField(max_length=9, verbose_name=u'Teléfono')
-    nrohistoria = models.CharField(max_length=6, verbose_name=u'N° de Historia Clínica')
+    nrohistoria = models.CharField(max_length=6, verbose_name=u'N° de Historia Clínica', unique=True)
     edadfur = models.DateField(verbose_name=u'Edad FUR', null=True, blank=True)
     null_edadfur = models.BooleanField(verbose_name=u'No recuerda')
     ultimofur = models.DateField(verbose_name=u'FUR', null=True, blank=True)
