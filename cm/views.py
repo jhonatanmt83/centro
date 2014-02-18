@@ -110,13 +110,6 @@ def examen(request, codigo):
     examen = Examen.objects.get(pk=codigo)
     antecedente = Antecedente.objects.filter(examen=examen)[0]
     if request.method=='POST':
-        # ResultadoItem, ResultadoSubItem, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita
-        # subitem_X
-        # item_X
-        # diagnostico_X
-        # recomendaciones
-        # proxima_cita
-        # num_diagnosticos
         for paquete in examen.paquetes.all():
             for tipo_examen in paquete.tiposexamen.all():
                 items = tipo_examen.obtener_items()
