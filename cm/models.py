@@ -48,6 +48,8 @@ class UltimaCita(models.Model):
         verbose_name_plural = ('UltimasCitas')
 
     paciente = models.ForeignKey(Paciente)
+
+
     proximo = models.DateField(verbose_name=u'Próxima cita')
     anterior = models.DateField(verbose_name=u'Última cita')
 
@@ -183,7 +185,11 @@ class Egreso(models.Model):
     pagouotro = models.BooleanField('Tipo de Pago')
 
     def __unicode__(self):
-        return self.usuario
+        return str(self.usuario)
+    def obtenerdni(self):
+        dni = Perfil.objects.filter(usuario = self.usuario)[0].dni
+        return dni
+
 
 
 #Para la parte de los exmanes
@@ -269,6 +275,9 @@ class Examen(models.Model):
 
     def __unicode__(self):
         return str(self.paciente)
+    def obtnerpaquete(self):
+        nombpaquete=self.paquetes.all()[0]
+        return nombpaquete.nombre
 
 
 class ImpresionDiagnostico(models.Model):

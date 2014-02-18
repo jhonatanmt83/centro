@@ -1,0 +1,131 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block title %}Adminstrador - Crear Nuevo Usuario{% endblock %}
+{% block css %}
+{% endblock %}
+{% block menu %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/administrador/">SISTEMA DE RECETAS</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
+            <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
+            <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
+            <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
+            <li ><a href="/administrador/receta">RECETAS</b></a></li>
+            <li ><a href="/administrador/caja">CAJA</b></a></li>
+            <li ><a href="/administrador/cita">CITAS</b></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <h3 class='text-center'><strong>INGRESOS</strong> DEL DIA</h3>
+            <div class="col-md-12">
+                
+                <div class="col-md-9 col-md-offset-1">
+                    <table class='table table-bordered table-striped table-hover'>
+                        <thead class='panel panel-color'>
+                            <tr>
+                                <th>Nro HIstoria</th>
+                                <th>NOMBRES Y APELLIDOS</th>
+                                <th>TIPO DE EXAMEN</th>
+                                <th>FECHA</th>
+                                <th>MONTO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for valor in examenes%}
+                                <tr>
+                                    <td>{{valor.paciente.nrohistoria}}</td>
+                                    <td>{{valor.paciente}}</td>
+                                    <td>{{valor.obtnerpaquete}}</td>
+                                    <td>{{valor.fecha}}</td>
+                                    <td>{{valor.precio}}</td>
+
+                                </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+            <div class="col-xs-4 col-xs-offset-8">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                            <label  class="col-sm-2 control-label">TOTAL</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control"  placeholder="Ingresa DNI">
+                            </div>
+                    </div>
+                </form>
+                
+            </div>
+            <hr>
+            <h3 class='text-center'><strong>EGRESOS</strong> DEL DIA</h3>
+            <div class="col-md-12">
+                
+                <div class="col-md-9 col-md-offset-1">
+                    <table class='table table-bordered table-striped table-hover'>
+                        <thead class='panel panel-color'>
+                            <tr>
+                                <th>DNI</th>
+                                <th>NOMBRES Y APELLIDOS</th>
+                                <th>DESCRIPCION</th>
+                                <th>FECHA</th>
+                                <th>MONTO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for valor in egreso%}
+                                <tr>
+                                    <td>{{valor.dni}}</td>
+                                    <td>{{valor.usuario}}</td>
+                                    <td>{{valor.descripcion}}</td>
+                                    <td>{{valor.fecha}}</td>
+                                    <td>{{valor.monto}}</td>
+
+                                </tr>
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+            <div class="col-xs-4 col-xs-offset-8">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                            <label  class="col-sm-2 control-label">TOTAL</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control"  placeholder="Ingresa DNI">
+                            </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-xs-2 col-xs-offset-6">
+            <button type="submit" class="btn btn-primary btn-lg">Imprimir</button>
+        </div>
+
+        <hr>
+
+        
+            
+    </div>
+{% endblock %}
+{% block js_end %}
+{% endblock %}
