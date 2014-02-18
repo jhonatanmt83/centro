@@ -25,7 +25,10 @@
       "Scheme"
     ];
     $( "#tags" ).autocomplete({
-      source: availableTags
+      source: availableTags.on('click',function(){
+        
+      })
     });
   });
+
  
