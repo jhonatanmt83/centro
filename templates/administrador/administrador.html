@@ -8,88 +8,10 @@
 {% block contenido %}
 <div class="container grup-container">
     <div class="row">
-    <div class="col-xs-2">
-        <div class="view view-sixth">
-            <img src="{% static 'img/paciente1.jpg' %}">
-            <h3>REGISTRO PACIENTES</h3>
-            <div class="mask">
-                <h2>REGISTRAR PACIENTE</h2>
-                <p>guardar pacientes en la base de datos</p>
-                <a href="paciente.html" class="info" target="_blank">ingresar</a>
-            </div>
-        </div>
-        
-    </div>
-
-    <div class="col-xs-2">
-        
-            <div class="view view-sixth">
-                <img src="{% static 'img/examn.jpg' %}">
-                <div class="mask">
-                    <h2>EXAMENES</h2>
-                    <p>tomara distintos examenes segun sea lo necesario</p>
-                    <a href="examen.html" class="info" target="_blank">ingresar</a>
-                </div>
-            </div>
-        
-    </div>
-
-    <div class="col-xs-2">
-        
-            <div class="view view-sixth">
-                 <img src="{% static 'img/recetas.jpg' %}">
-                <div class="mask">
-                    <h2>RECETA</h2>
-                    <p>Permite realizar recetas y modificaciones</p>
-                    <a href="registro.html" class="info" target="_blank">ingresar</a>
-                </div>
-            </div>
-        
-    </div>
-
-    <div class="col-xs-2">
-        
-            <div class="view view-sixth">
-             <img src="{% static 'img/cajadinero.jpg' %}">
-                <div class="mask">
-                    <h2>CAJA</h2>
-                    <p>Reporte de ingresos del dia</p>
-                    <a href="caja.html" class="info" target="_blank">ingresar</a>citas.html
-                </div>
-            </div>
-        
-    </div>
-
-    <div class="col-xs-2">        
-            <div class="view view-sixth">
-             <img src="{% static 'img/historialclini.jpg' %}">
-                <div class="mask">
-                    <h2>HISTORIA CLINICA</h2>
-                    <p>Veremos y modificaremos el historial clinico</p>
-                    <a href="historia.html" class="info" target="_blank">ingresar</a>
-                </div>
-            </div>
-        
-    </div>
-
-    <div class="col-xs-2">
-        
-            <div class="view view-sixth">
-             <img src="{% static 'img/citas.jpg' %}">
-                <div class="mask">
-                    <h2>CITAS PROGRAMADAS</h2>
-                    <p>veras todoas la citas programadas para el dia de hoy</p>
-                    <a href="citas.html" class="info" target="_blank">ingresar</a>
-                </div>
-            </div>
-        
-    </div>
-    <div class="col-xs-12 titulo">
-        <P><strong> CLINICA CAYETANO HEREDIA</strong> </P>      
-    </div>
 
 
-    <div class="col-xs-4">
+
+    <div class="col-xs-3">
         <ul class="ch-grid">
             <li>
                 <div class="ch-item ch-img-1">              
@@ -97,7 +19,7 @@
                         <div class="ch-info">
                             <div class="ch-info-front ch-img-1"></div>
                             <div class="ch-info-back">
-                                <h3>NUEVO USUARIO</h3>
+                                <h3 class="text-center"><a href="">NUEVO USUARIO</a></h3>
                                 <p>nuevo trabajador <a href="usuario.html">INGRESAR</a></p>
                             </div>  
                         </div>
@@ -107,7 +29,7 @@
         </ul>
     </div>
 
-    <div class="col-xs-4">
+    <div class="col-xs-3">
         <ul class="ch-grid">
             <li>
                 <div class="ch-item ch-img-2">              
@@ -115,7 +37,7 @@
                         <div class="ch-info">
                             <div class="ch-info-front ch-img-2"></div>
                             <div class="ch-info-back">
-                                <h3>BUSCAR HISTORIAL</h3>
+                                <h3 class="text-center"><a href="#">BUSCAR HISTORIAL</a></h3>
                                 <p>mostrara el numero de historia clinica<a href="#">INGRESAR</a></p>
                             </div>  
                         </div>
@@ -125,7 +47,7 @@
         </ul>
     </div>
     
-    <div class="col-xs-4">
+    <div class="col-xs-3">
         <ul class="ch-grid">
             <li>
                 <div class="ch-item ch-img-3">              
@@ -133,7 +55,7 @@
                         <div class="ch-info">
                             <div class="ch-info-front ch-img-3"></div>
                             <div class="ch-info-back">
-                                <h3>BUSCAR RECETA</h3>
+                                <h3 class="text-center"><a href="">BUSCAR RECETA</a></h3>
                                 <p>buscara las recetas para imprimirlas<a href="recetas.html">INGRESAR</a></p>
                             </div>  
                         </div>
@@ -142,7 +64,103 @@
             </li>
         </ul>
     </div>
-</div>
+
+    <div class="col-xs-3">
+        <ul class="ch-grid">
+            <li>
+                <div class="ch-item ch-img-3">              
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-3"></div>
+                            <div class="ch-info-back">
+                                <h3 class="text-center"><a href="">BUSCAR RECETA</a></h3>
+                                <p>buscara las recetas para imprimirlas<a href="recetas.html">INGRESAR</a></p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    
+    <div class="col-xs-12 titulo">
+        <P><strong> CLINICA CAYETANO HEREDIA</strong> </P>      
+    </div>
+
+
+
+    <div class="col-xs-3">
+        <ul class="ch-grid">
+            <li>
+                <div class="ch-item ch-img-3">              
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-3"></div>
+                            <div class="ch-info-back">
+                                <h3 class="text-center"><a href="">BUSCAR RECETA</a></h3>
+                                <p>buscara las recetas para imprimirlas<a href="recetas.html">INGRESAR</a></p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+        <div class="col-xs-3">
+        <ul class="ch-grid">
+            <li>
+                <div class="ch-item ch-img-3">              
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-3"></div>
+                            <div class="ch-info-back">
+                                <h3 class="text-center"><a href="">BUSCAR RECETA</a></h3>
+                                <p>buscara las recetas para imprimirlas<a href="recetas.html">INGRESAR</a></p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+        <div class="col-xs-3">
+        <ul class="ch-grid">
+            <li>
+                <div class="ch-item ch-img-3">              
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-3"></div>
+                            <div class="ch-info-back">
+                                <h3 class="text-center"><a href="">BUSCAR RECETA</a></h3>
+                                <p>buscara las recetas para imprimirlas<a href="recetas.html">INGRESAR</a></p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-xs-3">
+        <ul class="ch-grid">
+            <li>
+                <div class="ch-item ch-img-3">              
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-3"></div>
+                            <div class="ch-info-back">
+                                <h3 class="text-center"><a href="">BUSCAR RECETA</a></h3>
+                                <p>buscara las recetas para imprimirlas<a href="recetas.html">INGRESAR</a></p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
 {% endblock %}
 {% block js_end %}
