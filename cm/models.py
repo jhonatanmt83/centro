@@ -280,7 +280,7 @@ class ImpresionDiagnostico(models.Model):
     diagnostico = models.ManyToManyField(DiagnosticoExamen, related_name='diagnosticos_impresion')
 
     def __unicode__(self):
-        return self.diagnostico
+        return str(self.examen)
 
 
 class ResultadoItem(models.Model):
