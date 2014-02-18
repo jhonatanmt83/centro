@@ -4,71 +4,146 @@
 {% block css %}
 {% endblock %}
 {% block menu %}
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/administrador/">SISTEMA DE RECETAS</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
-            <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
-            <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
-            <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
-            <li ><a href="/administrador/receta">RECETAS</b></a></li>
-            <li ><a href="/administrador/caja">CAJA</b></a></li>
-            <li ><a href="/administrador/cita">CITAS</b></a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
 {% endblock %}
 {% block contenido %}
-    <div class="container">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class='row-fluid img-rounded'>
-                    
-            <div class="col-md-12">
-                <div class="col-md-3"><button href=''class="btn btn-lg btn-block btn-info"><a href="/administrador/usuario">+ USUARIO</a> </button></div>
-                <div class="col-md-3"><button href=''class="btn btn-lg btn-block btn-info"><a href="/administrador/paciente">+ PACIENTE</a> </button></div>
-                <div class="col-md-3"><button href=''class="btn btn-lg btn-block btn-info"><a href="/administrador/examen">+ EXAMEN</a> </button></div>
-                <div class="col-md-3"><button class="btn btn-lg btn-block btn-info"> <a href="/administrador/receta">+ RECETA</a></button></div>
-                
+<div class="container grup-container">
+    <div class="row">
+    <div class="col-xs-2">
+        <div class="view view-sixth">
+            <img src="{% static 'img/paciente1.jpg' %}">
+            <h3>REGISTRO PACIENTES</h3>
+            <div class="mask">
+                <h2>REGISTRAR PACIENTE</h2>
+                <p>guardar pacientes en la base de datos</p>
+                <a href="paciente.html" class="info" target="_blank">ingresar</a>
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h1 class='text-center'><strong>CLINICA CAYETANO HEREDIA</strong></h1>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <div class="col-md-12">
-                <div class="col-md-4"><button class="btn btn-lg btn-block btn-info"><a href="/administrador/caja">+ CAJA</a></button></div>
-                <div class="col-md-4"><button class="btn btn-lg btn-block btn-info"><a href="/administrador/historia">HISTORIA CLINICA</a> </button></div>
-                <div class="col-md-4"><button class="btn btn-lg btn-block btn-info"><a href="/administrador/cita">CITAS PROGRAMADAS</a></button></div>
-            </div>
-                
-                
-            
         </div>
+        
     </div>
+
+    <div class="col-xs-2">
+        
+            <div class="view view-sixth">
+                <img src="{% static 'img/examn.jpg' %}">
+                <div class="mask">
+                    <h2>EXAMENES</h2>
+                    <p>tomara distintos examenes segun sea lo necesario</p>
+                    <a href="examen.html" class="info" target="_blank">ingresar</a>
+                </div>
+            </div>
+        
+    </div>
+
+    <div class="col-xs-2">
+        
+            <div class="view view-sixth">
+                 <img src="{% static 'img/recetas.jpg' %}">
+                <div class="mask">
+                    <h2>RECETA</h2>
+                    <p>Permite realizar recetas y modificaciones</p>
+                    <a href="registro.html" class="info" target="_blank">ingresar</a>
+                </div>
+            </div>
+        
+    </div>
+
+    <div class="col-xs-2">
+        
+            <div class="view view-sixth">
+             <img src="{% static 'img/cajadinero.jpg' %}">
+                <div class="mask">
+                    <h2>CAJA</h2>
+                    <p>Reporte de ingresos del dia</p>
+                    <a href="caja.html" class="info" target="_blank">ingresar</a>citas.html
+                </div>
+            </div>
+        
+    </div>
+
+    <div class="col-xs-2">        
+            <div class="view view-sixth">
+             <img src="{% static 'img/historialclini.jpg' %}">
+                <div class="mask">
+                    <h2>HISTORIA CLINICA</h2>
+                    <p>Veremos y modificaremos el historial clinico</p>
+                    <a href="historia.html" class="info" target="_blank">ingresar</a>
+                </div>
+            </div>
+        
+    </div>
+
+    <div class="col-xs-2">
+        
+            <div class="view view-sixth">
+             <img src="{% static 'img/citas.jpg' %}">
+                <div class="mask">
+                    <h2>CITAS PROGRAMADAS</h2>
+                    <p>veras todoas la citas programadas para el dia de hoy</p>
+                    <a href="citas.html" class="info" target="_blank">ingresar</a>
+                </div>
+            </div>
+        
+    </div>
+    <div class="col-xs-12 titulo">
+        <P><strong> CLINICA CAYETANO HEREDIA</strong> </P>      
+    </div>
+
+
+    <div class="col-xs-4">
+        <ul class="ch-grid">
+            <li>
+                <div class="ch-item ch-img-1">              
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-1"></div>
+                            <div class="ch-info-back">
+                                <h3>NUEVO USUARIO</h3>
+                                <p>nuevo trabajador <a href="usuario.html">INGRESAR</a></p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-xs-4">
+        <ul class="ch-grid">
+            <li>
+                <div class="ch-item ch-img-2">              
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-2"></div>
+                            <div class="ch-info-back">
+                                <h3>BUSCAR HISTORIAL</h3>
+                                <p>mostrara el numero de historia clinica<a href="#">INGRESAR</a></p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="col-xs-4">
+        <ul class="ch-grid">
+            <li>
+                <div class="ch-item ch-img-3">              
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-3"></div>
+                            <div class="ch-info-back">
+                                <h3>BUSCAR RECETA</h3>
+                                <p>buscara las recetas para imprimirlas<a href="recetas.html">INGRESAR</a></p>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
 {% endblock %}
 {% block js_end %}
 {% endblock %}
