@@ -1,0 +1,90 @@
+body{
+  background-image: url(../img/body.jpg) !important;
+}
+
+.grup-container{
+	background: rgba(0, 0, 0, 0.53);
+	border-radius: 12px;
+	padding-top: 12px;
+
+}
+.navbar-default{
+	border: solid 0px;
+	background: rgba(21,173,7,1);
+	background: -moz-linear-gradient(top, rgba(21,173,7,1) 0%, rgba(18,61,2,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(21,173,7,1)), color-stop(100%, rgba(18,61,2,1)));
+	background: -webkit-linear-gradient(top, rgba(21,173,7,1) 0%, rgba(18,61,2,1) 100%);
+	background: -o-linear-gradient(top, rgba(21,173,7,1) 0%, rgba(18,61,2,1) 100%);
+	background: -ms-linear-gradient(top, rgba(21,173,7,1) 0%, rgba(18,61,2,1) 100%);
+	background: linear-gradient(to bottom, rgba(21,173,7,1) 0%, rgba(18,61,2,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#15ad07', endColorstr='#123d02', GradientType=0 );
+}
+.navbar-default .navbar-nav > li > a {
+	color: #FFFFFF;
+	font-weight: 900;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+color: #FFE000;
+background-color: rgba(10, 102, 6, 0.94);
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: #F0B00E;
+background-color: #144903;
+}
+.navbar-default .navbar-brand {
+	color: #FFCC00;
+	font-weight: 900;
+}
+.titulosamarillo{
+	color: yellow !important;
+}
+.for-color{
+	color: white;
+	font-size: 16px;
+	font-family: sans-border: solid 0px;serif;
+}
+
+.usuario-titulo{
+	color: rgb(89, 175, 21) !important;
+}
+.boton-guardar{
+	background: rgb(0, 172, 0);
+	width: 223px;
+	height: 50px;
+	border-radius: 12px;
+	border: solid 5px rgba(255, 255, 255, 0.91);
+	font-weight: 900;
+	color: white;
+}
+
+.boton-guardar:hover{
+	background: rgb(6, 204, 6);
+}
+.datos-establ{
+	color: rgb(255, 214, 0);
+	font-size: 16px;
+}
+.titulo-examen{
+	color: rgb(2, 245, 50) !important;
+}
+
+.table tbody{
+	background: white !important;
+}
+.form-group label{
+	font-size: 17px !important;
+	color: rgb(20, 255, 0)!important;
+}
+.boton-imprimir{
+	background: orange;
+	width: 223px;
+	height: 50px;
+	border-radius: 12px;
+	border: solid 5px rgba(255, 255, 255, 0.91);
+	font-weight: 900;
+	color: white;
+}
+.boton-imprimir:hover{
+	background: rgb(233, 119, 15)
+}
