@@ -126,7 +126,9 @@
                         <div class="form-group">
                             <label  class="col-xs-4 control-label">{{ subitem.texto }}</label>
                             <div class="col-xs-8">
-                                <textarea class="form-control" name='subitem_{{ subitem.pk }}'></textarea>
+                                <div class='col-xs-6'>
+                                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_subitem_{{subitem.pk}}">Diagnostico</button>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
@@ -134,7 +136,9 @@
                         <div class="form-group">
                             <label  class="col-xs-3 control-label">{{ item.texto }}</label>
                             <div class="col-xs-9">
-                                <textarea class="form-control" name='item_{{ item.pk }}'></textarea>
+                                <div class='col-xs-6'>
+                                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_item_{{item.pk}}">Diagnostico</button>
+                                </div>
                             </div>
                         </div>
                         {% endif%}
@@ -177,6 +181,77 @@
             <hr>
         </div>
     </div>
+    <!-- Modals para la seleccion de las opciones -->
+    {% for paquete in examen.paquetes.all %}
+        {% for tipo_examen in paquete.tiposexamen.all %}
+            {% for item in tipo_examen.obtener_items %}
+                {% if item.obtener_subitems %}
+                    {% for subitem in item.obtener_subitems %}
+    <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id='modal_subitem_{{ subitem.pk }}'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4>Agrega o Selecciona un NUEVO DIAGNOSTICO</h4>
+                </div>
+                <div class="modal-body">
+                    <div id='div_subitem_{{subitem.pk}}'>
+                    {% for opcion in subitem.obtener_opciones %}
+                        <label>
+                        <input type="checkbox" name='opcion_subitem_{{ opcion.pk }}' value='{{ opcion.pk }}'> {{ opcion.texto }}
+                        </label>
+                    {% endfor %}
+                    </div>
+                    <form class="form-search navbar-right" method="get" id="s" action="/">
+                        <div class="input-append">
+                            <input type="text" class="input-medium search-query" name="s" placeholder="Agrega un nuevo diagnostico" value="" id='add_opcion_subitem_{{subitem.pk}}'>
+                            <button class='btn btn-success'type="submit" class="add-on" onclick="AgregaOpcionSubItem('{{ subitem.pk }}', 'add_opcion_subitem_{{subitem.pk}}')"> + Nuevo Diagnostico</button>
+                        </div>
+                    </form>
+                </div>
+                <hr>
+                <div class="modal-footer">
+                    <button class='btn btn-danger'>Guardar</button><button class='btn btn-danger'>Cancelar</button>
+                </div> 
+            </div>
+        </div>
+    </div>
+                    {% endfor %}
+                {% else %}
+    <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id='modal_item_{{ item.pk }}'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4>Agrega o Selecciona un NUEVO DIAGNOSTICO</h4>
+                </div>
+                <div class="modal-body">
+                    <div id='div_item_{{ item.pk }}'>
+                    {% for opcion in item.obtener_opciones %}
+                        <label>
+                        <input type="checkbox" name='opcion_item_{{ opcion.pk }}' value='{{ opcion.pk }}'> {{ opcion.texto }}
+                        </label>
+                    {% endfor %}
+                    </div>
+                    <form class="form-search navbar-right" method="get" id="s" action="/">
+                        <div class="input-append">
+                            <input type="text" class="input-medium search-query" name="s" placeholder="Agrega un nuevo diagnostico" value="" id='add_opcion_item_{{item.pk}}'>
+                            <button class='btn btn-success'type="submit" class="add-on" onclick="AgregaOpcionItem('{{ item.pk }}', 'add_opcion_item_{{item.pk}}')"> + Nuevo Diagnostico</button>
+                        </div>
+                    </form>
+                </div>
+                <hr>
+                <div class="modal-footer">
+                    <button class='btn btn-danger'>Guardar</button><button class='btn btn-danger'>Cancelar</button>
+                </div> 
+            </div>
+        </div>
+    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+
 {% endblock %}
 {% block js_end %}
 <script type="text/javascript">

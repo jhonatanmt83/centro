@@ -25,7 +25,7 @@
       "Scheme"
     ];
     $( "#tags" ).autocomplete({
-      
+      source: availableTags
     });
   });
 
