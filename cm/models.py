@@ -183,7 +183,12 @@ class Egreso(models.Model):
     pagouotro = models.BooleanField('Tipo de Pago')
 
     def __unicode__(self):
-        return self.usuario
+        return str(self.usuario)
+
+    def obtenerdni(self):
+        dni = Perfil.objects.filter(usuario = self.usuario)[0].dni
+        return dni
+
 
 
 #Para la parte de los exmanes
@@ -194,6 +199,7 @@ class TipoExamen(models.Model):
         verbose_name_plural = ('Tipos de Examenes')
 
     nombre = models.CharField(max_length=100, verbose_name=u'Nombre')
+    subtitulo = models.CharField(max_length=200)
     descripcion = models.TextField(verbose_name=u'Descripción')
     fechacreacion = models.DateField(auto_now_add=True)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
@@ -202,41 +208,41 @@ class TipoExamen(models.Model):
     def __unicode__(self):
         return self.nombre
 
-    def obtener_items(self):
-        return ItemExamen.objects.filter(tipoexamen=self)
+#     def obtener_items(self):
+#         return ItemExamen.objects.filter(tipoexamen=self)
     
 
-class ItemExamen(models.Model):
-    class Meta:
-        verbose_name = ('ItemExamen')
-        verbose_name_plural = ('ItemsExamenes')
+# class ItemExamen(models.Model):
+#     class Meta:
+#         verbose_name = ('ItemExamen')
+#         verbose_name_plural = ('ItemsExamenes')
 
-    texto = models.CharField(max_length=100, verbose_name=u'Texto')
-    tipoexamen = models.ForeignKey(TipoExamen)
+#     texto = models.CharField(max_length=100, verbose_name=u'Texto')
+#     tipoexamen = models.ForeignKey(TipoExamen)
 
-    def __unicode__(self):
-        return self.texto
+#     def __unicode__(self):
+#         return self.texto
 
-    def obtener_subitems(self):
-        return SubItemExamen.objects.filter(item=self)
+#     def obtener_subitems(self):
+#         return SubItemExamen.objects.filter(item=self)
 
-    def obtener_opciones(self):
-        return OpcionItem.objects.filter(item=self)
+#     def obtener_opciones(self):
+#         return OpcionItem.objects.filter(item=self)
 
 
-class SubItemExamen(models.Model):
-    class Meta:
-        verbose_name = ('SubItemExamen')
-        verbose_name_plural = ('SubItemsExamenes')
+# class SubItemExamen(models.Model):
+#     class Meta:
+#         verbose_name = ('SubItemExamen')
+#         verbose_name_plural = ('SubItemsExamenes')
 
-    texto = models.CharField(max_length=100, verbose_name=u'Texto')
-    item = models.ForeignKey(ItemExamen)
+#     texto = models.CharField(max_length=100, verbose_name=u'Texto')
+#     item = models.ForeignKey(ItemExamen)
 
-    def __unicode__(self):
-        return self.texto
+#     def __unicode__(self):
+#         return self.texto
 
-    def obtener_opciones(self):
-        return OpcionSubItem.objects.filter(subitem=self)
+#     def obtener_opciones(self):
+#         return OpcionSubItem.objects.filter(subitem=self)
 
 
 class Paquete(models.Model):
@@ -276,6 +282,10 @@ class Examen(models.Model):
     def __unicode__(self):
         return str(self.paciente)
 
+    def obtnerpaquete(self):
+        nombpaquete=self.paquetes.all()[0]
+        return nombpaquete.nombre
+
 
 class ImpresionDiagnostico(models.Model):
     class Meta:
@@ -289,54 +299,54 @@ class ImpresionDiagnostico(models.Model):
         return str(self.examen)
 
 
-class OpcionItem(models.Model):
-    class Meta:
-        verbose_name = ('OpcionItem')
-        verbose_name_plural = ('OpcionItems')
+# class OpcionItem(models.Model):
+#     class Meta:
+#         verbose_name = ('OpcionItem')
+#         verbose_name_plural = ('OpcionItems')
 
-    item = models.ForeignKey(ItemExamen)
-    texto = models.CharField(max_length=200)
+#     item = models.ForeignKey(ItemExamen)
+#     texto = models.CharField(max_length=200)
 
-    def __unicode__(self):
-        return self.texto
+#     def __unicode__(self):
+#         return self.texto
 
 
-class OpcionSubItem(models.Model):
-    class Meta:
-        verbose_name = ('OpcionSubItem')
-        verbose_name_plural = ('OpcionSubItems')
+# class OpcionSubItem(models.Model):
+#     class Meta:
+#         verbose_name = ('OpcionSubItem')
+#         verbose_name_plural = ('OpcionSubItems')
 
-    subitem = models.ForeignKey(SubItemExamen)
-    texto = models.CharField(max_length=200)
+#     subitem = models.ForeignKey(SubItemExamen)
+#     texto = models.CharField(max_length=200)
 
-    def __unicode__(self):
-        return self.texto
+#     def __unicode__(self):
+#         return self.texto
 
     
-class ResultadoItem(models.Model):
-    class Meta:
-        verbose_name = ('ResultadoItem')
-        verbose_name_plural = ('Resultados Items')
+# class ResultadoItem(models.Model):
+#     class Meta:
+#         verbose_name = ('ResultadoItem')
+#         verbose_name_plural = ('Resultados Items')
 
-    item = models.ForeignKey(ItemExamen, related_name='item_resultadoitem')
-    examen= models.ForeignKey(Examen, related_name='examen_resultadoitem')
-    seleccionados = models.ManyToManyField(OpcionItem, related_name='seleccionados_resultadoitem')
+#     item = models.ForeignKey(ItemExamen, related_name='item_resultadoitem')
+#     examen= models.ForeignKey(Examen, related_name='examen_resultadoitem')
+#     seleccionados = models.ManyToManyField(OpcionItem, related_name='seleccionados_resultadoitem')
 
-    def __unicode__(self):
-        return self.texto
+#     def __unicode__(self):
+#         return self.texto
 
 
-class ResultadoSubItem(models.Model):
-    class Meta:
-        verbose_name = ('ResultadoSubItem')
-        verbose_name_plural = ('Resultados SubItems')
+# class ResultadoSubItem(models.Model):
+#     class Meta:
+#         verbose_name = ('ResultadoSubItem')
+#         verbose_name_plural = ('Resultados SubItems')
 
-    subitem = models.ForeignKey(SubItemExamen, related_name='item_resultadosubitem')
-    examen= models.ForeignKey(Examen, related_name='examen_resultadosubitem')
-    seleccionados = models.ManyToManyField(OpcionSubItem, related_name='seleccionados_resultadosubitem')
+#     subitem = models.ForeignKey(SubItemExamen, related_name='item_resultadosubitem')
+#     examen= models.ForeignKey(Examen, related_name='examen_resultadosubitem')
+#     seleccionados = models.ManyToManyField(OpcionSubItem, related_name='seleccionados_resultadosubitem')
 
-    def __unicode__(self):
-        return self.texto
+#     def __unicode__(self):
+#         return self.texto
 
 
 #perfil personal
@@ -355,3 +365,77 @@ class Perfil(models.Model):
 
     def __unicode__(self):
         return str(self.usuario)
+
+
+# Nuevos Examenes
+
+# class Item(models.Model):
+#     class Meta:
+#         verbose_name = ('Item')
+#         verbose_name_plural = ('Items')
+
+#     CAMPOS = (
+#         ('01', 'utero_eg'),
+#         ('02', 'situac_eg'),
+#         ('03', 'pres_eg'),
+#         ('04', 'dorso_eg'),
+#         ('05', 'actcard_eg'),
+#         ('06', 'crl_eg'),
+#         ('07', 'dbp_eg'),
+#         ('08', 'cabeza_eg'),
+#         ('09', 'corazon_eg'),
+#         ('10', 'abdomen_eg'),
+#         ('11', 'genitales_eg'),
+#         ('12', 'extrem_eg'),
+#         ('13', 'cordon_eg'),
+#         ('14', 'placenta_eg'),
+#         ('15', ''),
+#         ('', ''),
+#     )
+
+#     texto = models.TextField(verbose_name=u'Texto')
+#     tipo_examen = models.ForeignKey(TipoExamen)
+#     campo = models.CharField(max_length=2, choices=CAMPOS)
+
+#     def __unicode__(self):
+#         return self.texto
+    
+
+
+# class EcografiaGenetica(models.Model):
+#     class Meta:
+#         verbose_name = ('EcografiaGenetica')
+#         verbose_name_plural = ('EcografiaGeneticas')
+
+#     # Hallazgos
+#     utero = models.ManyToManyField(Item, related_name='utero_eg', blank=True, null=True)
+#     situac = models.ManyToManyField(Item, related_name='situac_eg', blank=True, null=True)
+#     pres = models.ManyToManyField(Item, related_name='pres_eg', blank=True, null=True)
+#     dorso = models.ManyToManyField(Item, related_name='dorso_eg', blank=True, null=True)
+#     actcard = models.ManyToManyField(Item, related_name='actcard_eg', blank=True, null=True, verbose_name=u'Act/Card')
+#     crl = models.ManyToManyField(Item, related_name='crl_eg', blank=True, null=True)
+#     dbp = models.ManyToManyField(Item, related_name='dbp_eg', blank=True, null=True)
+#     # Anatomia Fetal
+#     cabeza = models.ManyToManyField(Item, related_name='cabeza_eg', blank=True, null=True)
+#     corazon = models.ManyToManyField(Item, related_name='corazon_eg', blank=True, null=True)
+#     abdomen = models.ManyToManyField(Item, related_name='abdomen_eg', blank=True, null=True)
+#     genitales = models.ManyToManyField(Item, related_name='genitales_eg', blank=True, null=True)
+#     extrem = models.ManyToManyField(Item, related_name='extrem_eg', blank=True, null=True)
+#     cordon = models.ManyToManyField(Item, related_name='cordon_eg', blank=True, null=True)
+#     placenta = models.ManyToManyField(Item, related_name='placenta_eg', blank=True, null=True)
+
+#     def __unicode__(self):
+#         return str(self.pk)
+
+
+# class EcografiaObstetrica(models.Model):
+#     class Meta:
+#         verbose_name = ('EcografiaObstetrica')
+#         verbose_name_plural = ('EcografiasObstetricas')
+
+#     # Hallazgos
+#     utero = models.ManyToManyField(Item, related_name='utero_eo', blank=True, null=True)
+
+#     def __unicode__(self):
+#         pass
+#     

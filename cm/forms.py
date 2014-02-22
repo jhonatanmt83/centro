@@ -2,6 +2,7 @@ from django import forms
 from cm.models import Perfil, Paciente, Paquete, Antecedente
 from django.contrib.auth.models import Group
 from django.forms.extras.widgets import SelectDateWidget
+from django.forms import TextInput, CheckboxInput
 
 from datetime import date
 
@@ -21,7 +22,7 @@ class PacienteForm1(forms.ModelForm):
         model = Paciente
         fields = ['dni', 'nombres', 'direccion', 'edad', 'fechanacimiento', 'telefono']
         widgets = {
-            'fechanacimiento': SelectDateWidget(),
+            'fechanacimiento': TextInput(attrs={"class":"fecha_bonita"}),
         }
         
     
@@ -32,13 +33,23 @@ class PacienteForm2(forms.ModelForm):
     class Meta:
         model = Paciente
         fields = ['nrohistoria', 'edadfur', 'null_edadfur', 'ultimofur', 'null_ultimofur', 'fecha_actual']
+        widgets={
+            "edadfur":TextInput(attrs={'class':'fecha_fur'}),
+            "ultimofur":TextInput(attrs={'class':'fecha_finfur'}),
+            "null_edadfur":CheckboxInput(attrs={'onClick':'desactivar_edadfur();'}),
+            "null_ultimofur":CheckboxInput(attrs={'onClick':'desactivar_ultimofur();'}),
+
+        }
 
 
 class PacienteForm(forms.ModelForm):
     class Meta:
         model = Paciente
         widgets = {
-            'fechanacimiento': SelectDateWidget(years=range(1960,2014)),
+            "edadfur":TextInput(attrs={'class':'fecha_fur'}),
+            "ultimofur":TextInput(attrs={'class':'fecha_finfur'}),
+            'fechanacimiento': TextInput(attrs={"class":"fecha_bonita"}),
+
         }
     
 

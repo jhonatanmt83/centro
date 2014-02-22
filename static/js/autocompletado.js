@@ -25,8 +25,19 @@
       "Scheme"
     ];
     $( "#tags" ).autocomplete({
-      source: availableTags
+      source: availableTags,
+      select: function( event, ui ){
+         
+          url = "http://taller-de-scripts.com.ar";
+          window.open(url, '_blank');
+          return false;
+
+      }
+
     });
+
   });
+
+
 
  

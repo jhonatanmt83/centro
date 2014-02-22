@@ -7,7 +7,9 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 
 from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm
 from django.contrib.auth.models import User, Group
-from cm.models import Perfil, Paquete, Examen, Antecedente, ResultadoItem, ResultadoSubItem, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita
+
+from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita
+
 
 from django.contrib import messages
 
@@ -178,3 +180,20 @@ def resultado_impresiones(request):
     print objects
  
     return HttpResponse(objects,mimetype="text/plain")
+
+
+@administrador_login
+def citas(request):
+    cita = UltimaCita.objects.all()
+
+    return render_to_response('administrador/citas.html',{'cita':cita}, context_instance=RequestContext(request))
+
+
+@administrador_login
+def examenescaja(request):
+    examenes = Examen.objects.filter(fecha = date.today())
+    egreso = Egreso.objects.all()
+
+    return render_to_response('administrador/caja.html',{'examenes':examenes,'egreso':egreso}, context_instance=RequestContext(request))
+
+
