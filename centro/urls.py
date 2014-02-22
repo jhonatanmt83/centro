@@ -21,10 +21,10 @@ urlpatterns = patterns('',
     url(r'^administrador/citas$', 'cm.views.citas', name='citas'),
     url(r'^administrador/caja$', 'cm.views.examenescaja', name='caja'),
     url(r'^administrador/receta$', 'cm.views.recetas', name='recetas'),
-    #url(r'^administrador/caja$', 'cm.views.egresos', name='caja'),
     url(r'^administrador/examen/(?P<codigo>\d+)/$', 'cm.views.examen', name='examen'),
 
     url(r'^precio/paquete/(?P<codigo>\d+)/$', 'cm.views.precio_paquete', name='precio_paquete'),
+    url(r'^resultados/impresiones/$', 'resultado_impresiones', name='resultados_impreciones'), #2
 
 
     url(r'^admin/', include(admin.site.urls)),

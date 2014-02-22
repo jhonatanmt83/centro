@@ -3,11 +3,14 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
 from centro.decoratos import registrador_login, evaluador_login, administrador_login
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 
 from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm
 from django.contrib.auth.models import User, Group
-from cm.models import Perfil, Paquete, Examen, Antecedente, UltimaCita, Egreso, Receta
+
+from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta
+
+
 
 from django.contrib import messages
 
@@ -110,7 +113,40 @@ def examen(request, codigo):
     examen = Examen.objects.get(pk=codigo)
     antecedente = Antecedente.objects.filter(examen=examen)[0]
     if request.method=='POST':
-        pass
+        for paquete in examen.paquetes.all():
+            for tipo_examen in paquete.tiposexamen.all():
+                items = tipo_examen.obtener_items()
+                for item in items:
+                    if item.obtener_subitems():
+                        subitems = item.obtener_subitems()
+                        for subitem in subitems:
+                            subitem_resultado = ResultadoSubItem(subitem=subitem, examen=examen, texto=request.POST['item_'+str(subitem.pk)])
+                            subitem_resultado.save()
+                    else:
+                        item_resultado = ResultadoItem(item=item, examen=examen, texto=request.POST['item_'+str(item.pk)])
+                        item_resultado.save()
+        diagnosticos_add = []
+        for numero_diagnostico in range(1,int(request.POST['num_diagnosticos'])+1):
+            if (request.POST['diagnostico_'+str(numero_diagnostico)] != ""):
+                nuevo_diagnostico = DiagnosticoExamen(texto=request.POST['diagnostico_'+str(numero_diagnostico)])
+                nuevo_diagnostico.save()
+                diagnosticos_add.append(nuevo_diagnostico)
+        nueva_impresion = ImpresionDiagnostico(examen=examen)
+        nueva_impresion.save()
+        nueva_impresion.diagnostico = diagnosticos_add
+        examen.recomendaciones = request.POST['recomendaciones']
+        examen.terminado = True
+        examen.save()
+        cita = UltimaCita.objects.filter(paciente=examen.paciente)
+        fecha_new = request.POST['proxima_cita'].split("/")
+        if not cita:
+            new_cita = UltimaCita(paciente=examen.paciente, proximo=date(int(fecha_new[2]), int(fecha_new[0]), int(fecha_new[1])), anterior=date.today())
+            new_cita.save()
+        else:
+            temp_cita = cita.proximo
+            cita.anterior = temp_cita
+            cita.proximo = date(int(fecha_new[2]), int(fecha_new[0]), int(fecha_new[1]))
+            cita.save()
     else:
         pass
     return render_to_response('administrador/examen.html', {'antecedente':antecedente, 'examen':examen}, context_instance=RequestContext(request))
@@ -126,11 +162,33 @@ def precio_paquete(request, codigo):
     new_result.append(datos)
     return HttpResponse(json.dumps(new_result))
 
+
+def resultado_impresiones(request):
+ 
+    #if request.method=='GET' or not request.POST.__contains__('start'):
+    #    return HttpResponseForbidden()
+ 
+    # Hacemos la consulta para aquellos elementos que empiecen por start ordenados por nombre
+    print "inicio"
+    query = DiagnosticoExamen.objects.filter(texto__istartswith=request.POST['start']).order_by('texto')
+    print query
+    # Serializamos
+    objects = u'{items: [\n'
+    for i in query:
+        objects += u'{"0":"%s"},\n' % (i.texto.replace('"',''))
+    objects=objects.strip(",\n");
+    objects+=u']}\n'
+    print objects
+ 
+    return HttpResponse(objects,mimetype="text/plain")
+
+
 @administrador_login
 def citas(request):
     cita = UltimaCita.objects.all()
 
     return render_to_response('administrador/citas.html',{'cita':cita}, context_instance=RequestContext(request))
+
 
 @administrador_login
 def examenescaja(request):
@@ -138,6 +196,7 @@ def examenescaja(request):
     egreso = Egreso.objects.all()
 
     return render_to_response('administrador/caja.html',{'examenes':examenes,'egreso':egreso}, context_instance=RequestContext(request))
+
 
 
 @administrador_login
