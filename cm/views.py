@@ -75,7 +75,7 @@ def nuevo_usuario(request):
 @administrador_login
 def nuevo_paciente(request):
     paquetes = Paquete.objects.all()
-    fecha_actual = str(date.today().month) + "/" + str(date.today().day) + "/" +str(date.today().year)
+    fecha_actual = str(date.today().day) + "/" + str(date.today().month) + "/" + str(date.today().year)
     if request.method=='POST':
         formulario1 = PacienteForm1(request.POST)
         formulario2 = PacienteForm2(request.POST)
