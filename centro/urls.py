@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^administrador/paciente$', 'cm.views.nuevo_paciente', name='nuevo_paciente'),
     url(r'^administrador/citas$', 'cm.views.citas', name='citas'),
     url(r'^administrador/caja$', 'cm.views.examenescaja', name='caja'),
+    url(r'^administrador/receta$', 'cm.views.recetas', name='recetas'),
     url(r'^administrador/examen/(?P<codigo>\d+)/$', 'cm.views.examen', name='examen'),
 
     url(r'^precio/paquete/(?P<codigo>\d+)/$', 'cm.views.precio_paquete', name='precio_paquete'),

@@ -116,7 +116,7 @@
                     <div class="row">
                         {% for examen in paquete.tiposexamen.all %}
                         <h4><strong>{{ examen.nombre }}</strong></h4>
-                        <hr>
+                        <br>
                         {% for item in examen.obtener_items %}
                         {% if item.obtener_subitems %}
                         <div class="form-group">
@@ -142,13 +142,13 @@
                             </div>
                         </div>
                         {% endif%}
-                        {% endfor %}<hr>
+                        {% endfor %}<br>
                         {% endfor %}
                     </div>
                 </div>
                 {% endfor %}
             </div>
-            <br><hr><hr>
+            <br>
             <div class="row" id='impresiones'>
                 <h3><strong>IMPRESION DIAGNOSTICA</strong></h3>
                 <div id='div_diagnostico_1'>
