@@ -78,15 +78,15 @@ class ClaseMedicamento(models.Model):
     def __unicode__(self):
         return self.nombre
 
-class TipoCantidad(models.Model):
-    class Meta:
-        verbose_name = ('TipoCantidad')
-        verbose_name_plural = ('TipoCantidades')
+# class TipoCantidad(models.Model):
+#     class Meta:
+#         verbose_name = ('TipoCantidad')
+#         verbose_name_plural = ('TipoCantidades')
 
-    nombre = models.CharField(max_length=100, verbose_name=u'Nombre')
+#     nombre = models.CharField(max_length=100, verbose_name=u'Nombre')
 
-    def __unicode__(self):
-        return self.nombre
+#     def __unicode__(self):
+#         return self.nombre
 
 class Frecuencia(models.Model):
     class Meta:
@@ -115,9 +115,10 @@ class Medicamento(models.Model):
         verbose_name = ('Medicamento')
         verbose_name_plural = ('Medicamentos')
 
-    nombre = models.CharField(max_length=100, verbose_name=u'Nombre')
+    nombre = models.CharField(max_length=100, verbose_name=u'Nombre Generico')
+    nombre_comer = models.CharField(max_length=100, verbose_name=u'Nombre Comercial')
     clase = models.ForeignKey(ClaseMedicamento, verbose_name=u'Clase de Medicamento', related_name='medicamento_clase')
-    cantidad = models.ForeignKey(TipoCantidad, verbose_name=u'Tipode Cantidad', related_name='medicamento_cantidad')
+    #cantidad = models.ForeignKey(TipoCantidad, verbose_name=u'Tipode Cantidad', related_name='medicamento_cantidad')
 
     def __unicode__(self):
         return self.nombre
