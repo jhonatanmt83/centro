@@ -81,11 +81,26 @@
 }
 
 .ch-img-2 {
-  background-image: url(../img/buscarhistorial.jpg);
+  background-image: url(../img/nuevopaciente.jpg);
 }
 
 .ch-img-3 { 
+  background-image: url(../img/nuevoexamen.jpg);
+}
+.ch-img-4 { 
+  background-image: url(../img/historialclinica.jpg);
+}
+.ch-img-5 { 
   background-image: url(../img/reporterecetas.jpg);
+}
+.ch-img-6 { 
+  background-image: url(../img/caja.jpg);
+}
+.ch-img-7 { 
+  background-image: url(../img/citasprogramadas.jpg);
+}
+.ch-img-8 { 
+  background-image: url(../img/egreso.jpg);
 }
 
 .ch-info h3 {
