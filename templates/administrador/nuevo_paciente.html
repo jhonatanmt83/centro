@@ -3,7 +3,13 @@
 {% load staticfiles %}
 {% block title %}Adminstrador - Crear Nuevo Usuario{% endblock %}
 {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css-fecha/pickmeup.css' %}">
 {% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/js-fecha/jquery.pickmeup.js' %}"></script>
+{% endblock%}
+
 {% block menu %}
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
@@ -174,4 +180,74 @@
     });
     
 </script>
+    <script>
+        $(function () {
+            $('.demo').pickmeup({
+            flat: true
+            });
+            var input= $('.fecha_bonita');
+            input.pickmeup({
+            position: 'right',
+            before_show: function(){
+            input.pickmeup('set_date', input.val(), true);
+            },
+            change: function(formated){
+            input.val(formated);
+            }
+            });
+            });
+    </script>
+    <script>
+        $(function () {
+            $('.demo').pickmeup({
+            flat: true
+            });
+            var input= $('.fecha_fur');
+            input.pickmeup({
+            position: 'right',
+            before_show: function(){
+            input.pickmeup('set_date', input.val(), true);
+            },
+            change: function(formated){
+            input.val(formated);
+            }
+            });
+            });
+    </script><script>
+        $(function () {
+            $('.demo').pickmeup({
+            flat: true
+            });
+            var input= $('.fecha_finfur');
+            input.pickmeup({
+            position: 'right',
+            before_show: function(){
+            input.pickmeup('set_date', input.val(), true);
+            },
+            change: function(formated){
+            input.val(formated);
+            }
+            });
+            });
+        function desactivar_edadfur () {
+            // body...
+            if($("#id_null_edadfur").is(':checked')){
+                $("#id_edadfur").attr("readonly","readonly");
+            }
+            else{
+                $("#id_edadfur").removeAttr("readonly");
+            }
+        }
+        function desactivar_ultimofur () {
+
+            if($("#id_null_ultimofur").is(':checked')){
+                $("#id_ultimofur").attr("readonly","readonly");
+            }
+            else{
+                $("#id_ultimofur").removeAttr("readonly");
+            }
+        }
+    </script>
+
 {% endblock %}
+
