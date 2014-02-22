@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from cm.models import Paciente, Antecedente, UltimaCita, DiagnosticoExamen, ClaseMedicamento, TipoCantidad, Frecuencia, Medicamento, Receta, DiagnosticoReceta, Tratamiento, Egreso, TipoExamen, Paquete, Examen, ImpresionDiagnostico, Perfil
+from cm.models import Paciente, Antecedente, UltimaCita, DiagnosticoExamen, ClaseMedicamento, Frecuencia, Medicamento, Receta, DiagnosticoReceta, Tratamiento, Egreso, TipoExamen, Paquete, Examen, ImpresionDiagnostico, Perfil
 
 
 admin.site.register(Paciente)
@@ -9,7 +9,7 @@ admin.site.register(Antecedente)
 admin.site.register(UltimaCita)
 admin.site.register(DiagnosticoExamen)
 admin.site.register(ClaseMedicamento)
-admin.site.register(TipoCantidad)
+#admin.site.register(TipoCantidad)
 admin.site.register(Frecuencia)
 admin.site.register(Medicamento)
 admin.site.register(Receta)
