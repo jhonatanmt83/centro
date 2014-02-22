@@ -133,7 +133,7 @@ class Receta(models.Model):
     fecha = models.DateField(auto_now_add=True)
 
     def __unicode__(self):
-        return str(self.paciente)
+        return unicode(str(self.paciente), 'utf8')
 
 
 class DiagnosticoReceta(models.Model):
