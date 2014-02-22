@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm
 from django.contrib.auth.models import User, Group
-from cm.models import Perfil, Paquete, Examen, Antecedente, UltimaCita, Egreso
+from cm.models import Perfil, Paquete, Examen, Antecedente, UltimaCita, Egreso, Receta
 
 from django.contrib import messages
 
@@ -138,4 +138,12 @@ def examenescaja(request):
     egreso = Egreso.objects.all()
 
     return render_to_response('administrador/caja.html',{'examenes':examenes,'egreso':egreso}, context_instance=RequestContext(request))
+
+
+@administrador_login
+def recetas(request):
+    receta = Receta.objects.all()
+    
+
+    return render_to_response('administrador/recetas.html',{'receta':receta}, context_instance=RequestContext(request))
 
