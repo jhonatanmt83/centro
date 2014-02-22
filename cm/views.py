@@ -7,13 +7,10 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 
 from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm
 from django.contrib.auth.models import User, Group
-<<<<<<< HEAD
 
-from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita
+from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta
 
-=======
-from cm.models import Perfil, Paquete, Examen, Antecedente, UltimaCita, Egreso, Receta
->>>>>>> 76f435b2ec270a44995f605d22df905b17c4791a
+
 
 from django.contrib import messages
 
