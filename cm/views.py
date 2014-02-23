@@ -193,9 +193,11 @@ def citas(request):
 @administrador_login
 def examenescaja(request):
     examenes = Examen.objects.filter(fecha = date.today())
+    
     egreso = Egreso.objects.all()
+    valor={'examenes':examenes,'egreso':egreso}
 
-    return render_to_response('administrador/caja.html',{'examenes':examenes,'egreso':egreso}, context_instance=RequestContext(request))
+    return render_to_response('administrador/caja.html',valor, context_instance=RequestContext(request))
 
 
 
