@@ -1,0 +1,64 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block title %}Adminstrador - Crear Nuevo Usuario{% endblock %}
+{% block css %}
+{% endblock %}
+{% block menu %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/administrador/">SISTEMA DE RECETAS</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
+            <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
+            <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
+            <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
+            <li ><a href="/administrador/receta">RECETAS</b></a></li>
+            <li ><a href="/administrador/caja">CAJA</b></a></li>
+            <li ><a href="/administrador/cita">CITAS</b></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <table class='table table-striped'>
+        	<thead class="panel panel-color ">
+        		<tr>
+        			<th class="text-center"><strong>NRO HISTORIA CLINICA</strong></th>
+        			<th class="text-center"><strong>NOMBRES Y APELLIDOS</strong></th>
+        			<th class="text-center"><strong>TELEFONO</strong></th>
+        			<th class="text-center"><strong>FECHA</strong></th>
+        			<th></th>
+        			<th></th>
+
+        		</tr>
+        	</thead>
+        	<tbody>
+        	{% for valor in listahistoria%}
+        		<tr>
+        			<td>{{valor.nrohistoria }}</td>
+        			<td>{{valor.nombres }}</td>
+        			<td>{{valor.telefono }}</td>
+        			<td>{{valor.fecha|date:"l d F \a \l\a\s f a"}}</td>
+        			<td><a href="#" class="btn btn btn-success btn-lg active" role="button">Imprimir</a></td>
+        			<td><a href="#" class="btn btn-warning btn-lg active" role="button">Modificar</a></td>
+        			
+        		</tr>
+        	{%endfor%}	
+        	</tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block js_end %}
+{% endblock %}
