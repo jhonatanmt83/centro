@@ -22,7 +22,11 @@ urlpatterns = patterns('',
     url(r'^administrador/caja$', 'cm.views.examenescaja', name='caja'),
     url(r'^administrador/receta$', 'cm.views.recetas', name='recetas'),
     url(r'^administrador/examen/(?P<codigo>\d+)/$', 'cm.views.examen', name='examen'),
+    url(r'^administrador/historiaclinica/(?P<codigo>\d+)/$', 'cm.views.historiaclinica', name='historiaclinica'),
+    url(r'^administrador/listaclinica$', 'cm.views.lista_historia_clinica', name='lista_historia_clinica'),
     url(r'^administrador/egreso/$', 'cm.views.vista_egreso', name='egresos'),
+    url(r'^administrador/modificarhistoria/(?P<codigo>\d+)/$', 'cm.views.modi_historia_clinica', name='modi_historia_clinica'),
+
 
     url(r'^precio/paquete/(?P<codigo>\d+)/$', 'cm.views.precio_paquete', name='precio_paquete'),
     url(r'^resultados/impresiones/$', 'resultado_impresiones', name='resultados_impreciones'), #2

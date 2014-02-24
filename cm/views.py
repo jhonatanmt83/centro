@@ -11,8 +11,9 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm
 from django.contrib.auth.models import User, Group
 
-from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta
+from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
 
+from django.shortcuts import get_object_or_404
 
 
 from django.contrib import messages
@@ -215,7 +216,23 @@ def recetas(request):
     return render_to_response('administrador/recetas.html',{'receta':receta}, context_instance=RequestContext(request))
 
 @administrador_login
+
+def historiaclinica(request, codigo):
+    historiaclinica = Paciente.objects.filter(nrohistoria=codigo)
+    if historiaclinica:
+        historiaclinica=historiaclinica[0]
+
+    return render_to_response('administrador/historiaclinica.html', {'historiaclinicas':historiaclinica}, context_instance=RequestContext(request))
+
+
+@administrador_login
+def lista_historia_clinica(request):
+    lista_clinica = Paciente.objects.all()
+    lista={'listahistoria':lista_clinica}
+    return render_to_response('administrador/listahistoriaclinica.html',lista, context_instance=RequestContext(request))
+
 def vista_egreso(request):
+
     if request.method == 'POST': # If the form has been submitted...
         form = EgresoForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
@@ -233,3 +250,14 @@ def vista_egreso(request):
 
     formulario  =   EgresoForm()
     return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
+
+
+
+def modi_historia_clinica(request, codigo):
+    instancia = get_object_or_404(Paciente, pk=codigo)
+    modificar = PacienteForm(request.POST or None, instance=instancia)
+    if modificar.is_valid():
+        modificar.save()
+
+    return render_to_response('administrador/modificarhistoria.html', {'formhistoria': modificar}, context_instance=RequestContext(request))
+
