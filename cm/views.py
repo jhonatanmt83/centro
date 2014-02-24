@@ -8,7 +8,7 @@ from django.db.models import Sum
 from centro.decoratos import registrador_login, evaluador_login, administrador_login
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 
-from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm
+from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm, CitaForm
 from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
@@ -274,3 +274,14 @@ def modi_historia_clinica(request, codigo):
         modificar.save()
 
     return render_to_response('administrador/modificarhistoria.html', {'formhistoria': modificar}, context_instance=RequestContext(request))
+
+def modificarcita(request, codigo):
+    instancia = get_object_or_404(UltimaCita, pk=codigo)
+    nueva_cita= CitaForm(request.POST or None, instance=instancia)
+
+    if nueva_cita.is_valid():
+        nueva_cita.save()
+        messages.success(request, 'Nuevo cita es %s '% (request.POST['proximo']))
+     
+    return render_to_response('administrador/modificarcita.html',{'nueva_cita':nueva_cita},context_instance=RequestContext(request))
+    
