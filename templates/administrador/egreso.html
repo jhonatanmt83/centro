@@ -33,19 +33,23 @@
 {% block contenido %}
     <div class="container grup-container">
         <div class="row">
-            <h3 class='text-center'><strong>REGISTRAR EGRESOS DEL DIA</strong> </h3>
-            <hr>
-            {% bootstrap_messages %}
-            <div class="col-xs-6 col-xs-offset-2">
-                <form class="form-horizontal " action=' ' method='POST'>
+            <div class="col-xs-12">
+               {% bootstrap_messages %}
+                <div class="col-xs-6 col-xs-offset-2">
+                    <form class="form-horizontal " action=' ' method='POST'>
+                        
+                        {% csrf_token %}
 
-                    {% csrf_token %}
-                    {% bootstrap_form formulario  layout="horizontal" %}
-                    <input class='btn btn-primary' type='submit' value='submit'>
-                </form>
+                        {% bootstrap_form formulario  layout="horizontal" %}
+                        <div class="col-xs-4 col-xs-offset-5">
+                            <input class='btn btn-primary btn-lg' class="form-control" type='submit' value='GUARDAR NUEVO EGRESO'>
+                        </div>
+
+                        
+                        
+                    </form>
+                </div> 
             </div>
-           
-            
         </div>
             
     </div>
