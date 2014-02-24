@@ -154,3 +154,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', end
 	color: rgb(255, 255, 255);
 
 }
+
+.imagen-egreso{
+	max-width: 100%;
+	min-height: 80%;
+}
