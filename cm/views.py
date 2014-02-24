@@ -209,7 +209,7 @@ def recetas(request):
     return render_to_response('administrador/recetas.html',{'receta':receta}, context_instance=RequestContext(request))
 
 @administrador_login
-<<<<<<< HEAD
+
 def historiaclinica(request, codigo):
     historiaclinica = Paciente.objects.filter(nrohistoria=codigo)
     if historiaclinica:
@@ -223,8 +223,8 @@ def lista_historia_clinica(request):
     lista_clinica = Paciente.objects.all()
     lista={'listahistoria':lista_clinica}
     return render_to_response('administrador/listahistoriaclinica.html',lista, context_instance=RequestContext(request))
-=======
+
 def vista_egreso(request):
     formulario=EgresoForm()
     return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
->>>>>>> 9458d51d4855642bdfbf9e37b14ce4f24875b6de
+
