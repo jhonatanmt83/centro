@@ -144,7 +144,7 @@ class DiagnosticoxReceta(models.Model):
         verbose_name_plural = ('Diagnosticos por Recetas')
 
     receta = models.ForeignKey(Receta, verbose_name=u'Receta')
-    diagnosticos = models.ManyToManyField(DiagnosticoReceta, verbose_name=u'Diagnósticos')
+    diagnosticos = models.ManyToManyField(DiagnosticoReceta, verbose_name=u'Diagnósticos', null=True, blank=True)
 
     def __unicode__(self):
         return str(self.receta)

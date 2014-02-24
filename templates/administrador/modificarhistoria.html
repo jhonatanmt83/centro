@@ -3,7 +3,12 @@
 {% load staticfiles %}
 {% block title %}Adminstrador - Modicar Historia Clinica{% endblock %}
 {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css-fecha/pickmeup.css' %}">
 {% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/js-fecha/jquery.pickmeup.js' %}"></script>
+{% endblock%}
 {% block menu %}
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
@@ -53,35 +58,45 @@
         </div>
     </div>
 {% endblock %}
+
 {% block js_end %}
     <script>
         $(function () {
-            var input= $('.fecha_fur');
-            input.pickmeup({
-            format  : 'd/m/Y',
-            position: 'left',
-            before_show: function(){
-            input.pickmeup('set_date', input.val(), true);
-            },
-            change: function(formated){
-            input.val(formated);
-            }
+            var input1= $('.fecha_bonita');
+            input1.pickmeup({
+                format  : 'Y-m-d',
+                position: 'right',
+                before_show: function(){
+                    input1.pickmeup('set_date', input1.val(), true);
+                },
+                change: function(formated){
+                input1.val(formated);
+                }
             });
+            var input2= $('.fecha_fur');
+            input2.pickmeup({
+                format  : 'Y-m-d',
+                position: 'left',
+                before_show: function(){
+                    input2.pickmeup('set_date', input2.val(), true);
+                },
+                change: function(formated){
+                input2.val(formated);
+                }
             });
-    </script><script>
-        $(function () {
-            var input= $('.fecha_finfur');
-            input.pickmeup({
-            format  : 'd/m/Y',
-            position: 'left',
-            before_show: function(){
-            input.pickmeup('set_date', input.val(), true);
-            },
-            change: function(formated){
-            input.val(formated);
-            }
+            var input3= $('.fecha_finfur');
+            input3.pickmeup({
+                format  : 'Y-m-d',
+                position: 'left',
+                before_show: function(){
+                input3.pickmeup('set_date', input3.val(), true);
+                },
+                    change: function(formated){
+                    input3.val(formated);
+                }
             });
-            });
+        });
+
         function desactivar_edadfur () {
             // body...
             if($("#id_null_edadfur").is(':checked')){
