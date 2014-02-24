@@ -95,7 +95,7 @@ background-color: #144903 !important;
 }
 
 .texto-sombra{
-	text-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 1)
 }
 
 .fondo-usuario {
@@ -126,4 +126,28 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', end
 	width: 540px;
 	height: 686px;
 	border-radius: 12px;
+}
+
+.monto-total{
+	background: #608B00;
+	color: white;
+	font-weight: 900;
+	letter-spacing: 15px;
+}
+
+.boton-imprimir{
+	background: rgb(200, 216, 18);
+	border: 5px solid rgba(255, 255, 255, 0.91);
+	letter-spacing: 3px;
+	color: rgb(9, 97, 9);
+	font-weight: 900;
+	border-radius: 50px;
+	width: 150px;
+	height: 52px;
+}
+
+.boton-imprimir:hover{
+	background: rgb(139, 216, 78);
+	color: rgb(255, 255, 255);
+
 }
