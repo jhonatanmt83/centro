@@ -4,39 +4,41 @@
 {% block contenido %}
 <div class="container grup-container">
 	<div class="row">
-		<div class="col-xs-7">
-			<div class="col-xs-6">
-				<p><strong>NRO HISTORIA</strong></p>
-				<p><strong>APELLIDOS Y NOMBRES</strong></p>
-				<p><strong>DIRECCION</strong></p>
-				<p><strong>EDAD</strong></p>
-				<p><strong>FECHA DE NACIMIENTO</strong></p>
-			</div>
+		<div class='impresion'>
 
-			<div class="col-xs-6">
-				<P>{{historiaclinicas.nrohistoria}}</P>
-				<P>{{historiaclinicas.nombres}}</P>
-				<P>{{historiaclinicas.direccion}}</P>
-				<P>{{historiaclinicas.edad}}</P>
-				<P>{{historiaclinicas.fechanacimiento}}</P>
-			</div>
-		</div>
-		<div class="col-xs-5">
-			<div class="col-xs-4">
-				<p><strong>TELEFONO</strong></p>
-				<p><strong>EDAD RUF</strong></p>
-				<p><strong>RUF</strong></p>
-				<p><strong>FECHA</strong></p>
-			</div>
+			<div class="col-xs-5 col-xs-offset-2">
+				<div class="col-xs-6">
+					<p><strong>NRO HISTORIA</strong></p>
+					<p><strong>APELLIDOS Y NOMBRES</strong></p>
+					<p><strong>DIRECCION</strong></p>
+					<p><strong>EDAD</strong></p>
+					<p><strong>FECHA DE NACIMIENTO</strong></p>
+				</div>
 
-			<div class="col-xs-8">
-				<p>{{historiaclinicas.telefono}}</p>
-				<p>{{historiaclinicas.edadfur}}</p>
-				<p>{{historiaclinicas.ultimofur}}</p>
-				<p>{{historiaclinicas.fecha}}</p>
+				<div class="col-xs-6">
+					<P>{{historiaclinicas.nrohistoria}}</P>
+					<P>{{historiaclinicas.nombres}}</P>
+					<P>{{historiaclinicas.direccion}}</P>
+					<P>{{historiaclinicas.edad}}</P>
+					<P>{{historiaclinicas.fechanacimiento}}</P>
+				</div>
 			</div>
-			
-		</div>
+			<div class="col-xs-5">
+				<div class="col-xs-3">
+					<p><strong>TELEFONO</strong></p>
+					<p><strong>EDAD RUF</strong></p>
+					<p><strong>RUF</strong></p>
+					<p><strong>FECHA</strong></p>
+				</div>
+
+				<div class="col-xs-9">
+					<p>{{historiaclinicas.telefono}}</p>
+					<p>{{historiaclinicas.edadfur}}</p>
+					<p>{{historiaclinicas.ultimofur}}</p>
+					<p>{{historiaclinicas.fecha}}</p>
+				</div>
+			</div>
+		</div>	
 	</div>
 </div>
 {% endblock%}
