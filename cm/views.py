@@ -10,6 +10,7 @@ from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
 
+from django.shortcuts import get_object_or_404
 
 
 from django.contrib import messages
@@ -227,4 +228,14 @@ def lista_historia_clinica(request):
 def vista_egreso(request):
     formulario=EgresoForm()
     return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
+
+
+
+def modi_historia_clinica(request, codigo):
+    instancia = get_object_or_404(Paciente, pk=codigo)
+    modificar = PacienteForm(request.POST or None, instance=instancia)
+    if modificar.is_valid():
+        modificar.save()
+
+    return render_to_response('administrador/modificarhistoria.html', {'formhistoria': modificar}, context_instance=RequestContext(request))
 

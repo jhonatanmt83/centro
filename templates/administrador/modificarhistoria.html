@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% load bootstrap3 %}
 {% load staticfiles %}
-{% block title %}Adminstrador - Crear Nuevo Usuario{% endblock %}
+{% block title %}Adminstrador - Modicar Historia Clinica{% endblock %}
 {% block css %}
 {% endblock %}
 {% block menu %}
@@ -32,32 +32,22 @@
 {% endblock %}
 {% block contenido %}
     <div class="container">
-        <table class='table table-striped'>
-        	<thead class="panel panel-color ">
-        		<tr>
-        			<th class="text-center"><strong>NRO HISTORIA CLINICA</strong></th>
-        			<th class="text-center"><strong>NOMBRES Y APELLIDOS</strong></th>
-        			<th class="text-center"><strong>TELEFONO</strong></th>
-        			<th class="text-center"><strong>FECHA</strong></th>
-        			<th></th>
-        			<th></th>
-
-        		</tr>
-        	</thead>
-        	<tbody>
-        	{% for valor in listahistoria%}
-        		<tr>
-        			<td>{{valor.nrohistoria }}</td>
-        			<td>{{valor.nombres }}</td>
-        			<td>{{valor.telefono }}</td>
-        			<td>{{valor.fecha|date:"l d F \a \l\a\s f a"}}</td>
-        			<td><a href="/administrador/historiaclinica/{{valor.nrohistoria }}" class="btn btn btn-success btn-lg active" role="button">Imprimir</a></td>
-        			<td><a href="/administrador/modificarhistoria/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a></td>
-        			
-        		</tr>
-        	{%endfor%}	
-        	</tbody>
-        </table>
+        <div class="row">
+            {% bootstrap_messages %}
+            <div class="col-xs-12">
+                <form class="form-horizontal" role="form" method='POST' action=''>
+                    {% csrf_token %}
+                    <div class="col-xs-12">
+                        <h4><strong>DATOS PERSONALES</strong></h4>
+                        <hr>
+                        <div class="col-xs-6 col-xs-offset-1">
+                            {% bootstrap_form formhistoria  layout="horizontal" %}
+                        </div>
+                    </div>
+                    <input type="submit" value="Guardar Datos">   
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block js_end %}
