@@ -5,7 +5,7 @@ from django.template import RequestContext
 from centro.decoratos import registrador_login, evaluador_login, administrador_login
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 
-from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm
+from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm
 from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta
@@ -193,9 +193,11 @@ def citas(request):
 @administrador_login
 def examenescaja(request):
     examenes = Examen.objects.filter(fecha = date.today())
+    
     egreso = Egreso.objects.all()
+    valor={'examenes':examenes,'egreso':egreso}
 
-    return render_to_response('administrador/caja.html',{'examenes':examenes,'egreso':egreso}, context_instance=RequestContext(request))
+    return render_to_response('administrador/caja.html',valor, context_instance=RequestContext(request))
 
 
 
@@ -206,3 +208,7 @@ def recetas(request):
 
     return render_to_response('administrador/recetas.html',{'receta':receta}, context_instance=RequestContext(request))
 
+@administrador_login
+def vista_egreso(request):
+    formulario=EgresoForm()
+    return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))

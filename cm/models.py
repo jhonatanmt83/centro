@@ -41,7 +41,6 @@ class Antecedente(models.Model):
     def __unicode__(self):
         return str(self.examen)
 
-
 class UltimaCita(models.Model):
     class Meta:
         verbose_name = ('UltimaCita')
@@ -52,7 +51,7 @@ class UltimaCita(models.Model):
     anterior = models.DateField(verbose_name=u'Última cita')
 
     def __unicode__(self):
-        return str(self.paciente)
+        return unicode(str(self.paciente), 'utf8')
 
 
 class DiagnosticoExamen(models.Model):
@@ -170,7 +169,7 @@ class Tratamiento(models.Model):
     def __unicode__(self):
         return self.receta
 
-
+BOOL_CHOICES = ((True, 'Pago de Personal'), (False, 'Otros pagos'))
 class Egreso(models.Model):
     class Meta:
         verbose_name = ('Egreso')
@@ -181,7 +180,7 @@ class Egreso(models.Model):
     descripcion = models.TextField(verbose_name=u'Descripción')
     dni = models.CharField(max_length=8, verbose_name=u'DNI')
     fecha = models.DateField(auto_now_add=True)
-    pagouotro = models.BooleanField('Tipo de Pago')
+    pagouotro = models.BooleanField('tipode pago',choices=BOOL_CHOICES)
 
     def __unicode__(self):
         return str(self.usuario)
@@ -281,7 +280,7 @@ class Examen(models.Model):
     tipos_examen = models.ManyToManyField(TipoExamen, related_name='examen_tiposexamen', null=True, blank=True)
 
     def __unicode__(self):
-        return str(self.paciente)
+        unicode(str(self.paciente), 'utf8')
 
     def obtnerpaquete(self):
         nombpaquete=self.paquetes.all()[0]
@@ -440,3 +439,5 @@ class Perfil(models.Model):
 #     def __unicode__(self):
 #         pass
 #     
+
+

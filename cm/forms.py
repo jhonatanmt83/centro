@@ -1,5 +1,5 @@
 from django import forms
-from cm.models import Perfil, Paciente, Paquete, Antecedente
+from cm.models import Perfil, Paciente, Paquete, Antecedente, Egreso
 from django.contrib.auth.models import Group
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms import TextInput, CheckboxInput
@@ -68,3 +68,22 @@ class AntecedenteForm(forms.ModelForm):
     class Meta:
         model = Antecedente
         exclude = ['examen']
+
+
+
+# class egreso_formulario(forms.ModelForm):
+
+#     dni         =forms.CharField(widget=forms.TextInput())
+#     nombre      =forms.CharField(widget=forms.TextInput())
+#     monto       =forms.CharField(widget=forms.TextInput())
+#     decripciion =forms.CharField(widget=forms.Textarea())
+
+class EgresoForm(forms.ModelForm):
+    class Meta:
+        model = Egreso
+        fields = ['pagouotro','dni', 'usuario', 'monto', 'descripcion',]
+        ecogepago=((True, 'Pago de Personal'),(False,'Otros pagos'))
+        widgets = {
+            'pagouotro': forms.RadioSelect
+        }
+        
