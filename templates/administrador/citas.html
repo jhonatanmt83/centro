@@ -21,10 +21,10 @@
             <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
             <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
             <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
-            <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
+            <li ><a href="/administrador/listaclinica">HISTORIA CLINICA</a></li>
             <li ><a href="/administrador/receta">RECETAS</b></a></li>
             <li ><a href="/administrador/caja">CAJA</b></a></li>
-            <li ><a href="/administrador/cita">CITAS</b></a></li>
+            <li ><a href="/administrador/citas">CITAS</b></a></li>
           </ul>
         </div>
       </div>
@@ -32,28 +32,27 @@
 {% endblock %}
 {% block contenido %}
     <div class="container grup-container">
-        <div style="padding-top:70px;">
+        <div>
             <div class="row-fluid">
-            <div class="col-md-12">
-                <div class="row-fluid"> 
 
-                    <div class="panel panel-1">
-                        <table class="table table-bordered table-striped table-hover">
-                          
-                          <thead class="panel panel-color">
-                            <tr>
-                                <th>Historia Clinica</th>
-                                <th>Nombres y Apellidos</th>
-                                <th>Telefonos</th>
-                                <th>Fecha</th>
-                                <th>Dia</th>
-                                <th>Modificar</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                             {% for valor in cita %}
-                                <tr>
-                                   
+                <div class="col-md-12">
+                    <h2 class='text-center'><strong>Citas programadas para <button class='btn btn-danger' disabled='disabled'>HOY</button> y <button class='btn btn-primary ' disabled='disabled'>MAÑANA</button></strong></h2> 
+                    <div class="row-fluid"> 
+                        <div class="panel panel-1">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead class="panel panel-color">
+                                    <tr>
+                                        <th class="texto-blanco texto-sombra text-center">Historia Clinica</th>
+                                        <th class="texto-blanco texto-sombra text-center">Nombres y Apellidos</th>
+                                        <th class="texto-blanco texto-sombra text-center">Telefonos</th>
+                                        <th class="texto-blanco texto-sombra text-center">Fecha</th>
+                                        <th class="texto-blanco texto-sombra text-center">Dia</th>
+                                        <th class="texto-blanco texto-sombra text-center">Modificar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for valor in cita %}
+                                    <tr>
 
                                         <td>{{valor.paciente.nrohistoria}}</td>
                                         <td>{{valor.paciente}}</td>
@@ -61,90 +60,16 @@
                                         <td>{{valor.proximo}}</td>
                                         <td><a class='btn btn-danger btn-block btn-lg' disabled='disabled' href="#">HOY</a></td>
                                         <td>
-                                            <button class="btn btn-success btn-block btn-lg" data-toggle="modal" data-target=".mod-modal-lg">MODIFICAR</button>
-                                            <div class="modal mod-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                        <h4>Modificar la nueva Fecha:</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form class="form-horizontal" role="form">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label  class="col-sm-2 control-label">DNI :</label>
-                                                                        <div class="col-sm-2">
-                                                                            <input type="text" class="form-control"  placeholder="34524324">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label  class="col-sm-2 control-label">NOMBRES :</label>
-                                                                        <div class="col-sm-4">
-                                                                            <input type="text" class="form-control"  placeholder="Lucia Torres Campos">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label  class="col-sm-2 control-label">TELEFONO :</label>
-                                                                        <div class="col-sm-2">
-                                                                            <input type="text" class="form-control"  placeholder="34324523">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label  class="col-sm-2 control-label">FECHA DE CITA :</label>
-                                                                        <div class="col-sm-3">
-                                                                            <input type="text" class="form-control"  placeholder="12 NOVIEMBRE 2014">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </form>
-
-
-                                                    
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button class='btn btn-danger'>Guardar</button><button class='btn btn-danger'>Cancelar</button>
-                                                    </div> 
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </td>  
-                                   
-                                </tr>
-                             {% endfor %}
-                         <!--
-                            <tr>
-                                <td>11231</td>
-                                <td>lucia torrres Campos</td>
-                                <td>#765752</td>
-                                <td>12 de novimebre 2014</td>
-                                <td><a class='btn btn-danger btn-block btn-lg'href="#">HOY</a></td>
-                                <td><a class='btn btn-success btn-block btn-lg'href="#">MODIFICAR</a></td>  
-                            </tr>
-                            
-                            <tr>
-                                <td>11231</td>
-                                <td>lucia torrres Campos</td>
-                                <td>#765752</td>
-                                <td>12 de novimebre 2014</td>
-                                <td><a class='btn btn-primary btn-block btn-lg'href="#">MAÑANA</a></td>
-                                <td>
-                                    
-                                </td>
-                            </tr>
--->
-                          </tbody>
-                        </table>
-                    </div>
-
+                                            <a href="/administrador/modificarcita/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a>
                                             
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-
-            </div>
             </div>
         </div>  
     </div>

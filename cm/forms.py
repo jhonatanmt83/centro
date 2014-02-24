@@ -1,6 +1,8 @@
 from django import forms
+
 from cm.models import Perfil, Paciente, Paquete, Antecedente, Egreso, DiagnosticoReceta, DiagnosticoxReceta
-from cm.models import ClaseMedicamento, Medicamento, Frecuencia, Tratamiento
+from cm.models import ClaseMedicamento, Medicamento, Frecuencia, Tratamiento, UltimaCita
+
 from django.contrib.auth.models import Group
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms import TextInput, CheckboxInput
@@ -87,7 +89,16 @@ class EgresoForm(forms.ModelForm):
         widgets = {
             'pagouotro': forms.RadioSelect
         }
+
         
+
+class CitaForm(forms.ModelForm):
+    class Meta:
+        model= UltimaCita
+        exclude =['paciente','anterior']
+
+   
+
 
 class DiagnosticoxRecetaForm(forms.ModelForm):
     class Meta:
@@ -139,4 +150,3 @@ class TratamientoForm(forms.ModelForm):
 class DiagnosticoRecetaForm(forms.ModelForm):
     class Meta:
         model = DiagnosticoReceta
-    

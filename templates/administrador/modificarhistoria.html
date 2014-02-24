@@ -21,10 +21,10 @@
             <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
             <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
             <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
-            <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
+            <li ><a href="/administrador/listaclinica">HISTORIA CLINICA</a></li>
             <li ><a href="/administrador/receta">RECETAS</b></a></li>
             <li ><a href="/administrador/caja">CAJA</b></a></li>
-            <li ><a href="/administrador/cita">CITAS</b></a></li>
+            <li ><a href="/administrador/citas">CITAS</b></a></li>
           </ul>
         </div>
       </div>
@@ -39,7 +39,7 @@
                     {% csrf_token %}
                     <div class="col-xs-12">
                          <div class="col-xs-6 fondo-usuario img-rounded">
-                            <h4 class="titulosamarillo"><strong>DATOS PERSONALES</strong></h4>
+                            <h4 class="text-center titulosamarillo"><strong>DATOS PERSONALES</strong></h4>
                         
                             {% bootstrap_form formhistoria  layout="horizontal" %}
                             <input class="boton-guardar" type="submit" value="Guardar Datos">   
@@ -54,4 +54,51 @@
     </div>
 {% endblock %}
 {% block js_end %}
+    <script>
+        $(function () {
+            var input= $('.fecha_fur');
+            input.pickmeup({
+            format  : 'd/m/Y',
+            position: 'left',
+            before_show: function(){
+            input.pickmeup('set_date', input.val(), true);
+            },
+            change: function(formated){
+            input.val(formated);
+            }
+            });
+            });
+    </script><script>
+        $(function () {
+            var input= $('.fecha_finfur');
+            input.pickmeup({
+            format  : 'd/m/Y',
+            position: 'left',
+            before_show: function(){
+            input.pickmeup('set_date', input.val(), true);
+            },
+            change: function(formated){
+            input.val(formated);
+            }
+            });
+            });
+        function desactivar_edadfur () {
+            // body...
+            if($("#id_null_edadfur").is(':checked')){
+                $("#id_edadfur").attr("readonly","readonly");
+            }
+            else{
+                $("#id_edadfur").removeAttr("readonly");
+            }
+        }
+        function desactivar_ultimofur () {
+
+            if($("#id_null_ultimofur").is(':checked')){
+                $("#id_ultimofur").attr("readonly","readonly");
+            }
+            else{
+                $("#id_ultimofur").removeAttr("readonly");
+            }
+        }
+    </script>
 {% endblock %}
