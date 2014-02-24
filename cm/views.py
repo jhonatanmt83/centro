@@ -212,3 +212,23 @@ def recetas(request):
 def vista_egreso(request):
     formulario=EgresoForm()
     return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_diagnostico(request, codigo):
+    return render_to_response('administrador/receta_diagnostico.html',{},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_tratamiento(request, codigo):
+    return render_to_response('administrador/receta_tratamiento.html',{},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_modificar(request, codigo):
+    return render_to_response('administrador/receta_modificar.html',{},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_imprimir(request, codigo):
+    return render_to_response('administrador/receta_imprimir.html',{},context_instance=RequestContext(request))

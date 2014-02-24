@@ -25,7 +25,12 @@ urlpatterns = patterns('',
     url(r'^administrador/egreso/$', 'cm.views.vista_egreso', name='egresos'),
 
     url(r'^precio/paquete/(?P<codigo>\d+)/$', 'cm.views.precio_paquete', name='precio_paquete'),
-    url(r'^resultados/impresiones/$', 'resultado_impresiones', name='resultados_impreciones'), #2
+
+
+    url(r'^administrador/receta/diagnostico/(?P<codigo>\d+)/$', 'cm.views.receta_diagnostico', name='receta_diagnostico'),
+    url(r'^administrador/receta/tratamiento/(?P<codigo>\d+)/$', 'cm.views.receta_tratamiento', name='receta_tratamiento'),
+    url(r'^administrador/receta/modificar/(?P<codigo>\d+)/$', 'cm.views.receta_modificar', name='receta_modificar'),
+    url(r'^administrador/receta/imprimir/(?P<codigo>\d+)/$', 'cm.views.receta_imprimir', name='receta_imprimir'),
 
 
     url(r'^admin/', include(admin.site.urls)),
