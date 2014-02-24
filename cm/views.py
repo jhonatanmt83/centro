@@ -202,8 +202,16 @@ def examenescaja(request):
     
     suma_egreso=egreso.aggregate(Sum('monto'))
     suma_ingreso=examenes.aggregate(Sum('precio'))
-    
-    valor={'examenes':examenes,'egreso':egreso,'sumaegreso':suma_egreso,'sumaingreso':suma_ingreso}
+    if not egreso: 
+        sumar_egreso=0
+    else:
+        sumar_egreso=suma_egreso['monto__sum']
+    if not examenes: 
+        sumar_ingreso=0
+    else:
+        sumar_ingreso=suma_ingreso['precio__sum']
+    resta = sumar_ingreso - sumar_egreso
+    valor={'examenes':examenes,'egreso':egreso,'sumaegreso':suma_egreso,'sumaingreso':suma_ingreso, 'resta': resta}
     return render_to_response('administrador/caja.html',valor, context_instance=RequestContext(request))
 
 
@@ -231,8 +239,28 @@ def lista_historia_clinica(request):
     lista={'listahistoria':lista_clinica}
     return render_to_response('administrador/listahistoriaclinica.html',lista, context_instance=RequestContext(request))
 
-def vista_egreso(request):
 
+@administrador_login
+def receta_diagnostico(request, codigo):
+    return render_to_response('administrador/receta_diagnostico.html',{},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_tratamiento(request, codigo):
+    return render_to_response('administrador/receta_tratamiento.html',{},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_modificar(request, codigo):
+    return render_to_response('administrador/receta_modificar.html',{},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_imprimir(request, codigo):
+    return render_to_response('administrador/receta_imprimir.html',{},context_instance=RequestContext(request))
+
+
+def vista_egreso(request):
     if request.method == 'POST': # If the form has been submitted...
         form = EgresoForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
@@ -241,16 +269,10 @@ def vista_egreso(request):
             form.save()
             messages.success(request, 'monto de  %s creado'% (request.POST['monto']))
             form=EgresoForm()
-
-
-
     else:
         form = EgresoForm() # An unbound form
-    
-
     formulario  =   EgresoForm()
     return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
-
 
 
 def modi_historia_clinica(request, codigo):
@@ -260,4 +282,3 @@ def modi_historia_clinica(request, codigo):
         modificar.save()
 
     return render_to_response('administrador/modificarhistoria.html', {'formhistoria': modificar}, context_instance=RequestContext(request))
-

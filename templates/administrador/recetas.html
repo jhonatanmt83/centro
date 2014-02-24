@@ -47,7 +47,7 @@
                     <h3 class='text-center'>DNI: <strong>{{receta.paciente}}</strong></h3>
                     <h4 class='text-center'><strong>Laura Rodrigues cisnesros</strong></h4>
                     <div>
-                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target=".bs-modal-lg">Diagnostico</button>
+                        <button class="btn btn-primary btn-block" data-toggle="modal" id="diagnostico_button" value="{{receta.pk}}">Diagnostico</button>
 
                         <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
@@ -102,7 +102,7 @@
                           </div>
                         </div>
 
-                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target=".tratamiento-modal-lg">Tratamiento</button>
+                        <button class="btn btn-primary btn-block" data-toggle="modal" id="tratamiento_button" value="{{receta.pk}}">Tratamiento</button>
 
                         <div class="modal tratamiento-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
@@ -244,7 +244,7 @@
                         </div>
 
 
-                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target=".modificar-modal-lg">Modificar</button>
+                        <button class="btn btn-primary btn-block" data-toggle="modal" id="modificar_button" value="{{receta.pk}}">Modificar</button>
 
                         <div class="modal modificar-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
@@ -571,7 +571,7 @@
                         </div>
                         
                         
-                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target=".imprimir-modal-lg">VER E IMPRIMIR</button>
+                        <button class="btn btn-primary btn-block" data-toggle="modal" id="imprimir_button" value="{{receta.pk}}">VER E IMPRIMIR</button>
 
                         <div class="modal imprimir-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
@@ -658,4 +658,26 @@
     </div>
 {% endblock %}
 {% block js_end %}
+<script type="text/javascript">
+    $("#diagnostico_button").click(function() {
+        url_popup = "/administrador/receta/diagnostico/" + this.value;
+        ventana_diagnostico = window.open(url_popup,"Diagnostico",'height=500,width=800,resizable=yes,scrollbars=yes');
+        ventana_diagnostico.focus();
+    });
+    $("#tratamiento_button").click(function() {
+        url_popup = "/administrador/receta/tratamiento/" + this.value;
+        ventana_diagnostico = window.open(url_popup,"Tratamiento",'height=500,width=800,resizable=yes,scrollbars=yes');
+        ventana_diagnostico.focus();
+    });
+    $("#modificar_button").click(function() {
+        url_popup = "/administrador/receta/modificar/" + this.value;
+        ventana_diagnostico = window.open(url_popup,"Modificar",'height=500,width=800,resizable=yes,scrollbars=yes');
+        ventana_diagnostico.focus();
+    });
+    $("#imprimir_button").click(function() {
+        url_popup = "/administrador/receta/imprimir/" + this.value;
+        ventana_diagnostico = window.open(url_popup,"Imprimir",'height=500,width=800,resizable=yes,scrollbars=yes');
+        ventana_diagnostico.focus();
+    });
+</script>
 {% endblock %}
