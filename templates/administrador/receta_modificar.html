@@ -1,0 +1,97 @@
+{% extends 'basehistoriaclinica.html'%}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block js %}
+<script src="{% static 'js/jquery.confirm.js' %}"></script>
+{% endblock %}
+{% block contenido %}
+<div class="container">
+    {% csrf_token %}
+    <div class='row'>
+        <div class="col-md12">
+            <h3>Diagnosticos</h3>
+            {% for diagnostico in diagnosticos.diagnosticos.all %}
+            <li>{{ diagnostico.texto }} <a href="/administrador/receta/modificar/{{ receta.pk }}/diagnostico/{{diagnostico.pk}}" class='btn'>Editar</a> <a href="" onClick="DeleteDiagnostico({{ diagnosticos.pk }},{{ diagnostico.pk }});" class='btn confirmar'>Quitar</a></li>
+            {% endfor %}
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Tratamientos</h3>
+            <table class='table table-bordered '>
+                <thead class='panel-color'>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Medicamento</th>
+                        <th>Cantidad</th>
+                        <th>Dosis</th>
+                        <th>Frecuencia</th>
+                        <th>Duracion</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tratamiento in tratamientos %}
+                    <tr id='tratamiento_{{tratamiento.pk}}'>
+                        <td>{{ tratamiento.medicamento.clase }}</td>
+                        <td>{{ tratamiento.medicamento }}</td>
+                        <td>{{ tratamiento.cantidad }}</td>
+                        <td>{{ tratamiento.cantidaddosis }}</td>
+                        <td>{{ tratamiento.frecuencia }}</td>
+                        <td>{{ tratamiento.duracion }}</td>
+                        <td><a href="/administrador/receta/modificar/{{ receta.pk }}/tratamiento/{{tratamiento.pk}}"  class='btn'>Editar</a></td>
+                        <td><a href="" onClick="DeleteTratamiento({{ tratamiento.pk }}); return false;" class='btn'>Quitar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button class='close_popup btn'>Cerrar</button>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.close_popup').click(function() {
+        self.close();
+    });
+    function DeleteDiagnostico(id_diagnostico, id_diagnosticoreceta){
+        var confirmacion = confirm("¿Esta seguro de eliminar el dato?");
+        if ( confirmacion == true ){
+            $.ajax({
+                url: '/quitar/diagnostico/receta/',
+                async: false,
+                dataType:'json',
+                type:'POST',
+                data: {
+                    csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    "diagnostico":  id_diagnostico,
+                    "diagnosticoreceta":  id_diagnosticoreceta,
+                },
+                success: function(data) {
+                    location.reload()
+                }
+            });
+        }
+        return false;
+    }
+    function DeleteTratamiento(id_tratamiento){
+        var confirmacion = confirm("¿Esta seguro de eliminar el dato?");
+        if ( confirmacion == true ){
+            $.ajax({
+                url: '/eliminar/tratamiento/',
+                async: false,
+                dataType:'json',
+                type:'POST',
+                data: {
+                    csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    "eliminar":  id_tratamiento
+                },
+                success: function(data) {
+                    location.reload()
+                }
+            });
+        }
+        return false;
+    }
+</script>
+{% endblock%}

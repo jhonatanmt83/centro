@@ -4,43 +4,49 @@
 {% block contenido %}
 <div class="container">
     <div class="row">
-        <form class="form-horizontal" role="form" method='POST' action=''>
+        <form class="form-inline" role="form" method='POST' action=''>
             {% csrf_token %}
-            {% bootstrap_form form  layout="horizontal" %}
+            <div class="col-xs-12">
+            {% bootstrap_form form1  layout="inline" %}
+            </div>
+            <div class="col-xs-12">
+            {% bootstrap_form form2  layout="inline" %}
+            </div>
             <hr>
-            
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary">Agregar</button>
         </form>
-        <input type="text" placeholder="Nuevo diagnostico" required="required" id="texto_agregar">
-            <button class='add_diagnostico btn'>Agregar</button>
+        <div class="col-md-12">
+            <table class='table table-bordered '>
+                <thead class='panel-color'>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Medicamento</th>
+                        <th>Cantidad</th>
+                        <th>Dosis</th>
+                        <th>Frecuencia</th>
+                        <th>Duracion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tratamiento in tratamientos %}
+                    <tr>
+                        <td>{{ tratamiento.medicamento.clase }}</td>
+                        <td>{{ tratamiento.medicamento }}</td>
+                        <td>{{ tratamiento.cantidad }}</td>
+                        <td>{{ tratamiento.cantidaddosis }}</td>
+                        <td>{{ tratamiento.frecuencia }}</td>
+                        <td>{{ tratamiento.duracion }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button class='add_tratamiento btn'>Cerrar</button>
     </div>
 </div>
 <script type="text/javascript">
-    {% if cerrar %}
-    self.close();
-    {% endif %}
-    $('.add_diagnostico').click(function() {
-        $.ajax({
-            url: '/agregar/diagnostico/receta/',
-            async: false,
-            dataType:'json',
-            type:'POST',
-            data: {
-                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
-                "texto":  $('#texto_agregar').val()
-            },
-            success: function(data) {
-                $.each(data, function(i, val){
-                    console.log(val);
-                    id_diagnostico = val['id'];
-                    texto_diagnostico = val['texto'];
-                    $('#id_diagnosticos').append('<div class="checkbox"><label for="id_diagnosticos_'+id_diagnostico+'"><input id="id_diagnosticos_'+id_diagnostico+'" name="diagnosticos" placeholder="Diagnósticos" type="checkbox" value="'+id_diagnostico+'" checked="checked"> '+texto_diagnostico+'</label></div>');
-                    $('#texto_agregar').val("");
-                });
-                
-            }
-        });
-
+    $('.add_tratamiento').click(function() {
+        self.close();
     });
 </script>
 {% endblock%}

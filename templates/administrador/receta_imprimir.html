@@ -12,13 +12,16 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="col-md-6">
-						<h6>NOMBRES Y APELLIDOS : {{recetas_imp.nombres}}</h6>
-			    		<h6>EDAD : {{recetas_imp.edad}}</h6>
-			    		<h5><strong>DIAGNOSTICO : ENFERMEDAD PELVICA INFLAMATORIA / VULVOVAGINITIS</strong></h5>
+						<h6>NOMBRES Y APELLIDOS :{{receta_impresa.paciente.nombres}} </h6>
+			    		<h6>EDAD : {{receta_impresa.paciente.edad}} </h6>
+			    		{% for diagnostico in diagnosticos.diagnosticos.all %}
+			    		<h5><strong>DIAGNOSTICO : {{ diagnostico.texto }}</strong></h5>
+			    		{%endfor%}
 					</div>
 					<div class="col-md-6">
-						<h5 class='text-right'>HISTORIA CLINICA : {{recetas_imp.nrohistoria}}</h5>
-						<h5 class='text-right'>FECHA : {{recetas_imp.fecha}}</h5>
+						<h5 class='text-right'>HISTORIA CLINICA : {{receta_impresa.paciente.nrohistoria}}<strong> </strong></h5>
+						<h5 class='text-right'>FECHA :{{receta_impresa.paciente.fecha}} </h5>
+
 					</div>
 				</div>	
 			</div>
@@ -26,27 +29,13 @@
 			<table class='table table-bordered table-striped'>
 				<thead class="panel panel-color">
 					<tr>
-	    				<th>TRATAMIENTO</th>
-	    				<th>CANTIDAD</th>
+	    				<th class='text-center'>TRATAMIENTO</th>
+	    				<th class='text-center'>CANTIDAD</th>
 	    				<th class='text-center'>POSOLOGIA</th>
 	    			</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><strong>MICANAZOL 100mg + TINIDAZOL 150mg</strong> <br>FAMIDAL</td>
-						<td> <br>07 capsulas</td>
-						<td class='text-right'> Tomar 1 comprimido despues del desayuno por 07 dias</td>
-					</tr>
-					<tr>
-						<td><strong>MICANAZOL 100mg + TINIDAZOL 150mg</strong> <br>FAMIDAL</td>
-						<td> <br>07 capsulas</td>
-						<td class='text-right'> Tomar 1 comprimido despues del desayuno por 07 dias</td>
-					</tr>
-					<tr>
-						<td><strong>MICANAZOL 100mg + TINIDAZOL 150mg</strong> <br>FAMIDAL</td>
-						<td> <br>07 capsulas</td>
-						<td class='text-right'> Tomar 1 comprimido despues del desayuno por 07 dias</td>
-					</tr>
+
 					<tr>
 						<td><strong>MICANAZOL 100mg + TINIDAZOL 150mg</strong> <br>FAMIDAL</td>
 						<td> <br>07 capsulas</td>

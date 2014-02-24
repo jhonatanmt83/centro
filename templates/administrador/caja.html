@@ -23,7 +23,8 @@
             <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
             <li ><a href="/administrador/listaclinica">HISTORIA CLINICA</a></li>
             <li ><a href="/administrador/receta">RECETAS</b></a></li>
-            <li ><a href="/administrador/caja">CAJA</b></a></li>
+            <li class='active'><a href="/administrador/caja">CAJA</b></a></li>
+            <li ><a href="/administrador/egreso">EGRESO</b></a></li>
             <li ><a href="/administrador/citas">CITAS</b></a></li>
           </ul>
         </div>
@@ -33,7 +34,7 @@
 {% block contenido %}
     <div class="container grup-container">
         <div class="row">
-            <h3 class='text-center titulosamarillo'><strong>INGRESOS</strong> DEL DIA</h3>
+            <h4 class='text-center titulosamarillo'><strong>INGRESOS DEL DIA</strong> </h4>
             <div class="col-md-12">
                 
                 <div class="col-md-9 col-md-offset-1">
@@ -75,7 +76,7 @@
                  
             </div>
             <hr>
-            <h3 class='text-center titulosamarillo'><strong>EGRESOS</strong> DEL DIA</h3>
+            <h4 class='text-center titulosamarillo'><strong>EGRESOS DEL DIA</strong> </h4>
             <div class="col-md-12">
                 
                 <div class="col-md-9 col-md-offset-1">
@@ -121,9 +122,9 @@
         </div>
 
         
-        <div class="col-xs-2 col-xs-offset-6">
+        <div class="col-xs-2 col-xs-offset-6" style='margin-top: 9px'>
             
-            <button type="submit" class="boton-imprimir">Imprimir</button>
+            <a type="submit"  href='javascript:window.print()' class=" boton-imprimir">Imprimir</a>
         </div>            
     </div>
 {% endblock %}

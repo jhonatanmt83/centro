@@ -135,7 +135,7 @@ class Receta(models.Model):
         return unicode(str(self.paciente), 'utf8')
 
     def obtener_diagnostico(self):
-        return DiagnosticoxReceta.objects.filter(examen=self)[0]
+        return DiagnosticoxReceta.objects.filter(receta=self)[0]
 
 
 class DiagnosticoxReceta(models.Model):
@@ -160,6 +160,7 @@ class Tratamiento(models.Model):
         ('se', 'Semanas'),
         ('me', 'Meses'),
     )
+    receta = models.ForeignKey(Receta, verbose_name=u'Receta')
     medicamento = models.ForeignKey(Medicamento, verbose_name=u'Medicamento', related_name='tratamiento_medicamento')
     cantidad = models.IntegerField(verbose_name=u'Cantidad')
     cantidaddosis = models.IntegerField(verbose_name=u'Cantidad de dosis')
@@ -170,7 +171,7 @@ class Tratamiento(models.Model):
                                     default='di')
 
     def __unicode__(self):
-        return self.receta
+        return str(self.receta)
 
 
 BOOL_CHOICES = ((True, 'Pago de Personal'), (False, 'Otros pagos'))

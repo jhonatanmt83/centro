@@ -9,13 +9,15 @@ from centro.decoratos import registrador_login, evaluador_login, administrador_l
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 
 
-from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm, CitaForm
+from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm
+from cm.forms import DiagnosticoxRecetaForm, Tratamiento1Form, Tratamiento2Form, TratamientoM1Form, TratamientoM2Form
+from cm.forms import TratamientoForm, DiagnosticoRecetaForm, CitaForm
 from cm.forms import DiagnosticoxRecetaForm
 
 from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
-from cm.models import DiagnosticoxReceta, DiagnosticoReceta
+from cm.models import DiagnosticoxReceta, DiagnosticoReceta, Tratamiento
 
 from django.shortcuts import get_object_or_404
 
@@ -245,7 +247,8 @@ def lista_historia_clinica(request):
 @administrador_login
 def receta_diagnostico(request, codigo):
     cerrar = False
-    instancia = get_object_or_404(DiagnosticoxReceta, pk=codigo)
+    receta = get_object_or_404(Receta, pk=codigo)
+    instancia = receta.obtener_diagnostico()
     form = DiagnosticoxRecetaForm(request.POST or None, instance=instancia)
     if form.is_valid():
         form.save()
@@ -255,17 +258,63 @@ def receta_diagnostico(request, codigo):
 
 @administrador_login
 def receta_tratamiento(request, codigo):
-    return render_to_response('administrador/receta_tratamiento.html',{},context_instance=RequestContext(request))
+    receta = Receta.objects.get(pk=codigo)
+    if request.method=='POST':
+        instancia = Tratamiento(receta=receta)
+        formulario = TratamientoForm(request.POST, instance=instancia)
+        form1 = TratamientoM1Form(request.POST)
+        form2 = TratamientoM2Form(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            form1 = TratamientoM1Form()
+            form2 = TratamientoM2Form()
+        else:
+            print "error"
+        tratamientos = Tratamiento.objects.filter(receta=receta)
+    else:
+        form1 = TratamientoM1Form()
+        form2 = TratamientoM2Form()
+        tratamientos = Tratamiento.objects.filter(receta=receta)
+    return render_to_response('administrador/receta_tratamiento.html',{'form1': form1, 'form2': form2, 'tratamientos': tratamientos},context_instance=RequestContext(request))
 
 
 @administrador_login
 def receta_modificar(request, codigo):
-    return render_to_response('administrador/receta_modificar.html',{},context_instance=RequestContext(request))
+    receta = Receta.objects.get(pk=codigo)
+    tratamientos = Tratamiento.objects.filter(receta=receta)
+    diagnosticos = receta.obtener_diagnostico()
+    return render_to_response('administrador/receta_modificar.html',{'tratamientos': tratamientos, 'diagnosticos': diagnosticos, 'receta': receta},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_modificar_tratamiento(request, id_receta, id_tratamiento):
+    instancia = get_object_or_404(Tratamiento, pk=id_tratamiento)
+    receta = Receta.objects.get(pk=id_receta)
+    tratamiento = Tratamiento.objects.get(pk=id_tratamiento)
+    formulario = TratamientoForm(request.POST or None, instance=tratamiento)
+    if formulario.is_valid():
+        formulario.save()
+        return HttpResponseRedirect("/administrador/receta/modificar/"+str(id_receta))
+    return render_to_response('administrador/receta_modificar_tratamiento.html',{'formulario': formulario},context_instance=RequestContext(request))
+
+
+@administrador_login
+def receta_modificar_diagnostico(request, id_receta, id_diagnostico):
+    receta = Receta.objects.get(pk=id_receta)
+    diagnostico = DiagnosticoReceta.objects.get(pk=id_diagnostico)
+    formulario = DiagnosticoRecetaForm(request.POST or None, instance=diagnostico)
+    if formulario.is_valid():
+        formulario.save()
+        return HttpResponseRedirect("/administrador/receta/modificar/"+str(id_receta))
+    return render_to_response('administrador/receta_modificar_diagnostico.html',{'formulario': formulario},context_instance=RequestContext(request))
 
 
 @administrador_login
 def receta_imprimir(request, codigo):
-    return render_to_response('administrador/receta_imprimir.html',{},context_instance=RequestContext(request))
+    receta=Receta.objects.get(pk=codigo)
+    diagnosticos = receta.obtener_diagnostico()
+    medical = Tratamiento.objects.filter(receta=receta)
+    return render_to_response('administrador/receta_imprimir.html',{'receta_impresa': receta, 'diagnosticos':diagnosticos, 'medical':medical},context_instance=RequestContext(request))
 
 
 def vista_egreso(request):
@@ -317,3 +366,25 @@ def agregar_diagnostico(request):
     new_result.append(datos)
     return HttpResponse(json.dumps(new_result))
 
+
+def eliminar_tratamiento(request):
+    """Elimina el tratamiento"""
+    tratamiento = Tratamiento.objects.get(pk=request.POST['eliminar'])
+    tratamiento.delete()
+    new_result = []
+    datos = {}
+    new_result.append(datos)
+    return HttpResponse(json.dumps(new_result))
+
+
+def quitar_diagnostico_receta(request):
+    """Elimina el tratamiento"""
+    diagnostico = DiagnosticoxReceta.objects.get(pk=request.POST['diagnostico'])
+    diagnostico_receta = DiagnosticoReceta.objects.get(pk=request.POST['diagnosticoreceta'])
+    diagnostico.diagnosticos.remove(diagnostico_receta)
+    #diagnostico.save()
+    
+    new_result = []
+    datos = {}
+    new_result.append(datos)
+    return HttpResponse(json.dumps(new_result))
