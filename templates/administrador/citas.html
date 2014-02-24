@@ -34,27 +34,23 @@
     <div class="container grup-container">
         <div style="padding-top:70px;">
             <div class="row-fluid">
-            <div class="col-md-12">
-                <div class="row-fluid"> 
-
-                    <div class="panel panel-1">
-                        <table class="table table-bordered table-striped table-hover">
-                          
-                          <thead class="panel panel-color">
-                            <tr>
-                                <th>Historia Clinica</th>
-                                <th>Nombres y Apellidos</th>
-                                <th>Telefonos</th>
-                                <th>Fecha</th>
-                                <th>Dia</th>
-                                <th>Modificar</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                             {% for valor in cita %}
-                                <tr>
-                                   
-
+                <div class="col-md-12">
+                    <div class="row-fluid"> 
+                        <div class="panel panel-1">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead class="panel panel-color">
+                                    <tr>
+                                        <th class="texto-blanco texto-sombra text-center">Historia Clinica</th>
+                                        <th class="texto-blanco texto-sombra text-center">Nombres y Apellidos</th>
+                                        <th class="texto-blanco texto-sombra text-center">Telefonos</th>
+                                        <th class="texto-blanco texto-sombra text-center">Fecha</th>
+                                        <th class="texto-blanco texto-sombra text-center">Dia</th>
+                                        <th class="texto-blanco texto-sombra text-center">Modificar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for valor in cita %}
+                                    <tr>
                                         <td>{{valor.paciente.nrohistoria}}</td>
                                         <td>{{valor.paciente}}</td>
                                         <td>{{valor.paciente.telefono}}</td>
@@ -63,39 +59,14 @@
                                         <td>
                                             <button class="btn btn-success btn-block btn-lg" data-toggle="modal" data-target=".mod-modal-lg">MODIFICAR</button>
                                             
-                                        </td>  
-                                   
-                                </tr>
-                             {% endfor %}
-                         <!--
-                            <tr>
-                                <td>11231</td>
-                                <td>lucia torrres Campos</td>
-                                <td>#765752</td>
-                                <td>12 de novimebre 2014</td>
-                                <td><a class='btn btn-danger btn-block btn-lg'href="#">HOY</a></td>
-                                <td><a class='btn btn-success btn-block btn-lg'href="#">MODIFICAR</a></td>  
-                            </tr>
-                            
-                            <tr>
-                                <td>11231</td>
-                                <td>lucia torrres Campos</td>
-                                <td>#765752</td>
-                                <td>12 de novimebre 2014</td>
-                                <td><a class='btn btn-primary btn-block btn-lg'href="#">MAÑANA</a></td>
-                                <td>
-                                    
-                                </td>
-                            </tr>
--->
-                          </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-
-                                            
                 </div>
-
-            </div>
             </div>
         </div>  
     </div>
