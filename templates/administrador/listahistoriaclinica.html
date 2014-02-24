@@ -51,7 +51,7 @@
         			<td>{{valor.nombres }}</td>
         			<td>{{valor.telefono }}</td>
         			<td>{{valor.fecha|date:"l d F \a \l\a\s f a"}}</td>
-        			<td><a href="/administrador/historiaclinica/{{valor.nrohistoria }}" class="btn btn btn-success btn-lg active" role="button">Imprimir</a></td>
+        			<td><a href="/administrador/historiaclinica/{{valor.nrohistoria }}" class="btn btn btn-success btn-lg active boton_imprimir" role="button">Imprimir</a></td>
         			<td><a href="/administrador/modificarhistoria/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a></td>
         			
         		</tr>
@@ -61,4 +61,12 @@
     </div>
 {% endblock %}
 {% block js_end %}
+<script type="text/javascript">
+    $(".boton_imprimir").click(function() {
+        url_popup = this.href;
+        ventana_diagnostico = window.open(url_popup,"Imprimir",'height=500,width=800,resizable=yes,scrollbars=yes');
+        ventana_diagnostico.focus();
+        return false;
+    });
+</script>
 {% endblock %}

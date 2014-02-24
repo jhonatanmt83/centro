@@ -7,10 +7,14 @@
         <form class="form-inline" role="form" method='POST' action=''>
             {% csrf_token %}
             <div class="col-xs-12">
-            {% bootstrap_form form1  layout="inline" %}
+                {% for elemento in form1%}
+                    {{ elemento.label}} {{elemento}}
+                {% endfor%}
             </div>
             <div class="col-xs-12">
-            {% bootstrap_form form2  layout="inline" %}
+                {% for elemento in form2%}
+                    {{elemento.label}} {{elemento}}
+                {% endfor%}
             </div>
             <hr>
             <button type="submit" class="btn btn-primary">Agregar</button>
