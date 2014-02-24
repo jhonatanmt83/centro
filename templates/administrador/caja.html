@@ -33,18 +33,18 @@
 {% block contenido %}
     <div class="container grup-container">
         <div class="row">
-            <h3 class='text-center'><strong>INGRESOS</strong> DEL DIA</h3>
+            <h3 class='text-center titulosamarillo'><strong>INGRESOS</strong> DEL DIA</h3>
             <div class="col-md-12">
                 
                 <div class="col-md-9 col-md-offset-1">
                     <table class='table table-bordered table-striped table-hover'>
                         <thead class='panel panel-color'>
                             <tr>
-                                <th>Nro HIstoria</th>
-                                <th>NOMBRES Y APELLIDOS</th>
-                                <th>TIPO DE EXAMEN</th>
-                                <th>FECHA</th>
-                                <th>MONTO</th>
+                                <th class="texto-blanco texto-sombra">Nro HIstoria</th>
+                                <th class="texto-blanco texto-sombra">NOMBRES Y APELLIDOS</th>
+                                <th class="texto-blanco texto-sombra">TIPO DE EXAMEN</th>
+                                <th class="texto-blanco texto-sombra">FECHA</th>
+                                <th class="texto-blanco texto-sombra">MONTO</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,25 +68,26 @@
                     <div class="form-group">
                             <label  class="col-sm-2 control-label">TOTAL</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control"  placeholder="Ingresa DNI">
+                            <label for="disabledTextInput"></label>
+                                <input type="text" id="disabledTextInput"class="form-control"  placeholder="{{ sumaingreso.precio__sum}}">
                             </div>
                     </div>
                 </form>
-                 <p>{{ sumaingreso.precio__sum}}</p>
+                 
             </div>
             <hr>
-            <h3 class='text-center'><strong>EGRESOS</strong> DEL DIA</h3>
+            <h3 class='text-center titulosamarillo'><strong>EGRESOS</strong> DEL DIA</h3>
             <div class="col-md-12">
                 
                 <div class="col-md-9 col-md-offset-1">
                     <table class='table table-bordered table-striped table-hover'>
                         <thead class='panel panel-color'>
                             <tr>
-                                <th>DNI</th>
-                                <th>NOMBRES Y APELLIDOS</th>
-                                <th>DESCRIPCION</th>
-                                <th>FECHA</th>
-                                <th>MONTO</th>
+                                <th class="texto-blanco texto-sombra">DNI</th>
+                                <th class="texto-blanco texto-sombra">NOMBRES Y APELLIDOS</th>
+                                <th class="texto-blanco texto-sombra">DESCRIPCION</th>
+                                <th class="texto-blanco texto-sombra">FECHA</th>
+                                <th class="texto-blanco texto-sombra">MONTO</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,7 +111,7 @@
                     <div class="form-group">
                             <label  class="col-sm-2 control-label">TOTAL</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control"  placeholder="Ingresa DNI">
+                                <input type="text" class="form-control"  placeholder="{{ sumaegreso.monto__sum}}">
                             </div>
                     </div>
                 </form>
@@ -118,14 +119,9 @@
         </div>
         
         <div class="col-xs-2 col-xs-offset-6">
-            <p>{{ sumaegreso.monto__sum}}</p>
-            <button type="submit" class="btn btn-primary btn-lg">Imprimir</button>
-        </div>
-
-        <hr>
-
-        
             
+            <button type="submit" class="btn btn-primary btn-lg">Imprimir</button>
+        </div>            
     </div>
 {% endblock %}
 {% block js_end %}

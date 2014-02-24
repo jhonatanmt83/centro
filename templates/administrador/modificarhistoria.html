@@ -54,4 +54,51 @@
     </div>
 {% endblock %}
 {% block js_end %}
+    <script>
+        $(function () {
+            var input= $('.fecha_fur');
+            input.pickmeup({
+            format  : 'd/m/Y',
+            position: 'left',
+            before_show: function(){
+            input.pickmeup('set_date', input.val(), true);
+            },
+            change: function(formated){
+            input.val(formated);
+            }
+            });
+            });
+    </script><script>
+        $(function () {
+            var input= $('.fecha_finfur');
+            input.pickmeup({
+            format  : 'd/m/Y',
+            position: 'left',
+            before_show: function(){
+            input.pickmeup('set_date', input.val(), true);
+            },
+            change: function(formated){
+            input.val(formated);
+            }
+            });
+            });
+        function desactivar_edadfur () {
+            // body...
+            if($("#id_null_edadfur").is(':checked')){
+                $("#id_edadfur").attr("readonly","readonly");
+            }
+            else{
+                $("#id_edadfur").removeAttr("readonly");
+            }
+        }
+        function desactivar_ultimofur () {
+
+            if($("#id_null_ultimofur").is(':checked')){
+                $("#id_ultimofur").attr("readonly","readonly");
+            }
+            else{
+                $("#id_ultimofur").removeAttr("readonly");
+            }
+        }
+    </script>
 {% endblock %}
