@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block title %}Adminstrador - Crear Nuevo Usuario{% endblock %}
+{% block css %}
+{% endblock %}
+{% block menu %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/administrador/">SISTEMA DE RECETAS</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
+            <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
+            <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
+            <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
+            <li ><a href="/administrador/receta">RECETAS</b></a></li>
+            <li ><a href="/administrador/caja">CAJA</b></a></li>
+            <li ><a href="/administrador/cita">CITAS</b></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="container">
+        <div class="row">
+            {% bootstrap_messages %}
+            <div class="col-xs-12">
+                <form class="form-horizontal" role="form" method='POST' action=''>
+                    {% csrf_token %}
+                    <div class="col-xs-12">
+                        <h4><strong>DATOS PERSONALES</strong></h4>
+                        <hr>
+                        <div class="col-xs-6 col-xs-offset-1">
+                            {% bootstrap_form nueva_cita  layout="horizontal" %}
+                        </div>
+                    </div>
+                    <input type="submit" value="Guardar Datos">   
+                </form>
+            </div>
+        </div> 
+    </div>
+{% endblock %}
+{% block js_end %}
+{% endblock %}
