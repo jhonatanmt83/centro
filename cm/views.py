@@ -311,7 +311,13 @@ def receta_modificar_diagnostico(request, id_receta, id_diagnostico):
 
 @administrador_login
 def receta_imprimir(request, codigo):
-    return render_to_response('administrador/receta_imprimir.html',{},context_instance=RequestContext(request))
+    receta=Receta.objects.get(pk=codigo)
+    diagnosticos = receta.obtener_diagnostico()
+    tratamientos = Tratamiento.objects.filter(receta=receta)
+    cita = UltimaCita.objects.filter(paciente=receta.paciente).order_by('-pk')
+    if cita:
+        cita = cita[0]
+    return render_to_response('administrador/receta_imprimir.html',{'receta_impresa': receta, 'diagnosticos':diagnosticos, 'tratamientos':tratamientos, 'cita': cita},context_instance=RequestContext(request))
 
 
 def vista_egreso(request):

@@ -12,13 +12,16 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="col-md-6">
-						<h6>NOMBRES Y APELLIDOS : </h6>
-			    		<h6>EDAD : </h6>
-			    		<h5><strong>DIAGNOSTICO : </strong></h5>
+						<h6>NOMBRES Y APELLIDOS :{{receta_impresa.paciente.nombres}} </h6>
+			    		<h6>EDAD : {{receta_impresa.paciente.edad}} </h6>
+			    		{% for diagnostico in diagnosticos.diagnosticos.all %}
+			    		<h5><strong>DIAGNOSTICO : {{ diagnostico.texto }}</strong></h5>
+			    		{%endfor%}
 					</div>
 					<div class="col-md-6">
-						<h5 class='text-right'>HISTORIA CLINICA : <strong> </strong></h5>
-						<h5 class='text-right'>FECHA : </h5>
+						<h5 class='text-right'>HISTORIA CLINICA : {{receta_impresa.paciente.nrohistoria}}<strong> </strong></h5>
+						<h5 class='text-right'>FECHA :{{receta_impresa.paciente.fecha}} </h5>
+
 					</div>
 				</div>	
 			</div>
@@ -32,26 +35,13 @@
 	    			</tr>
 				</thead>
 				<tbody>
+					{% for tratamiento in tratamientos %}
 					<tr>
-						<td><strong>MICANAZOL 100mg + TINIDAZOL 150mg</strong> <br>FAMIDAL</td>
-						<td> <br>07 capsulas</td>
-						<td class='text-right'> Tomar 1 comprimido despues del desayuno por 07 dias</td>
+						<td><strong>{{ tratamiento.medicamento.nombre }}</strong> <br>{{ tratamiento.medicamento.nombre_comer }}</td>
+						<td> <br>{{ tratamiento.cantidad }} {{ tratamiento.medicamento.clase }}</td>
+						<td class='text-right'> Tomar {{ tratamiento.cantidaddosis }} {{ tratamiento.medicamento.clase }} cada {{ tratamiento.frecuencia }} durante {{ tratamiento.duracion }} {{ tratamiento.get_tipoduracion_display }}</td>
 					</tr>
-					<tr>
-						<td><strong>MICANAZOL 100mg + TINIDAZOL 150mg</strong> <br>FAMIDAL</td>
-						<td> <br>07 capsulas</td>
-						<td class='text-right'> Tomar 1 comprimido despues del desayuno por 07 dias</td>
-					</tr>
-					<tr>
-						<td><strong>MICANAZOL 100mg + TINIDAZOL 150mg</strong> <br>FAMIDAL</td>
-						<td> <br>07 capsulas</td>
-						<td class='text-right'> Tomar 1 comprimido despues del desayuno por 07 dias</td>
-					</tr>
-					<tr>
-						<td><strong>MICANAZOL 100mg + TINIDAZOL 150mg</strong> <br>FAMIDAL</td>
-						<td> <br>07 capsulas</td>
-						<td class='text-right'> Tomar 1 comprimido despues del desayuno por 07 dias</td>
-					</tr>
+					{% endfor %}
 				</tbody>
 				
 			</table>
@@ -64,7 +54,7 @@
 					</div>
 					
 					<div class="col-md-4 col-md-offset-2">
-						<h5><strong>Proxima Cita</strong>: 12 de Abril 2014</h5>
+						<h5><strong>Proxima Cita</strong>: {{ cita.proximo }}</h5>
 					</div>
 					
 
