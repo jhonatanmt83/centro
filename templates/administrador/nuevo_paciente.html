@@ -37,7 +37,7 @@
     </nav>
 {% endblock %}
 {% block contenido %}
-<div class="container">
+<div class="container grup-container">
         
         <div class="row">
             {% bootstrap_messages %}
@@ -45,7 +45,7 @@
                 <form class="form-horizontal" role="form" method='POST' action=''>
                     {% csrf_token %}
                     <div class="col-xs-12">
-                        <h4><strong>DATOS PERSONALES</strong></h4>
+                        <h4 class="titulosamarillo text-center"><strong>DATOS PERSONALES</strong></h4>
                         <hr>
                         <div class="col-xs-6 col-xs-offset-1">
                             {% bootstrap_form formulario1  layout="horizontal" %}
@@ -56,12 +56,12 @@
                     </div>
                     <div class="col-xs-12">
                         <div class="col-xs-6 col-xs-offset-1">
-                            <h4><strong>PAQUETE DE EXAMENES</strong></h4>                            
+                            <h4 class="titulosamarillo text-center"><strong>PAQUETE DE EXAMENES</strong></h4>                            
                             <hr>
                             {% bootstrap_form paquetesform  layout="horizontal" %}                 
                         </div>
                         <div class="col-xs-5">
-                            <h4><strong>COSTO DE EXAMENES</strong></h4>
+                            <h4 class="titulosamarillo text-center"><strong>COSTO DE EXAMENES</strong></h4>
                             <hr>
                             <div class="form-group">
                                 <label  class="col-sm-4 control-label">MONTO S/.</label>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-xs-12">
                         <div class="col-xs-6 col-xs-offset-1">
-                            <h4><strong>ANTECEDENTES PERSONALES</strong></h4>
+                            <h4 class="titulosamarillo text-center"><strong>ANTECEDENTES PERSONALES</strong></h4>
                             <hr>
                             {% bootstrap_form antecedentesform  layout="horizontal" %}
                         </div>
@@ -83,7 +83,7 @@
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="form-group navbar-center">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Guardar PAGO y DATOS</button>
+                                    <button type="submit" class="boton-guardar">Guardar PAGO y DATOS</button>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
             var input= $('.fecha_fur');
             input.pickmeup({
             format  : 'd/m/Y',
-            position: 'right',
+            position: 'left',
             before_show: function(){
             input.pickmeup('set_date', input.val(), true);
             },
@@ -214,7 +214,7 @@
             var input= $('.fecha_finfur');
             input.pickmeup({
             format  : 'd/m/Y',
-            position: 'right',
+            position: 'left',
             before_show: function(){
             input.pickmeup('set_date', input.val(), true);
             },

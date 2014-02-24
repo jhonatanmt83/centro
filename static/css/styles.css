@@ -1,6 +1,6 @@
 body{
 /*background-color: rgb(27, 26, 26);*/
-background-image: url(../img/fonditos.jpg);
+/*background-image: url(../img/fonditos.jpg);*/
 background-size: cover;
 
 
@@ -35,12 +35,12 @@ img:hover{
 	border: 1px solid #CFCACA;
 	border-radius: 7px;
 }
-.panel-color{
+/*.panel-color{
 	background-color: #058177;
 	color: #0BC7B0;
 	border-right: 7px;
 	
-}
+}*/
 
 
 .log{
