@@ -21,10 +21,10 @@
             <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
             <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
             <li ><a href="/administrador/examen">NUEVO EXAMEN</a></li>
-            <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
+            <li ><a href="/administrador/listaclinica">HISTORIA CLINICA</a></li>
             <li ><a href="/administrador/receta">RECETAS</b></a></li>
             <li ><a href="/administrador/caja">CAJA</b></a></li>
-            <li ><a href="/administrador/cita">CITAS</b></a></li>
+            <li ><a href="/administrador/citas">CITAS</b></a></li>
           </ul>
         </div>
       </div>
@@ -32,9 +32,11 @@
 {% endblock %}
 {% block contenido %}
     <div class="container grup-container">
-        <div style="padding-top:70px;">
+        <div>
             <div class="row-fluid">
+
                 <div class="col-md-12">
+                    <h2 class='text-center'><strong>Citas programadas para <button class='btn btn-danger' disabled='disabled'>HOY</button> y <button class='btn btn-primary ' disabled='disabled'>MAÑANA</button></strong></h2> 
                     <div class="row-fluid"> 
                         <div class="panel panel-1">
                             <table class="table table-bordered table-striped table-hover">
@@ -51,13 +53,14 @@
                                 <tbody>
                                 {% for valor in cita %}
                                     <tr>
+
                                         <td>{{valor.paciente.nrohistoria}}</td>
                                         <td>{{valor.paciente}}</td>
                                         <td>{{valor.paciente.telefono}}</td>
                                         <td>{{valor.proximo}}</td>
                                         <td><a class='btn btn-danger btn-block btn-lg' disabled='disabled' href="#">HOY</a></td>
                                         <td>
-                                            <button class="btn btn-success btn-block btn-lg" data-toggle="modal" data-target=".mod-modal-lg">MODIFICAR</button>
+                                            <a href="/administrador/modificarcita/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a>
                                             
                                         </td>
                                     </tr>
