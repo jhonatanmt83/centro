@@ -33,7 +33,7 @@
 				<tr>
 					<td><strong>{{ tratamiento.medicamento.nombre }}</strong> <br>{{ tratamiento.medicamento.nombre_comer }}</td>
 					<td> <br>{{ tratamiento.cantidad }} {{ tratamiento.medicamento.clase }}</td>
-					<td class='text-right'> Tomar {{ tratamiento.cantidaddosis }} {{ tratamiento.medicamento.clase }} cada {{ tratamiento.frecuencia }} durante {{ tratamiento.duracion }} {{ tratamiento.get_tipoduracion_display }}</td>
+					<td class='text-right'> {{ tratamiento.cantidaddosis }} {{ tratamiento.medicamento.clase }} cada {{ tratamiento.frecuencia }} durante {{ tratamiento.duracion }} {{ tratamiento.get_tipoduracion_display }}</td>
 				</tr>
 				{% endfor %}
 			</tbody>
