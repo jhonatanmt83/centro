@@ -11,7 +11,7 @@
         <div class="col-md12">
             <h3>Diagnosticos</h3>
             {% for diagnostico in diagnosticos.diagnosticos.all %}
-            <li>{{ diagnostico.texto }} <a href="/administrador/receta/modificar/{{ receta.pk }}/diagnostico/{{diagnostico.pk}}" class='btn btn-primary'>Editar</a> <a href="" onClick="DeleteDiagnostico({{ diagnosticos.pk }},{{ diagnostico.pk }});" class='btn btn-danger confirmar'>Quitar</a></li>
+            <li>{{ diagnostico.texto }} <a href="/administrador/receta/modificar/{{ receta.pk }}/diagnostico/{{diagnostico.pk}}" class='btn btn-primary'>Editar</a> <a href="" onClick="DeleteDiagnostico({{ diagnosticos.pk }},{{ diagnostico.pk }});" class='btn btn-danger confirmar'>Quitar</a></li><br>
             {% endfor %}
 
         </div>
