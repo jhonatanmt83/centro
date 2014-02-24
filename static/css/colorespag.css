@@ -131,7 +131,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', end
 }
 
 .monto-total{
-	background: #608B00;
+	background: #608B00;	
 	color: white;
 	font-weight: 900;
 	letter-spacing: 15px;
@@ -150,12 +150,66 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', end
 }
 
 .boton-imprimir:hover{
-	background: rgb(139, 216, 78);
-	color: rgb(255, 255, 255);
+	background: rgb(18, 146, 0);
+	border: 3px solid rgba(77, 207, 83, 0.71) !important;
+	border-radius: 14px !important;
+	color: white;
+	font-weight: 900 !important;
+	}
+
+.boton-verde{
+	background: rgb(18, 146, 0);
+	border: 3px solid rgba(77, 207, 83, 0.71) !important;
+	border-radius: 14px !important;
+	color: white;
+	font-weight: 900 !important;
+}
+.boton-rojo{
+	background: rgb(167, 36, 3);
+	border: 3px solid rgba(255, 187, 187, 0.71) !important;
+	border-radius: 14px !important;
+	color: white;
+	font-weight: 900 !important;
 
 }
+.boton-orange{
+	background: rgb(241, 157, 3);
+	border: 3px solid rgba(255, 234, 202, 0.71) !important;
+	border-radius: 14px !important;
+	color: white;
+	font-weight: 900 !important;
+}
+.boton-azul{
+background: rgb(19, 162, 110);
+border: 3px solid rgba(224, 255, 239, 0.71) !important;
+	border-radius: 14px !important;
+	color: white;
+	font-weight: 900 !important;
+}
 
+.boton-verde:hover{
+	border-radius: 10px !important;
+	color: white !important;
+	font-weight: 300 !important;
+}
+.boton-rojo:hover{
+	border-radius: 10px !important;
+	color: white !important;
+	font-weight: 300 !important;
+}
+
+.boton-orange:hover{
+	border-radius: 10px !important;
+	color: white !important;
+	font-weight: 300 !important;
+}
+.boton-azul:hover{
+	border-radius: 10px !important;
+	color: white !important;
+	font-weight: 300 !important;
+}
 .imagen-egreso{
 	max-width: 100%;
 	min-height: 80%;
+
 }

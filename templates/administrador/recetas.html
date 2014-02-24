@@ -59,10 +59,10 @@
                             <tr>
                                 <td>{{receta.paciente.dni}}</td>
                                 <td>{{ receta.paciente}}</td>
-                                <td><button class="btn btn-primary btn-block diagnostico_button" data-toggle="modal" id="diagnostico_button" value="{{receta.pk}}">Diagnostico</button></td>
-                                <td> <button class="btn btn-primary btn-block tratamiento_button" data-toggle="modal" id="tratamiento_button" value="{{receta.pk}}">Tratamiento</button></td>
-                                <td> <button class="btn btn-primary btn-block modificar_button" data-toggle="modal" id="modificar_button" value="{{receta.pk}}">Modificar</button></td>
-                                <td><button class="btn btn-primary btn-block imprimir_button" data-toggle="modal" id="imprimir_button" value="{{receta.pk}}">VER E IMPRIMIR</button></td>
+                                <td><button class="btn boton-verde btn-block" data-toggle="modal" id="diagnostico_button" value="{{receta.pk}}">Diagnostico</button></td>
+                                <td> <button class="btn boton-rojo btn-block" data-toggle="modal" id="tratamiento_button" value="{{receta.pk}}">Tratamiento</button></td>
+                                <td> <button class="btn boton-orange btn-block" data-toggle="modal" id="modificar_button" value="{{receta.pk}}">Modificar</button></td>
+                                <td><button class="btn boton-azul btn-block" data-toggle="modal" id="imprimir_button" value="{{receta.pk}}">VER E IMPRIMIR</button></td>
                             </tr>
                         {% endfor %}
                     </tbody>
