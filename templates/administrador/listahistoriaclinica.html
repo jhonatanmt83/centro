@@ -24,7 +24,7 @@
             <li ><a href="/administrador/historia">HISTORIA CLINICA</a></li>
             <li ><a href="/administrador/receta">RECETAS</b></a></li>
             <li ><a href="/administrador/caja">CAJA</b></a></li>
-            <li ><a href="/administrador/citas">CITAS</b></a></li>
+            <li ><a href="/administrador/cita">CITAS</b></a></li>
           </ul>
         </div>
       </div>
@@ -32,22 +32,32 @@
 {% endblock %}
 {% block contenido %}
     <div class="container">
-        <div class="row">
-            <h3 class='text-center'><strong>REGISTRAR EGRESOS DEL DIA</strong> </h3>
-            <hr>
-            {% bootstrap_messages %}
-            <div class="col-xs-6 col-xs-offset-2">
-                <form class="form-horizontal " action=' ' method='POST'>
+        <table class='table table-striped'>
+        	<thead class="panel panel-color ">
+        		<tr>
+        			<th class="text-center"><strong>NRO HISTORIA CLINICA</strong></th>
+        			<th class="text-center"><strong>NOMBRES Y APELLIDOS</strong></th>
+        			<th class="text-center"><strong>TELEFONO</strong></th>
+        			<th class="text-center"><strong>FECHA</strong></th>
+        			<th></th>
+        			<th></th>
 
-                    {% csrf_token %}
-                    {% bootstrap_form formulario  layout="horizontal" %}
-                    <input class='btn btn-primary' type='submit' value='submit'>
-                </form>
-            </div>
-           
-            
-        </div>
-            
+        		</tr>
+        	</thead>
+        	<tbody>
+        	{% for valor in listahistoria%}
+        		<tr>
+        			<td>{{valor.nrohistoria }}</td>
+        			<td>{{valor.nombres }}</td>
+        			<td>{{valor.telefono }}</td>
+        			<td>{{valor.fecha|date:"l d F \a \l\a\s f a"}}</td>
+        			<td><a href="/administrador/historiaclinica/{{valor.nrohistoria }}" class="btn btn btn-success btn-lg active" role="button">Imprimir</a></td>
+        			<td><a href="/administrador/modificarhistoria/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a></td>
+        			
+        		</tr>
+        	{%endfor%}	
+        	</tbody>
+        </table>
     </div>
 {% endblock %}
 {% block js_end %}

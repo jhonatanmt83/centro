@@ -2,14 +2,18 @@
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
+from django.db.models import Sum
+
+
 from centro.decoratos import registrador_login, evaluador_login, administrador_login
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 
 from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm
 from django.contrib.auth.models import User, Group
 
-from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta
+from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
 
+from django.shortcuts import get_object_or_404
 
 
 from django.contrib import messages
@@ -194,9 +198,12 @@ def citas(request):
 def examenescaja(request):
     examenes = Examen.objects.filter(fecha = date.today())
     
-    egreso = Egreso.objects.all()
-    valor={'examenes':examenes,'egreso':egreso}
-
+    egreso = Egreso.objects.filter(fecha=date.today())
+    
+    suma_egreso=egreso.aggregate(Sum('monto'))
+    suma_ingreso=examenes.aggregate(Sum('precio'))
+    
+    valor={'examenes':examenes,'egreso':egreso,'sumaegreso':suma_egreso,'sumaingreso':suma_ingreso}
     return render_to_response('administrador/caja.html',valor, context_instance=RequestContext(request))
 
 
@@ -209,9 +216,20 @@ def recetas(request):
     return render_to_response('administrador/recetas.html',{'receta':receta}, context_instance=RequestContext(request))
 
 @administrador_login
-def vista_egreso(request):
-    formulario=EgresoForm()
-    return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
+
+def historiaclinica(request, codigo):
+    historiaclinica = Paciente.objects.filter(nrohistoria=codigo)
+    if historiaclinica:
+        historiaclinica=historiaclinica[0]
+
+    return render_to_response('administrador/historiaclinica.html', {'historiaclinicas':historiaclinica}, context_instance=RequestContext(request))
+
+
+@administrador_login
+def lista_historia_clinica(request):
+    lista_clinica = Paciente.objects.all()
+    lista={'listahistoria':lista_clinica}
+    return render_to_response('administrador/listahistoriaclinica.html',lista, context_instance=RequestContext(request))
 
 
 @administrador_login
@@ -232,3 +250,27 @@ def receta_modificar(request, codigo):
 @administrador_login
 def receta_imprimir(request, codigo):
     return render_to_response('administrador/receta_imprimir.html',{},context_instance=RequestContext(request))
+
+
+def vista_egreso(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = EgresoForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # Process the data in form.cleaned_data
+            # ...
+            form.save()
+            messages.success(request, 'monto de  %s creado'% (request.POST['monto']))
+            form=EgresoForm()
+    else:
+        form = EgresoForm() # An unbound form
+    formulario  =   EgresoForm()
+    return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
+
+
+def modi_historia_clinica(request, codigo):
+    instancia = get_object_or_404(Paciente, pk=codigo)
+    modificar = PacienteForm(request.POST or None, instance=instancia)
+    if modificar.is_valid():
+        modificar.save()
+
+    return render_to_response('administrador/modificarhistoria.html', {'formhistoria': modificar}, context_instance=RequestContext(request))
