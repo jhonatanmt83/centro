@@ -327,7 +327,7 @@ def vista_egreso(request):
             # Process the data in form.cleaned_data
             # ...
             form.save()
-            messages.success(request, 'monto de  %s creado'% (request.POST['monto']))
+            messages.success(request, 'monto de  %s Nuevos Soles generado '% (request.POST['monto']))
             form=EgresoForm()
     else:
         form = EgresoForm() # An unbound form

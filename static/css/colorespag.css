@@ -167,3 +167,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', end
 .boton-azul{
 	background: rgb(7, 7, 117);
 }
+
+.imagen-egreso{
+	max-width: 100%;
+	min-height: 80%;
+
+}

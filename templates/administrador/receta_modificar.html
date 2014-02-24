@@ -11,7 +11,7 @@
         <div class="col-md12">
             <h3>Diagnosticos</h3>
             {% for diagnostico in diagnosticos.diagnosticos.all %}
-            <li>{{ diagnostico.texto }} <a href="/administrador/receta/modificar/{{ receta.pk }}/diagnostico/{{diagnostico.pk}}" class='btn'>Editar</a> <a href="" onClick="DeleteDiagnostico({{ diagnosticos.pk }},{{ diagnostico.pk }});" class='btn confirmar'>Quitar</a></li>
+            <li>{{ diagnostico.texto }} <a href="/administrador/receta/modificar/{{ receta.pk }}/diagnostico/{{diagnostico.pk}}" class='btn btn-primary'>Editar</a> <a href="" onClick="DeleteDiagnostico({{ diagnosticos.pk }},{{ diagnostico.pk }});" class='btn btn-danger confirmar'>Quitar</a></li>
             {% endfor %}
 
         </div>
@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <h3>Tratamientos</h3>
             <table class='table table-bordered '>
-                <thead class='panel-color'>
+                <thead class='panel panel-color'>
                     <tr>
                         <th>Tipo</th>
                         <th>Medicamento</th>
@@ -40,8 +40,8 @@
                         <td>{{ tratamiento.cantidaddosis }}</td>
                         <td>{{ tratamiento.frecuencia }}</td>
                         <td>{{ tratamiento.duracion }}</td>
-                        <td><a href="/administrador/receta/modificar/{{ receta.pk }}/tratamiento/{{tratamiento.pk}}"  class='btn'>Editar</a></td>
-                        <td><a href="" onClick="DeleteTratamiento({{ tratamiento.pk }}); return false;" class='btn'>Quitar</a></td>
+                        <td><a href="/administrador/receta/modificar/{{ receta.pk }}/tratamiento/{{tratamiento.pk}}"  class='btn btn-primary'>Editar</a></td>
+                        <td><a href="" onClick="DeleteTratamiento({{ tratamiento.pk }}); return false;" class='btn btn-danger'>Quitar</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

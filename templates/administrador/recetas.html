@@ -41,6 +41,7 @@
         </div>
 
         <div class="col-md-12">
+<<<<<<< HEAD
             {% for receta in recetas %}
             <div class="col-md-3">
                 <div class="thumbnail">
@@ -67,8 +68,37 @@
                         
                     </div>
                 </div>  
+=======
+            
+            <div class="col-md-12">
+                <table class='table table-bordered table-striped table-hover'>
+                    <thead class='panel panel-color'>
+                        <tr>
+                            <th>DNI</th>
+                            <th>PACIENTE</th>
+                            <th>DIAGNOSTICO</th>
+                            <th>TRATAMIENTO</th>
+                            <th>MODIFICAR</th>
+                            <th>IMPRIMIR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for receta in recetas %}
+                            <tr>
+                                <td>{{receta.paciente.dni}}</td>
+                                <td>{{ receta.paciente}}</td>
+                                <td><button class="btn btn-primary btn-block" data-toggle="modal" id="diagnostico_button" value="{{receta.pk}}">Diagnostico</button></td>
+                                <td> <button class="btn btn-primary btn-block" data-toggle="modal" id="tratamiento_button" value="{{receta.pk}}">Tratamiento</button></td>
+                                <td> <button class="btn btn-primary btn-block" data-toggle="modal" id="modificar_button" value="{{receta.pk}}">Modificar</button></td>
+                                <td><button class="btn btn-primary btn-block" data-toggle="modal" id="imprimir_button" value="{{receta.pk}}">VER E IMPRIMIR</button></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                 
+>>>>>>> 2c822357baab57bdc571bb0e1ed9e15191254d26
             </div>
-            {% endfor %}
+            
 
         </div>            
     </div>
