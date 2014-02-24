@@ -1,6 +1,7 @@
 from django import forms
 
-from cm.models import Perfil, Paciente, Paquete, Antecedente, Egreso, DiagnosticoReceta, DiagnosticoxReceta,UltimaCita
+from cm.models import Perfil, Paciente, Paquete, Antecedente, Egreso, DiagnosticoReceta, DiagnosticoxReceta
+from cm.models import ClaseMedicamento, Medicamento, Frecuencia, Tratamiento, UltimaCita
 
 from django.contrib.auth.models import Group
 from django.forms.extras.widgets import SelectDateWidget
@@ -107,3 +108,45 @@ class DiagnosticoxRecetaForm(forms.ModelForm):
         }
         exclude = ['receta',]
 
+
+class Tratamiento1Form(forms.Form):
+    tipomedicamento = forms.ModelChoiceField(queryset=ClaseMedicamento.objects.all(), empty_label=None)
+    medicamento = forms.ModelChoiceField(queryset=Medicamento.objects.all(), empty_label=None)
+    cantidad = forms.IntegerField(label="Cantidad")
+
+
+class Tratamiento2Form(forms.Form):
+    tipo_duracion = (
+        ('di', 'Dias'),
+        ('se', 'Semanas'),
+        ('me', 'Meses'),
+    )
+    dosis = forms.IntegerField(label="Dosis")
+    frecuencia = forms.ModelChoiceField(queryset=Frecuencia.objects.all(), empty_label=None)
+    duracion = forms.IntegerField(label="Durante")
+    tipo_duracion = forms.ChoiceField(choices=tipo_duracion)
+
+class TratamientoM1Form(forms.ModelForm):
+    tipomedicamento = forms.ModelChoiceField(queryset=ClaseMedicamento.objects.all(), empty_label=None)
+    class Meta:
+        model = Tratamiento
+        exclude = ['receta', 'cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion']
+        fields = ['tipomedicamento', 'medicamento', 'cantidad']
+
+
+class TratamientoM2Form(forms.ModelForm):
+    class Meta:
+        model = Tratamiento
+        fields = ['cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion']
+        exclude = ['receta', 'tipomedicamento', 'medicamento', 'cantidad']
+
+
+class TratamientoForm(forms.ModelForm):
+    class Meta:
+        model = Tratamiento
+        exclude = ['receta']
+
+
+class DiagnosticoRecetaForm(forms.ModelForm):
+    class Meta:
+        model = DiagnosticoReceta

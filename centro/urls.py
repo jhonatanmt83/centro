@@ -31,11 +31,15 @@ urlpatterns = patterns('',
 
     url(r'^precio/paquete/(?P<codigo>\d+)/$', 'cm.views.precio_paquete', name='precio_paquete'),
     url(r'^agregar/diagnostico/receta/$', 'cm.views.agregar_diagnostico', name='agregar_diagnostico'),
+    url(r'^eliminar/tratamiento/$', 'cm.views.eliminar_tratamiento', name='eliminar_tratamiento'),
+    url(r'^quitar/diagnostico/receta/$', 'cm.views.quitar_diagnostico_receta', name='quitar_diagnostico_receta'),
 
 
     url(r'^administrador/receta/diagnostico/(?P<codigo>\d+)/$', 'cm.views.receta_diagnostico', name='receta_diagnostico'),
     url(r'^administrador/receta/tratamiento/(?P<codigo>\d+)/$', 'cm.views.receta_tratamiento', name='receta_tratamiento'),
     url(r'^administrador/receta/modificar/(?P<codigo>\d+)/$', 'cm.views.receta_modificar', name='receta_modificar'),
+    url(r'^administrador/receta/modificar/(?P<id_receta>\d+)/tratamiento/(?P<id_tratamiento>\d+)$', 'cm.views.receta_modificar_tratamiento', name='receta_modificar_tratamiento'),
+    url(r'^administrador/receta/modificar/(?P<id_receta>\d+)/diagnostico/(?P<id_diagnostico>\d+)$', 'cm.views.receta_modificar_diagnostico', name='receta_modificar_diagnostico'),
     url(r'^administrador/receta/imprimir/(?P<codigo>\d+)/$', 'cm.views.receta_imprimir', name='receta_imprimir'),
 
 
