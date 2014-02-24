@@ -202,8 +202,16 @@ def examenescaja(request):
     
     suma_egreso=egreso.aggregate(Sum('monto'))
     suma_ingreso=examenes.aggregate(Sum('precio'))
-    
-    valor={'examenes':examenes,'egreso':egreso,'sumaegreso':suma_egreso,'sumaingreso':suma_ingreso}
+    if not egreso: 
+        sumar_egreso=0
+    else:
+        sumar_egreso=suma_egreso['monto__sum']
+    if not examenes: 
+        sumar_ingreso=0
+    else:
+        sumar_ingreso=suma_ingreso['precio__sum']
+    resta = sumar_ingreso - sumar_egreso
+    valor={'examenes':examenes,'egreso':egreso,'sumaegreso':suma_egreso,'sumaingreso':suma_ingreso, 'resta': resta}
     return render_to_response('administrador/caja.html',valor, context_instance=RequestContext(request))
 
 
