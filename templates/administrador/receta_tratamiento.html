@@ -31,6 +31,7 @@
             },
             success: function(data) {
                 $.each(data, function(i, val){
+                    console.log(val);
                     id_diagnostico = val['id'];
                     texto_diagnostico = val['texto'];
                     $('#id_diagnosticos').append('<div class="checkbox"><label for="id_diagnosticos_'+id_diagnostico+'"><input id="id_diagnosticos_'+id_diagnostico+'" name="diagnosticos" placeholder="Diagnósticos" type="checkbox" value="'+id_diagnostico+'" checked="checked"> '+texto_diagnostico+'</label></div>');
