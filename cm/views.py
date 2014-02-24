@@ -5,7 +5,7 @@ from django.template import RequestContext
 from centro.decoratos import registrador_login, evaluador_login, administrador_login
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 
-from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm
+from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm
 from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
@@ -209,6 +209,7 @@ def recetas(request):
     return render_to_response('administrador/recetas.html',{'receta':receta}, context_instance=RequestContext(request))
 
 @administrador_login
+<<<<<<< HEAD
 def historiaclinica(request, codigo):
     historiaclinica = Paciente.objects.filter(nrohistoria=codigo)
     if historiaclinica:
@@ -222,3 +223,8 @@ def lista_historia_clinica(request):
     lista_clinica = Paciente.objects.all()
     lista={'listahistoria':lista_clinica}
     return render_to_response('administrador/listahistoriaclinica.html',lista, context_instance=RequestContext(request))
+=======
+def vista_egreso(request):
+    formulario=EgresoForm()
+    return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
+>>>>>>> 9458d51d4855642bdfbf9e37b14ce4f24875b6de
