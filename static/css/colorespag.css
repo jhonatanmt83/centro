@@ -154,3 +154,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', end
 	color: rgb(255, 255, 255);
 
 }
+.boton-verde{
+	background: green;
+}
+.boton-rojo{
+	background: rgb(190, 10, 10);
+
+}
+.boton-orange{
+	background: rgb(241, 157, 3);
+}
+.boton-azul{
+	background: rgb(7, 7, 117);
+}
