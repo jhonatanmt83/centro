@@ -31,7 +31,7 @@
     </nav>
 {% endblock %}
 {% block contenido %}
-    <div class="container">
+    <div class="container grup-container">
         <div>
             <form id="searchform">
                 <input type="text" placeholder="Buscar Paciente por DNI o NOMBRE" required>
@@ -41,15 +41,40 @@
         </div>
 
         <div class="col-md-12">
-            
+            {% for receta in recetas %}
             <div class="col-md-3">
                 <div class="thumbnail">
-                    <h3 class='text-center'>DNI: <strong>{{receta.paciente}}</strong></h3>
-                    <h4 class='text-center'><strong>Laura Rodrigues cisnesros</strong></h4>
+                    <h3 class='text-center'>DNI: <strong>{{receta.paciente.dni}}</strong></h3>
+                    <h4 class='text-center'><strong>{{ receta.paciente}}</strong></h4>
                     <div>
                         <button class="btn btn-primary btn-block" data-toggle="modal" id="diagnostico_button" value="{{receta.pk}}">Diagnostico</button>
 
-                        <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        
+
+                        <button class="btn btn-primary btn-block" data-toggle="modal" id="tratamiento_button" value="{{receta.pk}}">Tratamiento</button>
+
+                        
+
+
+                        <button class="btn btn-primary btn-block" data-toggle="modal" id="modificar_button" value="{{receta.pk}}">Modificar</button>
+
+                        
+                        
+                        
+                        <button class="btn btn-primary btn-block" data-toggle="modal" id="imprimir_button" value="{{receta.pk}}">VER E IMPRIMIR</button>
+
+                        
+                        
+                    </div>
+                </div>  
+            </div>
+            {% endfor %}
+
+        </div>            
+    </div>
+
+    <!--
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
                           <div class="modal-dialog modal-lg">
 
@@ -102,9 +127,7 @@
                           </div>
                         </div>
 
-                        <button class="btn btn-primary btn-block" data-toggle="modal" id="tratamiento_button" value="{{receta.pk}}">Tratamiento</button>
-
-                        <div class="modal tratamiento-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal tratamiento-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
                           <div class="modal-dialog modal-lg">
 
@@ -243,10 +266,7 @@
                           </div>
                         </div>
 
-
-                        <button class="btn btn-primary btn-block" data-toggle="modal" id="modificar_button" value="{{receta.pk}}">Modificar</button>
-
-                        <div class="modal modificar-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal modificar-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
                           <div class="modal-dialog modal-lg">
 
@@ -569,11 +589,7 @@
                             </div>
                           </div>
                         </div>
-                        
-                        
-                        <button class="btn btn-primary btn-block" data-toggle="modal" id="imprimir_button" value="{{receta.pk}}">VER E IMPRIMIR</button>
-
-                        <div class="modal imprimir-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal imprimir-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
                           <div class="modal-dialog modal-lg">
 
@@ -649,13 +665,8 @@
                             </div>
                           </div>
                         </div>
-                        
-                    </div>
-                </div>  
-            </div>
 
-        </div>            
-    </div>
+-->
 {% endblock %}
 {% block js_end %}
 <script type="text/javascript">

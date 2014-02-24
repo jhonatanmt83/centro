@@ -1,0 +1,45 @@
+{% extends 'basehistoriaclinica.html'%}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block contenido %}
+<div class="container">
+    <div class="row">
+        <form class="form-horizontal" role="form" method='POST' action=''>
+            {% csrf_token %}
+            {% bootstrap_form form  layout="horizontal" %}
+            <hr>
+            
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+        <input type="text" placeholder="Nuevo diagnostico" required="required" id="texto_agregar">
+            <button class='add_diagnostico btn'>Agregar</button>
+    </div>
+</div>
+<script type="text/javascript">
+    {% if cerrar %}
+    self.close();
+    {% endif %}
+    $('.add_diagnostico').click(function() {
+        $.ajax({
+            url: '/agregar/diagnostico/receta/',
+            async: false,
+            dataType:'json',
+            type:'POST',
+            data: {
+                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                "texto":  $('#texto_agregar').val()
+            },
+            success: function(data) {
+                $.each(data, function(i, val){
+                    id_diagnostico = val['id'];
+                    texto_diagnostico = val['texto'];
+                    $('#id_diagnosticos').append('<div class="checkbox"><label for="id_diagnosticos_'+id_diagnostico+'"><input id="id_diagnosticos_'+id_diagnostico+'" name="diagnosticos" placeholder="Diagnósticos" type="checkbox" value="'+id_diagnostico+'" checked="checked"> '+texto_diagnostico+'</label></div>');
+                    $('#texto_agregar').val("");
+                });
+                
+            }
+        });
+
+    });
+</script>
+{% endblock%}

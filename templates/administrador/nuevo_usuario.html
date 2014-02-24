@@ -31,21 +31,21 @@
     </nav>
 {% endblock %}
 {% block contenido %}
-    <div class="container">
+    <div class="container grup-container">
         <div class="row-fluid">
-            <div class="col-xs-3">
-                <h3>Registro de usuario</h3>
+            <div class="col-xs-3 recomendacion">
+                <h3 class="titulosamarillo">Registro de usuario</h3>
                 <p>Esta parte nos permite agregar nuevos usuarios que manejaran el sistema</p>
             </div>
             <div class="col-xs-6 fondo-usuario img-rounded">
                 {% bootstrap_messages %}
-                <h3 class='text-center text-danger'>
+                <h3 class='text-center text-danger titulosamarillo'>
                     <strong>DATOS PERSONALES</strong>
                 </h3>
                 <form class="form-horizontal" role="form" action='' method='POST'>
                     {% csrf_token %}
                     {% bootstrap_form formulario_perfil  layout="horizontal" %}
-                    <h3 class='text-center text-danger'> <strong>GENERAR USUARIO</strong></h3>
+                    <h3 class='text-center text-danger titulosamarillo'> <strong>GENERAR USUARIO</strong></h3>
                     {% bootstrap_form formulario layout="horizontal" %}
                     <div class="form-group navbar-center">
                     <div class="col-xs-offset-2 col-xs-10">

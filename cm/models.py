@@ -134,17 +134,20 @@ class Receta(models.Model):
     def __unicode__(self):
         return unicode(str(self.paciente), 'utf8')
 
+    def obtener_diagnostico(self):
+        return DiagnosticoxReceta.objects.filter(examen=self)[0]
 
-class DiagnosticoReceta(models.Model):
+
+class DiagnosticoxReceta(models.Model):
     class Meta:
-        verbose_name = ('DiagnosticoReceta')
-        verbose_name_plural = ('DiagnosticoRecetas')
+        verbose_name = ('Diagnostico por Receta')
+        verbose_name_plural = ('Diagnosticos por Recetas')
 
     receta = models.ForeignKey(Receta, verbose_name=u'Receta')
     diagnosticos = models.ManyToManyField(DiagnosticoReceta, verbose_name=u'Diagnósticos')
 
     def __unicode__(self):
-        return self.receta
+        return str(self.receta)
 
 
 class Tratamiento(models.Model):
@@ -168,6 +171,7 @@ class Tratamiento(models.Model):
 
     def __unicode__(self):
         return self.receta
+
 
 BOOL_CHOICES = ((True, 'Pago de Personal'), (False, 'Otros pagos'))
 class Egreso(models.Model):

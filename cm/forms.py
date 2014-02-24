@@ -1,5 +1,7 @@
 from django import forms
-from cm.models import Perfil, Paciente, Paquete, Antecedente, Egreso, UltimaCita
+
+from cm.models import Perfil, Paciente, Paquete, Antecedente, Egreso, DiagnosticoReceta, DiagnosticoxReceta,UltimaCita
+
 from django.contrib.auth.models import Group
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms import TextInput, CheckboxInput
@@ -86,6 +88,7 @@ class EgresoForm(forms.ModelForm):
         widgets = {
             'pagouotro': forms.RadioSelect
         }
+
         
 
 class CitaForm(forms.ModelForm):
@@ -94,3 +97,13 @@ class CitaForm(forms.ModelForm):
         exclude =['paciente','anterior']
 
    
+
+
+class DiagnosticoxRecetaForm(forms.ModelForm):
+    class Meta:
+        model = DiagnosticoxReceta
+        widgets = {
+            'diagnosticos': forms.CheckboxSelectMultiple,
+        }
+        exclude = ['receta',]
+

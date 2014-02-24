@@ -8,10 +8,14 @@ from django.db.models import Sum
 from centro.decoratos import registrador_login, evaluador_login, administrador_login
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 
-from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm, CitaForm
+
+from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm
+from cm.forms import DiagnosticoxRecetaForm
+
 from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
+from cm.models import DiagnosticoxReceta, DiagnosticoReceta
 
 from django.shortcuts import get_object_or_404
 
@@ -202,18 +206,24 @@ def examenescaja(request):
     
     suma_egreso=egreso.aggregate(Sum('monto'))
     suma_ingreso=examenes.aggregate(Sum('precio'))
-    
-    valor={'examenes':examenes,'egreso':egreso,'sumaegreso':suma_egreso,'sumaingreso':suma_ingreso}
+    if not egreso: 
+        sumar_egreso=0
+    else:
+        sumar_egreso=suma_egreso['monto__sum']
+    if not examenes: 
+        sumar_ingreso=0
+    else:
+        sumar_ingreso=suma_ingreso['precio__sum']
+    resta = sumar_ingreso - sumar_egreso
+    valor={'examenes':examenes,'egreso':egreso,'sumaegreso':suma_egreso,'sumaingreso':suma_ingreso, 'resta': resta}
     return render_to_response('administrador/caja.html',valor, context_instance=RequestContext(request))
 
 
 
 @administrador_login
 def recetas(request):
-    receta = Receta.objects.all()
-    
-
-    return render_to_response('administrador/recetas.html',{'receta':receta}, context_instance=RequestContext(request))
+    recetas = Receta.objects.all()
+    return render_to_response('administrador/recetas.html',{'recetas':recetas}, context_instance=RequestContext(request))
 
 @administrador_login
 
@@ -234,7 +244,13 @@ def lista_historia_clinica(request):
 
 @administrador_login
 def receta_diagnostico(request, codigo):
-    return render_to_response('administrador/receta_diagnostico.html',{},context_instance=RequestContext(request))
+    cerrar = False
+    instancia = get_object_or_404(DiagnosticoxReceta, pk=codigo)
+    form = DiagnosticoxRecetaForm(request.POST or None, instance=instancia)
+    if form.is_valid():
+        form.save()
+        cerrar = True
+    return render_to_response('administrador/receta_diagnostico.html',{'form': form, 'cerrar': cerrar},context_instance=RequestContext(request))
 
 
 @administrador_login
@@ -275,6 +291,7 @@ def modi_historia_clinica(request, codigo):
 
     return render_to_response('administrador/modificarhistoria.html', {'formhistoria': modificar}, context_instance=RequestContext(request))
 
+
 def modificarcita(request, codigo):
     instancia = get_object_or_404(UltimaCita, pk=codigo)
     nueva_cita= CitaForm(request.POST or None, instance=instancia)
@@ -285,3 +302,17 @@ def modificarcita(request, codigo):
      
     return render_to_response('administrador/modificarcita.html',{'nueva_cita':nueva_cita},context_instance=RequestContext(request))
     
+
+
+def agregar_diagnostico(request):
+    """Agrega nuevo diagnostico de receta"""
+    texto = request.POST['texto']
+    nuevo_diagnostico = DiagnosticoReceta(texto=texto)
+    nuevo_diagnostico.save()
+    new_result = []
+    datos = {}
+    datos['id'] = str(nuevo_diagnostico.pk)
+    datos['texto'] = str(nuevo_diagnostico.texto)
+    new_result.append(datos)
+    return HttpResponse(json.dumps(new_result))
+
