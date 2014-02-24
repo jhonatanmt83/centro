@@ -104,6 +104,10 @@ def nuevo_paciente(request):
             instancia = Antecedente(examen=examen)
             antecedente = AntecedenteForm(request.POST, instance=instancia)
             antecedente.save()
+            receta = Receta(paciente=paciente)
+            receta.save()
+            diagxreceta = DiagnosticoxReceta(receta=receta)
+            diagxreceta.save()
             messages.success(request, 'Nuevo paciente %s creado'% (request.POST['nombres']))
             # Nuevos formularios
             formulario1 = PacienteForm1
