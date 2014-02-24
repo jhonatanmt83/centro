@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^administrador/egreso/$', 'cm.views.vista_egreso', name='egresos'),
     url(r'^administrador/modificarhistoria/(?P<codigo>\d+)/$', 'cm.views.modi_historia_clinica', name='modi_historia_clinica'),
     url(r'^administrador/modificarcita/(?P<codigo>\d+)/$', 'cm.views.modificarcita', name='nuevacita'),
+    
 
     url(r'^precio/paquete/(?P<codigo>\d+)/$', 'cm.views.precio_paquete', name='precio_paquete'),
     url(r'^agregar/diagnostico/receta/$', 'cm.views.agregar_diagnostico', name='agregar_diagnostico'),
