@@ -32,32 +32,40 @@
 {% endblock %}
 {% block contenido %}
     <div class="container grup-container">
-        <table class='table table-bordered'>
-        	<thead class="panel panel-color ">
-        		<tr>
-        			<th class="text-center texto-sombra texto-blanco"><strong>NRO HISTORIA CLINICA</strong></th>
-        			<th class="text-center texto-sombra texto-blanco"><strong>NOMBRES Y APELLIDOS</strong></th>
-        			<th class="text-center texto-sombra texto-blanco"><strong>TELEFONO</strong></th>
-        			<th class="text-center texto-sombra texto-blanco"><strong>FECHA</strong></th>
-        			<th class="text-center texto-sombra texto-blanco"><strong>IMPRIMIR</strong></th>
-        			<th class="text-center texto-sombra texto-blanco"><strong>MODIFICAR</strong></th>
+        
+        <div class="panel panel-1">
+            <div class="text-center">
+                <label for="txtBuscar"><h3>BUSCAR </h3> </label>
+                <input type="search" class='busqueda' id="txtBuscar" autofocus
+                    placeholder="Digite DNI,NRO-HISTORIA o NOMBRES DEL PACIENTE que desea encontrar y presione la ENTER. Para cancelar la tecla ESCAPE.">
+            </div>
+            <table class='table table-bordered' id="tblTabla" >
+            	<thead class="panel panel-color ">
+            		<tr>
+            			<th class="text-center texto-sombra texto-blanco"><strong>NRO HISTORIA CLINICA</strong></th>
+            			<th class="text-center texto-sombra texto-blanco"><strong>NOMBRES Y APELLIDOS</strong></th>
+            			<th class="text-center texto-sombra texto-blanco"><strong>TELEFONO</strong></th>
+            			<th class="text-center texto-sombra texto-blanco"><strong>FECHA</strong></th>
+            			<th class="text-center texto-sombra texto-blanco"><strong>IMPRIMIR</strong></th>
+            			<th class="text-center texto-sombra texto-blanco"><strong>MODIFICAR</strong></th>
 
-        		</tr>
-        	</thead>
-        	<tbody>
-        	{% for valor in listahistoria%}
-        		<tr>
-        			<td>{{valor.nrohistoria }}</td>
-        			<td>{{valor.nombres }}</td>
-        			<td>{{valor.telefono }}</td>
-        			<td>{{valor.fecha|date:"l d F \a \l\a\s f a"}}</td>
-        			<td><a href="/administrador/historiaclinica/{{valor.nrohistoria }}" class="btn btn btn-success btn-lg active boton_imprimir" role="button">Imprimir</a></td>
-        			<td><a href="/administrador/modificarhistoria/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a></td>
-        			
-        		</tr>
-        	{%endfor%}	
-        	</tbody>
-        </table>
+            		</tr>
+            	</thead>
+            	<tbody>
+            	{% for valor in listahistoria%}
+            		<tr>
+            			<td>{{valor.nrohistoria }}</td>
+            			<td>{{valor.nombres }}</td>
+            			<td>{{valor.telefono }}</td>
+            			<td>{{valor.fecha|date:"l d F \a \l\a\s f a"}}</td>
+            			<td><a href="/administrador/historiaclinica/{{valor.nrohistoria }}" class="btn btn btn-success btn-lg active boton_imprimir" role="button">Imprimir</a></td>
+            			<td><a href="/administrador/modificarhistoria/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a></td>
+            			
+            		</tr>
+            	{%endfor%}	
+            	</tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
 {% block js_end %}

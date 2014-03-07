@@ -528,3 +528,7 @@
    -moz-box-shadow: 0 0 5px #000;
    box-shadow: 0 0 5px #000;
 }
+.busqueda{
+    padding: 5px;
+    width: 595px;
+}

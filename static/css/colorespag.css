@@ -213,3 +213,9 @@ border: 3px solid rgba(224, 255, 239, 0.71) !important;
 	min-height: 80%;
 
 }
+
+.busqueda{
+    padding: 5px;
+    width: 800px;
+    margin:10px;
+}

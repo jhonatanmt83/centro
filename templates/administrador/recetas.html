@@ -32,18 +32,19 @@
 {% endblock %}
 {% block contenido %}
     <div class="container grup-container">
-        <div>
-            <form id="searchform">
-                <input type="text" placeholder="Buscar Paciente por DNI o NOMBRE" required>
-                <button type="submit">Buscar</button>
-            </form>
-             
-        </div>
+        
 
         <div class="col-md-12">
             
             <div class="col-md-12">
-                <table class='table table-bordered table-striped table-hover'>
+                
+                <div class="panel panel-1">
+                    <div class="text-center">
+                        <label for="txtBuscar"><h3>BUSCAR </h3> </label>
+                        <input type="search" class='busqueda' id="txtBuscar" autofocus
+                            placeholder="Digite DNI,NRO-HISTORIA o NOMBRES DEL PACIENTE que desea encontrar y presione la ENTER. Para cancelar la tecla ESCAPE.">
+                    </div>
+                    <table class='table table-bordered table-striped table-hover' id="tblTabla">
                     <thead class='panel panel-color'>
                         <tr>
                             <th class="texto-sombra texto-blanco">DNI</th>
@@ -68,7 +69,8 @@
                             </tr>
                         {% endfor %}
                     </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
             
 
