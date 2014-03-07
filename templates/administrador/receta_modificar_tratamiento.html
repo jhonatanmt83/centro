@@ -13,4 +13,26 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    function actualizar_medicamentos()
+    {
+        var cadena='id_tipomedicamento';
+        $.getJSON('/obtener/medicamentos/'+ 
+                       document.getElementById(cadena).value,
+                   function(data){ actualizar_combo_medicamentos(data); 
+                                  });
+    }
+    //Actualiza el combo  con los datos obtenidos del ajax
+    function actualizar_combo_medicamentos(data)
+    {
+        $('#id_medicamento').empty(); //elimino el cotenido actual del combo
+
+        // agrego los tipos obtenidos por ajax
+        $.each(data, function(index, medicamento){
+          $('<option value="' + medicamento['id'] + '">' +
+                                medicamento['nombre'] + '</option>')
+          .appendTo('#id_medicamento')     
+       });
+    }
+</script>
 {% endblock%}

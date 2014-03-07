@@ -4,9 +4,11 @@
 {% block title %}Administrador - Examen{% endblock %}
 {% block js %}
 <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-tagsinput.js' %}"></script>
 {% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/themes/base/jquery.ui.all.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-tagsinput.css' %}">
 {% endblock %}
 {% block menu %}
 
@@ -63,7 +65,7 @@
                     <div class="col-md-8">
                         <p>{{ examen.paciente.nombres }}</p>
                         <p>{{ examen.paciente.direccion }}</p>
-                        <p>{{ examen.paciente.edad }}</P>
+                        <p>{{ examen.paciente.edad_actual }}</P>
                         <p>{{ examen.paciente.fechanacimiento }}</p>
                         <p>{{ examen.paciente.telefono }}</p>
                     </div>
@@ -129,6 +131,7 @@
                             <label  class="col-xs-4 control-label">{{ subitem.texto }}</label>
                             <div class="col-xs-8">
                                 <div class='col-xs-6'>
+                                    <input type='text' id='input_s_{{subitem.pk}}' class='tag_input' name='input_s_{{subitem.pk}}'/>
                                     <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_subitem_{{subitem.pk}}">Diagnostico</button>
                                 </div>
                             </div>
@@ -139,6 +142,7 @@
                             <label  class="col-xs-3 control-label">{{ item.texto }}</label>
                             <div class="col-xs-9">
                                 <div class='col-xs-6'>
+                                    <input type='text' id='input_i_{{item.pk}}' class='tag_input' name='input_i_{{item.pk}}'/>
                                     <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_item_{{item.pk}}">Diagnostico</button>
                                 </div>
                             </div>
@@ -157,7 +161,7 @@
                     <input type="text" class="form-control imp_diag" placeholder="Ingresa el diagnostico" id='diagnostico_1' name='diagnostico_1'>
                     <br>
                 </div>
-                <input type="hidden" val="0" id='num_diagnosticos' name='num_diagnosticos'>
+                <input type="hidden" val="0" id='num_diagnosticos' name='num_diagnosticos' value='1'>
             </div>
             <div class="row">
                 <h3><strong>RECOMENDACIONES</strong></h3>
@@ -189,31 +193,29 @@
             {% for item in tipo_examen.obtener_items %}
                 {% if item.obtener_subitems %}
                     {% for subitem in item.obtener_subitems %}
-    <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id='modal_subitem_{{ subitem.pk }}'>
+    <div class="modal fade bs-modal-lg" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" id='modal_subitem_{{ subitem.pk }}'>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4>Agrega o Selecciona un NUEVO DIAGNOSTICO</h4>
+                    <h4 class="modal-title">Agrega o Selecciona un NUEVO DIAGNOSTICO</h4>
                 </div>
                 <div class="modal-body">
                     <div id='div_subitem_{{subitem.pk}}'>
                     {% for opcion in subitem.obtener_opciones %}
                         <label>
-                        <input type="checkbox" name='opcion_subitem_{{ opcion.pk }}' value='{{ opcion.pk }}'> {{ opcion.texto }}
+                        <input type="checkbox" name='opcion_subitem_{{ opcion.pk }}' value='{{ opcion.pk }}' class='check_s_{{subitem.pk}}'> {{ opcion.texto }}
                         </label>
                     {% endfor %}
                     </div>
-                    <form class="form-search navbar-right" method="get" id="s" action="/">
-                        <div class="input-append">
-                            <input type="text" class="input-medium search-query" name="s" placeholder="Agrega un nuevo diagnostico" value="" id='add_opcion_subitem_{{subitem.pk}}'>
-                            <button class='btn btn-success'type="submit" class="add-on" onclick="AgregaOpcionSubItem('{{ subitem.pk }}', 'add_opcion_subitem_{{subitem.pk}}')"> + Nuevo Diagnostico</button>
-                        </div>
-                    </form>
+                    <div class="input-append">
+                        <input type="text" class="input-medium search-query" name="s" placeholder="Agrega un nuevo diagnostico" value="" id='add_opcion_subitem_{{subitem.pk}}'>
+                        <button class='btn btn-success' class="add-on" onclick="AgregaOpcionSubItem('{{ subitem.pk }}', 'add_opcion_subitem_{{subitem.pk}}')"> + Nuevo Diagnostico</button>
+                    </div>
                 </div>
                 <hr>
                 <div class="modal-footer">
-                    <button class='btn btn-danger'>Guardar</button><button class='btn btn-danger'  data-dismiss="modal">Cancelar</button>
+                    <button class='btn btn-danger' onclick='GuardaOpcionesS("{{subitem.pk}}")'>Guardar</button><button class='btn btn-danger'  data-dismiss="modal">Cancelar</button>
                 </div> 
             </div>
         </div>
@@ -231,21 +233,19 @@
                     <div id='div_item_{{ item.pk }}'>
                     {% for opcion in item.obtener_opciones %}
                         <label>
-                        <input type="checkbox" name='opcion_item_{{ opcion.pk }}' value='{{ opcion.pk }}'> {{ opcion.texto }}
+                        <input type="checkbox" name='opcion_item_{{ opcion.pk }}' value='{{ opcion.pk }}' class='check_i_{{item.pk}}'> {{ opcion.texto }}
                         </label>
                     {% endfor %}
                     </div>
-                    <form class="form-search navbar-right" method="get" id="s" action="/">
-                        <div class="input-append">
-                            <input type="text" class="input-medium search-query" name="s" placeholder="Agrega un nuevo diagnostico" value="" id='add_opcion_item_{{item.pk}}'>
-                            <button class='btn btn-success'type="submit" class="add-on" onclick="AgregaOpcionItem('{{ item.pk }}', 'add_opcion_item_{{item.pk}}')"> + Nuevo Diagnostico</button>
-                        </div>
-                    </form>
+                    <div class="input-append">
+                        <input type="text" class="input-medium search-query" name="s" placeholder="Agrega un nuevo diagnostico" value="" id='add_opcion_item_{{item.pk}}'>
+                        <button class='btn btn-success' class="add-on" onclick="AgregaOpcionItem('{{ item.pk }}', 'add_opcion_item_{{item.pk}}')"> + Nuevo Diagnostico</button>
+                    </div>
                 </div>
                 <hr>
                 <div class="modal-footer">
-                    <button class='btn btn-danger'>Guardar</button><button class='btn btn-danger' data-dismiss="modal">Cancelar</button>
-                </div> 
+                    <button class='btn btn-danger' onclick='GuardaOpcionesI("{{item.pk}}")'>Guardar</button><button class='btn btn-danger' data-dismiss="modal">Cancelar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -257,11 +257,74 @@
 {% endblock %}
 {% block js_end %}
 <script type="text/javascript">
+function GuardaOpcionesI(id_item){
+    $('#input_i_'+id_item).tagsinput('removeAll');
+    $('.check_i_'+id_item+':checked').each(function(){
+        var texto_add = $(this).parent().text().trim();
+        var id_add = $(this).val();
+        $('#input_i_'+id_item).tagsinput('add', { "value": id_add , "text": texto_add  });
+        $('#modal_item_'+id_item).modal('hide');
+    });
+}
+function GuardaOpcionesS(id_subitem){
+    $('#input_s_'+id_subitem).tagsinput('removeAll');
+    $('.check_s_'+id_subitem+':checked').each(function(){
+        console.log($(this).val());
+        var texto_add = $(this).parent().text().trim();
+        var id_add = $(this).val();
+        $('#input_s_'+id_subitem).tagsinput('add', { "value": id_add , "text": texto_add  });
+        $('#modal_subitem_'+id_subitem).modal('hide');
+    });
+}
+function AgregaOpcionItem(id_item, id_input_add){
+    if ($('#'+id_input_add).val()){
+        $.ajax({
+            url: '/agregar/item/examen/',
+            async: false,
+            dataType:'json',
+            type:'POST',
+            data: {
+                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                "texto":  $('#'+id_input_add).val(),
+                "id_item": id_item
+            },
+            success: function(data) {
+                $.each(data, function(i, val){
+                    id_opcion = val['id'];
+                    texto_opcion = val['texto'];
+                    //$('#input_s_'+id_subitem).tagsinput('add', { "value": id_opcion , "text": texto_opcion  });
+                    $('#div_item_'+id_item).append('<label><input name="opcion_item_'+id_item+'" type="checkbox" value="'+id_opcion+'" checked="checked" class="check_i_'+id_item+'"> '+texto_opcion+'</label>');
+                    $('#'+id_input_add).val("");
+                });
+            }
+        });
+    }
+}
+function AgregaOpcionSubItem(id_subitem, id_input_add){
+    $.ajax({
+        url: '/agregar/subitem/examen/',
+        async: false,
+        dataType:'json',
+        type:'POST',
+        data: {
+            csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+            "texto":  $('#'+id_input_add).val(),
+            "id_subitem": id_subitem
+        },
+        success: function(data) {
+            $.each(data, function(i, val){
+                id_opcion = val['id'];
+                texto_opcion = val['texto'];
+                //$('#input_s_'+id_subitem).tagsinput('add', { "value": id_opcion , "text": texto_opcion  });
+                $('#div_subitem_'+id_subitem).append('<label><input name="opcion_subitem_'+id_subitem+'" type="checkbox" value="'+id_opcion+'" checked="checked" class="check_s_'+id_subitem+'"> '+texto_opcion+'</label>');
+                $('#'+id_input_add).val("");
+            });
+        }
+    });
+}
  
 $(document).ready(function(){
- 
     var counter = 2;
-
     $('#formulario_examen').bind("keypress", function(e) {
         var code = e.keyCode || e.which; 
         if (code  == 13) {
@@ -292,34 +355,16 @@ $(document).ready(function(){
             changeMonth: true,
             changeYear: true
         });
-        $('#diagnostico_1').autocomplete({
-            minLength:1,
-            source: function(req, add){
-                $.ajax({
-                    url: '/resultados/impresiones/',
-                    async: false,
-                    dataType:'json',
-                    type:'POST',
-                    data: {
-                        start: function() { return $('#diagnostico_1').val(); },
-                        csrfmiddlewaretoken: '{{ csrf_token }}' ,
-                    },
-                    success: function(data) {
-         
-                        //create array for response objects
-                        var suggestions = [];
-         
-                        //process response
-                        $.each(data.items, function(i, val){
-                            suggestions.push(val[0]);
-                        });
-         
-                        //pass array to callback
-                        add(suggestions);
-                    }
-                });
+    });
+
+    $('.tag_input').tagsinput({
+        itemValue: 'value',
+        itemText: 'text',
+        typeahead: {
+            source: function(query) {
+                return $.getJSON('cities.json');
             }
-        });
+        }
     });
 });
 </script>

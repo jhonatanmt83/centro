@@ -4,6 +4,15 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+import datetime
+
+class SureDate(datetime.date):
+    def replace(self,**kw):
+        day=kw.get("day",self.day)
+        kw["day"]=1
+        delta=datetime.timedelta(day-1)
+        return datetime.date.replace(self,**kw)+delta
+
 
 class Paciente(models.Model):
     class Meta:
@@ -13,7 +22,7 @@ class Paciente(models.Model):
     dni = models.CharField(max_length=8, verbose_name=u'DNI', unique=True)
     nombres = models.CharField(max_length=200, verbose_name=u'Nombres y Apellidos')
     direccion = models.CharField(max_length=200, verbose_name=u'Dirección')
-    edad = models.IntegerField(verbose_name=u'Edad')
+    # edad = models.IntegerField(verbose_name=u'Edad')
     fechanacimiento = models.DateField(verbose_name=u'Fecha de Nacimiento')
     telefono = models.CharField(max_length=9, verbose_name=u'Teléfono')
     nrohistoria = models.CharField(max_length=6, verbose_name=u'N° de Historia Clínica', unique=True)
@@ -25,6 +34,19 @@ class Paciente(models.Model):
 
     def __unicode__(self):
         return self.nombres
+
+    def edad_actual(self):
+        dnacim = SureDate(self.fechanacimiento.year, self.fechanacimiento.month, self.fechanacimiento.day)
+        dhoy = SureDate.today()
+
+        #último cumpleaños
+        d0 = dnacim.replace(year=dhoy.year)
+        if d0>dhoy:
+          d0 = dnacim.replace(year=dhoy.year-1)
+
+        edad_devolver = d0.year-dnacim.year
+
+        return edad_devolver
 
 
 class Antecedente(models.Model):
@@ -39,7 +61,8 @@ class Antecedente(models.Model):
     examen = models.ForeignKey('Examen')
 
     def __unicode__(self):
-        return str(self.examen)
+        return unicode(str(self.examen.paciente), 'utf8')
+
 
 class UltimaCita(models.Model):
     class Meta:
@@ -169,6 +192,7 @@ class Tratamiento(models.Model):
     tipoduracion = models.CharField(max_length=2,
                                     choices=tipo_duracion,
                                     default='di')
+    posologia = models.CharField(verbose_name=u'Posología', max_length=200, null=True, blank=True)
 
     def __unicode__(self):
         return str(self.receta)
@@ -185,7 +209,7 @@ class Egreso(models.Model):
     descripcion = models.TextField(verbose_name=u'Descripción')
     dni = models.CharField(max_length=8, verbose_name=u'DNI')
     fecha = models.DateField(auto_now_add=True)
-    pagouotro = models.BooleanField('tipode pago',choices=BOOL_CHOICES)
+    pagouotro = models.BooleanField('tipo de pago',choices=BOOL_CHOICES)
 
     def __unicode__(self):
         return str(self.usuario)
@@ -196,7 +220,7 @@ class Egreso(models.Model):
 
 
 
-#Para la parte de los exmanes
+#Para la parte de los examanes
 
 class TipoExamen(models.Model):
     class Meta:
@@ -204,50 +228,52 @@ class TipoExamen(models.Model):
         verbose_name_plural = ('Tipos de Examenes')
 
     nombre = models.CharField(max_length=100, verbose_name=u'Nombre')
-    subtitulo = models.CharField(max_length=200)
-    descripcion = models.TextField(verbose_name=u'Descripción')
+    subtitulo = models.CharField(max_length=200, null=True, blank=True)
+    descripcion = models.TextField(verbose_name=u'Descripción', null=True, blank=True)
     fechacreacion = models.DateField(auto_now_add=True)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     activo = models.BooleanField(default=True)
+    medidas = models.BooleanField(verbose_name=u'Tabla de Medidas')
 
     def __unicode__(self):
         return self.nombre
 
-#     def obtener_items(self):
-#         return ItemExamen.objects.filter(tipoexamen=self)
+    def obtener_items(self):
+        return ItemExamen.objects.filter(tipoexamen=self)
     
 
-# class ItemExamen(models.Model):
-#     class Meta:
-#         verbose_name = ('ItemExamen')
-#         verbose_name_plural = ('ItemsExamenes')
+class ItemExamen(models.Model):
+    class Meta:
+        verbose_name = ('ItemExamen')
+        verbose_name_plural = ('ItemsExamenes')
 
-#     texto = models.CharField(max_length=100, verbose_name=u'Texto')
-#     tipoexamen = models.ForeignKey(TipoExamen)
+    texto = models.CharField(max_length=100, verbose_name=u'Texto')
+    tipoexamen = models.ForeignKey(TipoExamen)
+    titulo = models.BooleanField(verbose_name=u'Título')
 
-#     def __unicode__(self):
-#         return self.texto
+    def __unicode__(self):
+        return self.texto
 
-#     def obtener_subitems(self):
-#         return SubItemExamen.objects.filter(item=self)
+    def obtener_subitems(self):
+        return SubItemExamen.objects.filter(item=self)
 
-#     def obtener_opciones(self):
-#         return OpcionItem.objects.filter(item=self)
+    def obtener_opciones(self):
+        return OpcionItem.objects.filter(item=self)
 
 
-# class SubItemExamen(models.Model):
-#     class Meta:
-#         verbose_name = ('SubItemExamen')
-#         verbose_name_plural = ('SubItemsExamenes')
+class SubItemExamen(models.Model):
+    class Meta:
+        verbose_name = ('SubItemExamen')
+        verbose_name_plural = ('SubItemsExamenes')
 
-#     texto = models.CharField(max_length=100, verbose_name=u'Texto')
-#     item = models.ForeignKey(ItemExamen)
+    texto = models.CharField(max_length=100, verbose_name=u'Texto')
+    item = models.ForeignKey(ItemExamen)
 
-#     def __unicode__(self):
-#         return self.texto
+    def __unicode__(self):
+        return self.texto
 
-#     def obtener_opciones(self):
-#         return OpcionSubItem.objects.filter(subitem=self)
+    def obtener_opciones(self):
+        return OpcionSubItem.objects.filter(subitem=self)
 
 
 class Paquete(models.Model):
@@ -270,6 +296,28 @@ class Paquete(models.Model):
         return retornar
 
 
+class TablaMedidas(models.Model):
+    class Meta:
+        verbose_name = ('TablaMedidas')
+        verbose_name_plural = ('TablaMedidass')
+
+    utero_long = models.PositiveSmallIntegerField(verbose_name=u'Long de Utero', blank=True, null=True)
+    utero_ap = models.PositiveSmallIntegerField(verbose_name=u'Ap de Utero', blank=True, null=True)
+    utero_transv = models.PositiveSmallIntegerField(verbose_name=u'Transverso de Utero', blank=True, null=True)
+    utero_vol = models.PositiveSmallIntegerField(verbose_name=u'Volumen de Utero', blank=True, null=True)
+    ovderecho_long = models.PositiveSmallIntegerField(verbose_name=u'Long de Ovario derecho', blank=True, null=True)
+    ovderecho_ap = models.PositiveSmallIntegerField(verbose_name=u'Ap de Ovario derecho', blank=True, null=True)
+    ovderecho_transv = models.PositiveSmallIntegerField(verbose_name=u'Transverso de Ovario derecho', blank=True, null=True)
+    ovderecho_vol = models.PositiveSmallIntegerField(verbose_name=u'Volumen de Ovario derecho', blank=True, null=True)
+    ovizquierdo_long = models.PositiveSmallIntegerField(verbose_name=u'Long de Ovario izquierdo', blank=True, null=True)
+    ovizquierdo_ap = models.PositiveSmallIntegerField(verbose_name=u'Ap de Ovario izquierdo', blank=True, null=True)
+    ovizquierdo_transv = models.PositiveSmallIntegerField(verbose_name=u'Transverso de Ovario izquierdo', blank=True, null=True)
+    ovizquierdo_vol = models.PositiveSmallIntegerField(verbose_name=u'Volumen de Ovario izquierdo', blank=True, null=True)
+
+    def __unicode__(self):
+        return str(self.pk)
+    
+
 class Examen(models.Model):
     class Meta:
         verbose_name = ('Examen')
@@ -283,11 +331,12 @@ class Examen(models.Model):
     terminado = models.BooleanField(default=False)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     tipos_examen = models.ManyToManyField(TipoExamen, related_name='examen_tiposexamen', null=True, blank=True)
+    tabla_medidas = models.ManyToManyField(TablaMedidas, related_name='examen_tablamedidas', null=True, blank=True)
 
     def __unicode__(self):
         unicode(str(self.paciente), 'utf8')
 
-    def obtnerpaquete(self):
+    def obtenerpaquete(self):
         nombpaquete=self.paquetes.all()[0]
         return nombpaquete.nombre
 
@@ -304,54 +353,54 @@ class ImpresionDiagnostico(models.Model):
         return str(self.examen)
 
 
-# class OpcionItem(models.Model):
-#     class Meta:
-#         verbose_name = ('OpcionItem')
-#         verbose_name_plural = ('OpcionItems')
+class OpcionItem(models.Model):
+    class Meta:
+        verbose_name = ('OpcionItem')
+        verbose_name_plural = ('OpcionItems')
 
-#     item = models.ForeignKey(ItemExamen)
-#     texto = models.CharField(max_length=200)
+    item = models.ForeignKey(ItemExamen)
+    texto = models.CharField(max_length=200)
 
-#     def __unicode__(self):
-#         return self.texto
+    def __unicode__(self):
+        return self.texto
 
 
-# class OpcionSubItem(models.Model):
-#     class Meta:
-#         verbose_name = ('OpcionSubItem')
-#         verbose_name_plural = ('OpcionSubItems')
+class OpcionSubItem(models.Model):
+    class Meta:
+        verbose_name = ('OpcionSubItem')
+        verbose_name_plural = ('OpcionSubItems')
 
-#     subitem = models.ForeignKey(SubItemExamen)
-#     texto = models.CharField(max_length=200)
+    subitem = models.ForeignKey(SubItemExamen)
+    texto = models.CharField(max_length=200)
 
-#     def __unicode__(self):
-#         return self.texto
+    def __unicode__(self):
+        return self.texto
 
     
-# class ResultadoItem(models.Model):
-#     class Meta:
-#         verbose_name = ('ResultadoItem')
-#         verbose_name_plural = ('Resultados Items')
+class ResultadoItem(models.Model):
+    class Meta:
+        verbose_name = ('ResultadoItem')
+        verbose_name_plural = ('Resultados Items')
 
-#     item = models.ForeignKey(ItemExamen, related_name='item_resultadoitem')
-#     examen= models.ForeignKey(Examen, related_name='examen_resultadoitem')
-#     seleccionados = models.ManyToManyField(OpcionItem, related_name='seleccionados_resultadoitem')
+    item = models.ForeignKey(ItemExamen, related_name='item_resultadoitem')
+    examen= models.ForeignKey(Examen, related_name='examen_resultadoitem')
+    seleccionados = models.ManyToManyField(OpcionItem, related_name='seleccionados_resultadoitem', null=True, blank=True)
 
-#     def __unicode__(self):
-#         return self.texto
+    def __unicode__(self):
+        return unicode(str(self.item.texto), 'utf8')
 
 
-# class ResultadoSubItem(models.Model):
-#     class Meta:
-#         verbose_name = ('ResultadoSubItem')
-#         verbose_name_plural = ('Resultados SubItems')
+class ResultadoSubItem(models.Model):
+    class Meta:
+        verbose_name = ('ResultadoSubItem')
+        verbose_name_plural = ('Resultados SubItems')
 
-#     subitem = models.ForeignKey(SubItemExamen, related_name='item_resultadosubitem')
-#     examen= models.ForeignKey(Examen, related_name='examen_resultadosubitem')
-#     seleccionados = models.ManyToManyField(OpcionSubItem, related_name='seleccionados_resultadosubitem')
+    subitem = models.ForeignKey(SubItemExamen, related_name='item_resultadosubitem')
+    examen= models.ForeignKey(Examen, related_name='examen_resultadosubitem')
+    seleccionados = models.ManyToManyField(OpcionSubItem, related_name='seleccionados_resultadosubitem', null=True, blank=True)
 
-#     def __unicode__(self):
-#         return self.texto
+    def __unicode__(self):
+        return unicode(str(self.subitem.texto), 'utf8')
 
 
 #perfil personal

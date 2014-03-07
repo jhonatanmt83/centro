@@ -10,14 +10,15 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 
 
 from cm.forms import PerfilForm, PacienteForm1, PacienteForm2, PaquetesSeleccionForm, AntecedenteForm, PacienteForm, EgresoForm
-from cm.forms import DiagnosticoxRecetaForm, Tratamiento1Form, Tratamiento2Form, TratamientoM1Form, TratamientoM2Form
+from cm.forms import DiagnosticoxRecetaForm, TratamientoM1Form, TratamientoM2Form
 from cm.forms import TratamientoForm, DiagnosticoRecetaForm, CitaForm
-from cm.forms import DiagnosticoxRecetaForm
+
 
 from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
-from cm.models import DiagnosticoxReceta, DiagnosticoReceta, Tratamiento
+from cm.models import DiagnosticoxReceta, DiagnosticoReceta, Tratamiento, Medicamento, ResultadoSubItem, ResultadoItem
+from cm.models import OpcionItem, OpcionSubItem, ItemExamen, SubItemExamen, ResultadoItem, ResultadoSubItem
 
 from django.shortcuts import get_object_or_404
 
@@ -86,6 +87,7 @@ def nuevo_usuario(request):
 def nuevo_paciente(request):
     paquetes = Paquete.objects.all()
     fecha_actual = str(date.today().day) + "/" + str(date.today().month) + "/" + str(date.today().year)
+    historias = Paciente.objects.all()
     if request.method=='POST':
         formulario1 = PacienteForm1(request.POST)
         formulario2 = PacienteForm2(request.POST)
@@ -102,21 +104,32 @@ def nuevo_paciente(request):
             examen.save()
             examen.paquetes = lista_paquetes
             instancia = Antecedente(examen=examen)
-            antecedente = AntecedenteForm(request.POST, instance=instancia)
-            antecedente.save()
+            if request.POST['personales'] == "" and request.POST['familiares'] == "" and request.POST['cancer'] == "" and request.POST['otros'] == "":
+                antecedente = Antecedente(examen=examen, personales="", familiares="", cancer="", otros="")
+                antecedente.save()
+            else:
+                antecedente = AntecedenteForm(request.POST, instance=instancia)
+                antecedente.save()
             receta = Receta(paciente=paciente)
             receta.save()
             diagxreceta = DiagnosticoxReceta(receta=receta)
             diagxreceta.save()
             messages.success(request, 'Nuevo paciente %s creado'% (request.POST['nombres']))
             # Nuevos formularios
-            formulario1 = PacienteForm1
-            formulario2 = PacienteForm2(initial={'fecha_actual': fecha_actual})
+            new_nrohistoria = str(int(paciente.nrohistoria) + 1)
+            instancia_paciente = Paciente(nrohistoria=new_nrohistoria)
+            formulario1 = PacienteForm1()
+            formulario2 = PacienteForm2(initial={'fecha_actual': fecha_actual}, instance=instancia_paciente)
             paquetesform = PaquetesSeleccionForm
             antecedentesform = AntecedenteForm
     else:
-        formulario1 = PacienteForm1
-        formulario2 = PacienteForm2(initial={'fecha_actual': fecha_actual})
+        if historias:
+            new_nrohistoria = str(int(historias.order_by("-nrohistoria")[0].nrohistoria) + 1)
+        else:
+            new_nrohistoria = "100000"
+        instancia_paciente = Paciente(nrohistoria=new_nrohistoria)
+        formulario1 = PacienteForm1()
+        formulario2 = PacienteForm2(initial={'fecha_actual': fecha_actual}, instance=instancia_paciente)
         paquetesform = PaquetesSeleccionForm
         antecedentesform = AntecedenteForm
     return render_to_response('administrador/nuevo_paciente.html', {'formulario1': formulario1, 'formulario2': formulario2, 'paquetesform': paquetesform, 'antecedentesform': antecedentesform, 'paquetes': paquetes}, context_instance=RequestContext(request))
@@ -134,11 +147,23 @@ def examen(request, codigo):
                     if item.obtener_subitems():
                         subitems = item.obtener_subitems()
                         for subitem in subitems:
-                            subitem_resultado = ResultadoSubItem(subitem=subitem, examen=examen, texto=request.POST['item_'+str(subitem.pk)])
-                            subitem_resultado.save()
+                            # input_s_1
+                            resultado_subitem = ResultadoSubItem(subitem=subitem, examen=examen)
+                            resultado_subitem.save()
+                            lista_subitems = []
+                            lista_de_opciones = request.POST["input_s_"+str(subitem.pk)].split(",")
+                            for opcion in lista_de_opciones:
+                                lista_subitems.append(OpcionSubItem.objects.get(pk=opcion))
+                            resultado_subitem.seleccionados = lista_subitems
                     else:
-                        item_resultado = ResultadoItem(item=item, examen=examen, texto=request.POST['item_'+str(item.pk)])
+                        item_resultado = ResultadoItem(item=item, examen=examen)
                         item_resultado.save()
+                        lista_items = []
+                        lista_de_opciones = request.POST["input_i_"+str(item.pk)].split(",")
+                        for opcion in lista_de_opciones:
+                            lista_items.append(OpcionItem.objects.get(pk=opcion))
+                        item_resultado.seleccionados = lista_items
+                        # input_i_1
         diagnosticos_add = []
         for numero_diagnostico in range(1,int(request.POST['num_diagnosticos'])+1):
             if (request.POST['diagnostico_'+str(numero_diagnostico)] != ""):
@@ -175,26 +200,6 @@ def precio_paquete(request, codigo):
     datos['precio'] = str(paquete.precio_total())
     new_result.append(datos)
     return HttpResponse(json.dumps(new_result))
-
-
-def resultado_impresiones(request):
- 
-    #if request.method=='GET' or not request.POST.__contains__('start'):
-    #    return HttpResponseForbidden()
- 
-    # Hacemos la consulta para aquellos elementos que empiecen por start ordenados por nombre
-    print "inicio"
-    query = DiagnosticoExamen.objects.filter(texto__istartswith=request.POST['start']).order_by('texto')
-    print query
-    # Serializamos
-    objects = u'{items: [\n'
-    for i in query:
-        objects += u'{"0":"%s"},\n' % (i.texto.replace('"',''))
-    objects=objects.strip(",\n");
-    objects+=u']}\n'
-    print objects
- 
-    return HttpResponse(objects,mimetype="text/plain")
 
 
 @administrador_login
@@ -272,8 +277,6 @@ def receta_tratamiento(request, codigo):
             formulario.save()
             form1 = TratamientoM1Form()
             form2 = TratamientoM2Form()
-        else:
-            print "error"
         tratamientos = Tratamiento.objects.filter(receta=receta)
     else:
         form1 = TratamientoM1Form()
@@ -324,41 +327,72 @@ def receta_imprimir(request, codigo):
     return render_to_response('administrador/receta_imprimir.html',{'receta_impresa': receta, 'diagnosticos':diagnosticos, 'tratamientos':tratamientos, 'cita': cita},context_instance=RequestContext(request))
 
 
+@administrador_login
 def vista_egreso(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form = EgresoForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            # ...
+    if request.method == 'POST':
+        form = EgresoForm(request.POST)
+        if form.is_valid():
             form.save()
             messages.success(request, 'monto de  %s Nuevos Soles generado '% (request.POST['monto']))
             form=EgresoForm()
     else:
-        form = EgresoForm() # An unbound form
+        form = EgresoForm()
     formulario  =   EgresoForm()
     return render_to_response('administrador/egreso.html',{'formulario':formulario},context_instance=RequestContext(request))
 
 
+@administrador_login
 def modi_historia_clinica(request, codigo):
     instancia = get_object_or_404(Paciente, pk=codigo)
     modificar = PacienteForm(request.POST or None, instance=instancia)
     if modificar.is_valid():
         modificar.save()
         messages.success(request, 'LOS CAMBIOS FUERON GUARDADOS CON ÉXITO ')
+    edad = instancia.edad_actual()
+    return render_to_response('administrador/modificarhistoria.html', {'formhistoria': modificar, 'edad': edad}, context_instance=RequestContext(request))
 
-    return render_to_response('administrador/modificarhistoria.html', {'formhistoria': modificar}, context_instance=RequestContext(request))
 
-
+@administrador_login
 def modificarcita(request, codigo):
     instancia = get_object_or_404(UltimaCita, pk=codigo)
     nueva_cita= CitaForm(request.POST or None, instance=instancia)
-    
     if nueva_cita.is_valid():
         nueva_cita.save()
         messages.success(request, 'SU NUEVA CITA SERA EL %s '% (request.POST['proximo']))
-     
     return render_to_response('administrador/modificarcita.html',{'nueva_cita':nueva_cita},context_instance=RequestContext(request))
     
+
+# Json
+def agregar_item(request):
+    """Agrega nuevo diagnostico de receta"""
+    # OpcionItem, OpcionSubItem, ItemExamen, SubItemExamen
+    texto = request.POST['texto']
+    id_item = request.POST['id_item']
+    item = ItemExamen.objects.get(pk=id_item)
+    nueva_opcion = OpcionItem(item=item, texto=texto)
+    nueva_opcion.save()
+    new_result = []
+    datos = {}
+    datos['id'] = str(nueva_opcion.pk)
+    datos['texto'] = str(nueva_opcion.texto)
+    new_result.append(datos)
+    return HttpResponse(json.dumps(new_result))
+
+
+def agregar_subitem(request):
+    """Agrega nuevo diagnostico de receta"""
+    # OpcionItem, OpcionSubItem, ItemExamen, SubItemExamen
+    texto = request.POST['texto']
+    id_subitem = request.POST['id_subitem']
+    subitem = SubItemExamen.objects.get(pk=id_subitem)
+    nueva_opcion = OpcionSubItem(subitem=subitem, texto=texto)
+    nueva_opcion.save()
+    new_result = []
+    datos = {}
+    datos['id'] = str(nueva_opcion.pk)
+    datos['texto'] = str(nueva_opcion.texto)
+    new_result.append(datos)
+    return HttpResponse(json.dumps(new_result))
 
 
 def agregar_diagnostico(request):
@@ -385,13 +419,25 @@ def eliminar_tratamiento(request):
 
 
 def quitar_diagnostico_receta(request):
-    """Elimina el tratamiento"""
+    """Elimina el diagnostico"""
     diagnostico = DiagnosticoxReceta.objects.get(pk=request.POST['diagnostico'])
     diagnostico_receta = DiagnosticoReceta.objects.get(pk=request.POST['diagnosticoreceta'])
     diagnostico.diagnosticos.remove(diagnostico_receta)
     #diagnostico.save()
-    
     new_result = []
     datos = {}
     new_result.append(datos)
     return HttpResponse(json.dumps(new_result))
+
+
+def medicamentos_por_tipo(request,id_tipo):
+    """Devuelve los medicamentos de un tipo especifico para ser utilizados por el js"""
+    medicamentos = Medicamento.objects.filter(clase = id_tipo)
+    medicamentos = medicamentos.order_by('nombre')
+    resultado = []
+    for medicamento in medicamentos:
+        datos = {}
+        datos['id'] = medicamento.id
+        datos['nombre'] = medicamento.nombre
+        resultado.append(datos)
+    return HttpResponse( json.dumps(resultado) )

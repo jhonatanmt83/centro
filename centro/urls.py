@@ -28,13 +28,17 @@ urlpatterns = patterns('',
     url(r'^administrador/modificarhistoria/(?P<codigo>\d+)/$', 'cm.views.modi_historia_clinica', name='modi_historia_clinica'),
     url(r'^administrador/modificarcita/(?P<codigo>\d+)/$', 'cm.views.modificarcita', name='nuevacita'),
     
-
+    # Urls con json
     url(r'^precio/paquete/(?P<codigo>\d+)/$', 'cm.views.precio_paquete', name='precio_paquete'),
+    url(r'^obtener/medicamentos/(?P<id_tipo>\d+)/$', 'cm.views.medicamentos_por_tipo', name='medicamentos_por_tipo'),
     url(r'^agregar/diagnostico/receta/$', 'cm.views.agregar_diagnostico', name='agregar_diagnostico'),
+    url(r'^agregar/item/examen/$', 'cm.views.agregar_item', name='agregar_item'),
+    url(r'^agregar/subitem/examen/$', 'cm.views.agregar_subitem', name='agregar_subitem'),
     url(r'^eliminar/tratamiento/$', 'cm.views.eliminar_tratamiento', name='eliminar_tratamiento'),
     url(r'^quitar/diagnostico/receta/$', 'cm.views.quitar_diagnostico_receta', name='quitar_diagnostico_receta'),
 
 
+    # urls de recetas
     url(r'^administrador/receta/diagnostico/(?P<codigo>\d+)/$', 'cm.views.receta_diagnostico', name='receta_diagnostico'),
     url(r'^administrador/receta/tratamiento/(?P<codigo>\d+)/$', 'cm.views.receta_tratamiento', name='receta_tratamiento'),
     url(r'^administrador/receta/modificar/(?P<codigo>\d+)/$', 'cm.views.receta_modificar', name='receta_modificar'),

@@ -1,14 +1,26 @@
 from django import forms
 
+
 from cm.models import Perfil, Paciente, Paquete, Antecedente, Egreso, DiagnosticoReceta, DiagnosticoxReceta
 from cm.models import ClaseMedicamento, Medicamento, Frecuencia, Tratamiento, UltimaCita
 
 from django.contrib.auth.models import Group
 from django.forms.extras.widgets import SelectDateWidget
-from django.forms import TextInput, CheckboxInput
+from django.forms import TextInput, CheckboxInput, Select
+
 
 from datetime import date
 
+#funciones
+def ObtenerPaquetes():
+    paquetes_total = Paquete.objects.all()
+    seleccionado = []
+    for paquete in paquetes_total:
+        seleccionado.append((str(paquete.pk), paquete.nombre))
+    seleccionado = tuple(seleccionado)
+    return seleccionado
+
+# endfunciones
 
 
 class PerfilForm(forms.ModelForm):
@@ -20,6 +32,7 @@ class PerfilForm(forms.ModelForm):
 
 
 class PacienteForm1(forms.ModelForm):
+    edad = forms.IntegerField(label="Edad", widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta:
         model = Paciente
@@ -27,7 +40,6 @@ class PacienteForm1(forms.ModelForm):
         widgets = {
             'fechanacimiento': TextInput(attrs={"class":"fecha_bonita"}),
         }
-        
     
 
 class PacienteForm2(forms.ModelForm):
@@ -37,6 +49,7 @@ class PacienteForm2(forms.ModelForm):
         model = Paciente
         fields = ['nrohistoria', 'edadfur', 'null_edadfur', 'ultimofur', 'null_ultimofur', 'fecha_actual']
         widgets={
+            "nrohistoria":TextInput(attrs={'readonly': 'readonly'}),
             "edadfur":TextInput(attrs={'class':'fecha_fur'}),
             "ultimofur":TextInput(attrs={'class':'fecha_finfur'}),
             "null_edadfur":CheckboxInput(attrs={'onClick':'desactivar_edadfur();'}),
@@ -46,25 +59,22 @@ class PacienteForm2(forms.ModelForm):
 
 
 class PacienteForm(forms.ModelForm):
+    edad = forms.IntegerField(label="Edad", widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
     class Meta:
         model = Paciente
+        fields = ['dni', 'nombres', 'direccion', 'edad', 'fechanacimiento', 'telefono', 'nrohistoria', 'edadfur', 'null_edadfur', 'ultimofur', 'null_ultimofur']
         widgets = {
             "edadfur":TextInput(attrs={'class':'fecha_fur'}),
             "ultimofur":TextInput(attrs={'class':'fecha_finfur'}),
             'fechanacimiento': TextInput(attrs={"class":"fecha_bonita"}),
-
+            "nrohistoria":TextInput(attrs={'readonly': 'readonly'}),
         }
-    
 
-paquetes_total = Paquete.objects.all()
-seleccionado = []
-for paquete in paquetes_total:
-    seleccionado.append((str(paquete.pk), paquete.nombre))
-seleccionado = tuple(seleccionado)
 
 class PaquetesSeleccionForm(forms.Form):
     paquetes = forms.MultipleChoiceField(required=True,
-        widget=forms.CheckboxSelectMultiple, choices=seleccionado)
+        widget=forms.CheckboxSelectMultiple, choices=ObtenerPaquetes())
 
 
 class AntecedenteForm(forms.ModelForm):
@@ -72,14 +82,6 @@ class AntecedenteForm(forms.ModelForm):
         model = Antecedente
         exclude = ['examen']
 
-
-
-# class egreso_formulario(forms.ModelForm):
-
-#     dni         =forms.CharField(widget=forms.TextInput())
-#     nombre      =forms.CharField(widget=forms.TextInput())
-#     monto       =forms.CharField(widget=forms.TextInput())
-#     decripciion =forms.CharField(widget=forms.Textarea())
 
 class EgresoForm(forms.ModelForm):
     class Meta:
@@ -89,15 +91,12 @@ class EgresoForm(forms.ModelForm):
         widgets = {
             'pagouotro': forms.RadioSelect
         }
-
-        
+ 
 
 class CitaForm(forms.ModelForm):
     class Meta:
         model= UltimaCita
         exclude =['paciente','anterior']
-
-   
 
 
 class DiagnosticoxRecetaForm(forms.ModelForm):
@@ -109,29 +108,16 @@ class DiagnosticoxRecetaForm(forms.ModelForm):
         exclude = ['receta',]
 
 
-class Tratamiento1Form(forms.Form):
-    tipomedicamento = forms.ModelChoiceField(queryset=ClaseMedicamento.objects.all(), empty_label=None)
-    medicamento = forms.ModelChoiceField(queryset=Medicamento.objects.all(), empty_label=None)
-    cantidad = forms.IntegerField(label="Cantidad")
-
-
-class Tratamiento2Form(forms.Form):
-    tipo_duracion = (
-        ('di', 'Dias'),
-        ('se', 'Semanas'),
-        ('me', 'Meses'),
-    )
-    dosis = forms.IntegerField(label="Dosis")
-    frecuencia = forms.ModelChoiceField(queryset=Frecuencia.objects.all(), empty_label=None)
-    duracion = forms.IntegerField(label="Durante")
-    tipo_duracion = forms.ChoiceField(choices=tipo_duracion)
-
 class TratamientoM1Form(forms.ModelForm):
-    tipomedicamento = forms.ModelChoiceField(queryset=ClaseMedicamento.objects.all(), empty_label=None)
+    tipomedicamento = forms.ModelChoiceField(queryset=ClaseMedicamento.objects.all(), empty_label="Seleccione tipo", widget=forms.Select(attrs={'onchange':'actualizar_medicamentos()'}))
     class Meta:
         model = Tratamiento
         exclude = ['receta', 'cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion']
         fields = ['tipomedicamento', 'medicamento', 'cantidad']
+        widgets = {
+            'tipomedicamento': Select(attrs={'id': 'combo_tipomedicamento',
+                                   'onchange': "actualizar_medicamentos()", }),
+        }
 
 
 class TratamientoM2Form(forms.ModelForm):
@@ -142,9 +128,11 @@ class TratamientoM2Form(forms.ModelForm):
 
 
 class TratamientoForm(forms.ModelForm):
+    tipomedicamento = forms.ModelChoiceField(queryset=ClaseMedicamento.objects.all(), empty_label="Seleccione tipo", widget=forms.Select(attrs={'onchange':'actualizar_medicamentos()'}))
     class Meta:
         model = Tratamiento
         exclude = ['receta']
+        fields = ['tipomedicamento', 'medicamento', 'cantidad', 'cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion']
 
 
 class DiagnosticoRecetaForm(forms.ModelForm):
