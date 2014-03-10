@@ -65,7 +65,17 @@
                                         <td>{{valor.paciente}}</td>
                                         <td>{{valor.paciente.telefono}}</td>
                                         <td>{{valor.proximo}}</td>
-                                        <td><a class='btn btn-danger btn-block btn-lg' disabled='disabled' href="#">HOY</a></td>
+                                        <td>
+                                            {% if valordiadecita = "hoy" %}
+                                            <a class='btn btn-danger btn-block btn-lg' disabled='disabled' href="#">HOY</a>
+                                            {% elif valor.diadecita = "mañana" %}
+                                            <a class='btn btn-primary btn-block btn-lg' disabled='disabled' href="#">MAÑANA</a>
+                                            {% elif valor.diadecita = "pasado" %}
+                                            <a class='btn btn-warning btn-block btn-lg' disabled='disabled' href="#">PASADO</a>
+                                            {% elif valor.diadecita = "proximo" %}
+                                            <a class='btn btn-info btn-block btn-lg' disabled='disabled' href="#">PROXIMO</a>
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             <a href="/administrador/modificarcita/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a>
                                             

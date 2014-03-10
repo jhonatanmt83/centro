@@ -76,6 +76,18 @@ class UltimaCita(models.Model):
     def __unicode__(self):
         return unicode(str(self.paciente), 'utf8')
 
+    def diadecita(self):
+        devolver = ""
+        if self.proximo == datetime.date.today():
+            devolver = "hoy"
+        elif self.proximo.day - 1 == datetime.date.today():
+            devolver = "mañana"
+        elif self.proximo < datetime.date.today():
+            devolver = "pasado"
+        else:
+            devolver = "proximo"
+        return devolver
+
 
 class DiagnosticoExamen(models.Model):
     class Meta:
