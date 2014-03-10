@@ -109,22 +109,29 @@ class DiagnosticoxRecetaForm(forms.ModelForm):
 
 
 class TratamientoM1Form(forms.ModelForm):
-    tipomedicamento = forms.ModelChoiceField(queryset=ClaseMedicamento.objects.all(), empty_label="Seleccione tipo", widget=forms.Select(attrs={'onchange':'actualizar_medicamentos()'}))
+    tipomedicamento = forms.ModelChoiceField(queryset=ClaseMedicamento.objects.all(), empty_label="Seleccione tipo", widget=forms.Select(attrs={'onchange':'actualizar_medicamentos()', 'class':'form-control'}), label='Tipo')
     class Meta:
         model = Tratamiento
-        exclude = ['receta', 'cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion']
+        exclude = ['receta', 'cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion', 'posologia']
         fields = ['tipomedicamento', 'medicamento', 'cantidad']
         widgets = {
-            'tipomedicamento': Select(attrs={'id': 'combo_tipomedicamento',
-                                   'onchange': "actualizar_medicamentos()", }),
+            'medicamento': Select(attrs={'class': 'form-control'}),
+            'cantidad': TextInput(attrs={'class': 'form-control'}),
         }
 
 
 class TratamientoM2Form(forms.ModelForm):
     class Meta:
         model = Tratamiento
-        fields = ['cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion']
+        fields = ['cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion', 'posologia']
         exclude = ['receta', 'tipomedicamento', 'medicamento', 'cantidad']
+        widgets = {
+            'cantidaddosis': TextInput(attrs={'class': 'form-control'}),
+            'frecuencia': Select(attrs={'class': 'form-control'}),
+            'duracion': TextInput(attrs={'class': 'form-control'}),
+            'tipoduracion': Select(attrs={'class': 'form-control'}),
+            'posologia': TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 class TratamientoForm(forms.ModelForm):
@@ -132,7 +139,7 @@ class TratamientoForm(forms.ModelForm):
     class Meta:
         model = Tratamiento
         exclude = ['receta']
-        fields = ['tipomedicamento', 'medicamento', 'cantidad', 'cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion']
+        fields = ['tipomedicamento', 'medicamento', 'cantidad', 'cantidaddosis', 'frecuencia', 'duracion', 'tipoduracion', 'posologia']
 
 
 class DiagnosticoRecetaForm(forms.ModelForm):

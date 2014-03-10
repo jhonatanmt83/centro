@@ -334,7 +334,7 @@ class Examen(models.Model):
     tabla_medidas = models.ManyToManyField(TablaMedidas, related_name='examen_tablamedidas', null=True, blank=True)
 
     def __unicode__(self):
-        unicode(str(self.paciente), 'utf8')
+        return unicode(str(self.paciente.nombres), 'utf8')
 
     def obtenerpaquete(self):
         nombpaquete=self.paquetes.all()[0]
@@ -401,6 +401,19 @@ class ResultadoSubItem(models.Model):
 
     def __unicode__(self):
         return unicode(str(self.subitem.texto), 'utf8')
+
+
+class Conclusion(models.Model):
+    class Meta:
+        verbose_name = ('Conclusion')
+        verbose_name_plural = ('Conclusiones')
+
+    tipoexamen = models.ForeignKey(TipoExamen, related_name='conclusion_tipoexamen')
+    examen= models.ForeignKey(Examen, related_name='conclusion_examen')
+    texto = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return unicode(str(self.examen.pk), 'utf8')
 
 
 #perfil personal

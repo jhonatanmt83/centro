@@ -1,17 +1,24 @@
 {% extends 'basehistoriaclinica.html'%}
 {% load bootstrap3 %}
 {% load staticfiles %}
+{% block css %}
+<style type="text/css">
+    .form-inline .form-group input {
+        width:140px;
+    }
+</style>
+{% endblock %}
 {% block contenido %}
 <div class="container">
     <div class="row">
         <form class="form-inline" role="form" method='POST' action=''>
             {% csrf_token %}
-            <div class="col-xs-12">
+            <div class="form-group">
                 {% for elemento in form1%}
                     {{ elemento.label}} {{elemento}}
                 {% endfor%}
             </div>
-            <div class="col-xs-12">
+            <div class="form-group">
                 {% for elemento in form2%}
                     {{elemento.label}} {{elemento}}
                 {% endfor%}
@@ -29,6 +36,7 @@
                         <th>Dosis</th>
                         <th>Frecuencia</th>
                         <th>Duracion</th>
+                        <th>Posologia</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +48,7 @@
                         <td>{{ tratamiento.cantidaddosis }}</td>
                         <td>{{ tratamiento.frecuencia }}</td>
                         <td>{{ tratamiento.duracion }}</td>
+                        <td>{{ tratamiento.posologia }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -72,5 +81,11 @@
           .appendTo('#id_medicamento')     
        });
     }
+$(document).ready(function(){
+    $("#id_cantidaddosis").keypress(function() {
+        texto = $("#id_cantidaddosis").val() + " " + $("#id_tipomedicamento option:selected").text() + " cada " + $("#id_frecuencia option:selected").text() + " durante " + $("#id_duracion").val() + " " + $("#id_tipoduracion option:selected").text();
+        $("#id_posologia").val(texto);
+    });
+});
 </script>
 {% endblock%}

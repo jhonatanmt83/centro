@@ -18,7 +18,7 @@ from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
 from cm.models import DiagnosticoxReceta, DiagnosticoReceta, Tratamiento, Medicamento, ResultadoSubItem, ResultadoItem
-from cm.models import OpcionItem, OpcionSubItem, ItemExamen, SubItemExamen, ResultadoItem, ResultadoSubItem
+from cm.models import OpcionItem, OpcionSubItem, ItemExamen, SubItemExamen, ResultadoItem, ResultadoSubItem, Conclusion
 
 from django.shortcuts import get_object_or_404
 
@@ -153,7 +153,8 @@ def examen(request, codigo):
                             lista_subitems = []
                             lista_de_opciones = request.POST["input_s_"+str(subitem.pk)].split(",")
                             for opcion in lista_de_opciones:
-                                lista_subitems.append(OpcionSubItem.objects.get(pk=opcion))
+                                if opcion != "":
+                                    lista_subitems.append(OpcionSubItem.objects.get(pk=opcion))
                             resultado_subitem.seleccionados = lista_subitems
                     else:
                         item_resultado = ResultadoItem(item=item, examen=examen)
@@ -161,9 +162,15 @@ def examen(request, codigo):
                         lista_items = []
                         lista_de_opciones = request.POST["input_i_"+str(item.pk)].split(",")
                         for opcion in lista_de_opciones:
-                            lista_items.append(OpcionItem.objects.get(pk=opcion))
+                            if opcion != "":
+                                lista_items.append(OpcionItem.objects.get(pk=opcion))
                         item_resultado.seleccionados = lista_items
                         # input_i_1
+                for numero_conclusion in range(1,int(request.POST['num_conclusiones_'+str(tipo_examen.pk)])+1):
+                    if (request.POST['conclusion_'+str(tipo_examen.pk)+'_'+str(numero_conclusion)] != ""):
+                        nueva_conclusion = Conclusion(tipoexamen=tipo_examen, examen=examen,texto=request.POST['conclusion_'+str(tipo_examen.pk)+'_'+str(numero_conclusion)])
+                        nueva_conclusion.save()
+
         diagnosticos_add = []
         for numero_diagnostico in range(1,int(request.POST['num_diagnosticos'])+1):
             if (request.POST['diagnostico_'+str(numero_diagnostico)] != ""):
@@ -173,7 +180,6 @@ def examen(request, codigo):
         nueva_impresion = ImpresionDiagnostico(examen=examen)
         nueva_impresion.save()
         nueva_impresion.diagnostico = diagnosticos_add
-        examen.recomendaciones = request.POST['recomendaciones']
         examen.terminado = True
         examen.save()
         cita = UltimaCita.objects.filter(paciente=examen.paciente)
@@ -182,6 +188,7 @@ def examen(request, codigo):
             new_cita = UltimaCita(paciente=examen.paciente, proximo=date(int(fecha_new[2]), int(fecha_new[0]), int(fecha_new[1])), anterior=date.today())
             new_cita.save()
         else:
+            cita = cita[0]
             temp_cita = cita.proximo
             cita.anterior = temp_cita
             cita.proximo = date(int(fecha_new[2]), int(fecha_new[0]), int(fecha_new[1]))
@@ -205,16 +212,13 @@ def precio_paquete(request, codigo):
 @administrador_login
 def citas(request):
     cita = UltimaCita.objects.all()
-
     return render_to_response('administrador/citas.html',{'cita':cita}, context_instance=RequestContext(request))
 
 
 @administrador_login
 def examenescaja(request):
     examenes = Examen.objects.filter(fecha = date.today())
-    
     egreso = Egreso.objects.filter(fecha=date.today())
-    
     suma_egreso=egreso.aggregate(Sum('monto'))
     suma_ingreso=examenes.aggregate(Sum('precio'))
     if not egreso: 

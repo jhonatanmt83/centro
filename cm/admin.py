@@ -3,6 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from cm.models import Paciente, Antecedente, UltimaCita, DiagnosticoExamen, ClaseMedicamento, Frecuencia, Medicamento, Receta, DiagnosticoReceta, Tratamiento, Egreso, TipoExamen, Paquete, Examen, ImpresionDiagnostico, Perfil, DiagnosticoxReceta
 from cm.models import ItemExamen, SubItemExamen, TablaMedidas, OpcionItem, OpcionSubItem, ResultadoItem, ResultadoSubItem
+from cm.models import Conclusion
 
 
 admin.site.register(Paciente)
@@ -30,3 +31,4 @@ admin.site.register(OpcionSubItem)
 admin.site.register(ResultadoItem)
 admin.site.register(ResultadoSubItem)
 admin.site.register(Perfil)
+admin.site.register(Conclusion)
