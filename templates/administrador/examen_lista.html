@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block title %}Adminstrador - Crear Nuevo Usuario{% endblock %}
+{% block css %}
+{% endblock %}
+{% block menu %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/administrador/">SISTEMA DE RECETAS</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ><a href="/administrador/usuario">NUEVO USUARIO</a></li>
+            <li ><a href="/administrador/paciente">NUEVO PACIENTE</a></li>
+            <li ><a disabled='disabled' href="/administrador/examen">NUEVO EXAMEN</a></li>
+            <li ><a href="/administrador/listaclinica">HISTORIA CLINICA</a></li>
+            <li ><a href="/administrador/receta">RECETAS</b></a></li>
+            <li ><a href="/administrador/caja">CAJA</b></a></li>
+            <li ><a href="/administrador/egreso">EGRESO</b></a></li>
+            <li class='active'><a href="/administrador/citas">CITAS</b></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+{% block contenido %}
+    <div class="container grup-container">
+        
+        <div class="panel panel-1">
+            <div class="text-center">
+                <label for="txtBuscar"><h3>BUSCAR </h3> </label>
+                <input type="search" class='busqueda' id="txtBuscar" autofocus
+                    placeholder="Digite DNI,NRO-HISTORIA o NOMBRES DEL PACIENTE que desea encontrar y presione la ENTER. Para cancelar la tecla ESCAPE.">
+            </div>
+            <ul>
+            	{% for valor in lista %}
+            		<li><a href="/examen/{{valor.pk}}">{{valor.paciente.nombres}} - {{valor.fecha}}</a></li>
+            	{%endfor%}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block js_end %}
+{% endblock %}

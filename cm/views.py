@@ -201,6 +201,12 @@ def examen(request, codigo):
     return render_to_response('administrador/examen.html', {'antecedente':antecedente, 'examen':examen}, context_instance=RequestContext(request))
 
 
+@administrador_login
+def examen_lista(request):
+    lista = Examen.objects.filter(terminado=False)
+    return render_to_response('administrador/examen_lista.html', {'lista':lista}, context_instance=RequestContext(request))
+
+
 # Function json
 def precio_paquete(request, codigo):
     """Devuelve el precio correspondiente al paquete"""
