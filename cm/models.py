@@ -325,6 +325,7 @@ class TablaMedidas(models.Model):
     ovizquierdo_ap = models.PositiveSmallIntegerField(verbose_name=u'Ap de Ovario izquierdo', blank=True, null=True)
     ovizquierdo_transv = models.PositiveSmallIntegerField(verbose_name=u'Transverso de Ovario izquierdo', blank=True, null=True)
     ovizquierdo_vol = models.PositiveSmallIntegerField(verbose_name=u'Volumen de Ovario izquierdo', blank=True, null=True)
+    tipoexamen = models.ForeignKey(TipoExamen)
 
     def __unicode__(self):
         return str(self.pk)

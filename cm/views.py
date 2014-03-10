@@ -18,7 +18,7 @@ from django.contrib.auth.models import User, Group
 
 from cm.models import Perfil, Paquete, Examen, Antecedente, DiagnosticoExamen, ImpresionDiagnostico, UltimaCita, Egreso, Receta, Paciente
 from cm.models import DiagnosticoxReceta, DiagnosticoReceta, Tratamiento, Medicamento, ResultadoSubItem, ResultadoItem
-from cm.models import OpcionItem, OpcionSubItem, ItemExamen, SubItemExamen, ResultadoItem, ResultadoSubItem, Conclusion
+from cm.models import OpcionItem, OpcionSubItem, ItemExamen, SubItemExamen, ResultadoItem, ResultadoSubItem, Conclusion, TablaMedidas
 
 from django.shortcuts import get_object_or_404
 
@@ -170,7 +170,10 @@ def examen(request, codigo):
                     if (request.POST['conclusion_'+str(tipo_examen.pk)+'_'+str(numero_conclusion)] != ""):
                         nueva_conclusion = Conclusion(tipoexamen=tipo_examen, examen=examen,texto=request.POST['conclusion_'+str(tipo_examen.pk)+'_'+str(numero_conclusion)])
                         nueva_conclusion.save()
-
+                if tipo_examen.medidas:
+                    tabla = TablaMedidas(utero_long=request.POST['tabla_'+str(tipo_examen.pk)+"_1"],utero_ap=request.POST['tabla_'+str(tipo_examen.pk)+"_2"],utero_transv=request.POST['tabla_'+str(tipo_examen.pk)+"_3"],utero_vol=request.POST['tabla_'+str(tipo_examen.pk)+"_4"],ovderecho_long=request.POST['tabla_'+str(tipo_examen.pk)+"_5"],ovderecho_ap=request.POST['tabla_'+str(tipo_examen.pk)+"_6"],ovderecho_transv=request.POST['tabla_'+str(tipo_examen.pk)+"_7"],ovderecho_vol=request.POST['tabla_'+str(tipo_examen.pk)+"_8"],ovizquierdo_long=request.POST['tabla_'+str(tipo_examen.pk)+"_9"],ovizquierdo_ap=request.POST['tabla_'+str(tipo_examen.pk)+"_10"],ovizquierdo_transv=request.POST['tabla_'+str(tipo_examen.pk)+"_11"],ovizquierdo_vol=request.POST['tabla_'+str(tipo_examen.pk)+"_12"], tipoexamen=tipo_examen)
+                    tabla.save()
+                    examen.tabla_medidas.add(tabla)
         diagnosticos_add = []
         for numero_diagnostico in range(1,int(request.POST['num_diagnosticos'])+1):
             if (request.POST['diagnostico_'+str(numero_diagnostico)] != ""):

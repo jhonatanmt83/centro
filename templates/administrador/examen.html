@@ -121,6 +121,43 @@
                         {% for examen in paquete.tiposexamen.all %}
                         <h4><strong>{{ examen.nombre }}</strong></h4>
                         <br>
+                        {% if examen.medidas %}
+                        <table class='table table-bordered'>
+                            <thead>
+                                <tr>
+                                    <th><strong>MEDIDAS</strong></th>
+                                    <th>Longitud<br>(mm)</th>
+                                    <th>AP<br>(mm)</th>
+                                    <th>Transverso<br>(mm)</th>
+                                    <th>Columna<br>(mm)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>UTERO</td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_1'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_2'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_3'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_4'></td>
+                                </tr>
+                                <tr>
+                                    <td>OVARIO<br>DERECHO</td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_5'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_6'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_7'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_8'></td>
+                                </tr>
+                                <tr>
+                                    <td>OVARIO<br>IZQUIERDO</td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_9'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_10'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_11'></td>
+                                    <td><input class='form-control' name='tabla_{{ examen.pk }}_12'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        {% endif %}
                         {% for item in examen.obtener_items %}
                         {% if item.obtener_subitems %}
                         <div class="form-group">

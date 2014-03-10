@@ -60,7 +60,6 @@
                                 <tbody>
                                 {% for valor in cita %}
                                     <tr>
-
                                         <td>{{valor.paciente.nrohistoria}}</td>
                                         <td>{{valor.paciente}}</td>
                                         <td>{{valor.paciente.telefono}}</td>
@@ -78,7 +77,6 @@
                                         </td>
                                         <td>
                                             <a href="/administrador/modificarcita/{{valor.pk }}" class="btn btn-warning btn-lg active" role="button">Modificar</a>
-                                            
                                         </td>
                                     </tr>
                                 {% endfor %}
